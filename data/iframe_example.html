@@ -1,0 +1,48 @@
+<html style="height: 100%;">
+
+<head style="margin:0; padding: 0;">
+    <title>My Report</title>
+</head>
+
+<body style="margin: 0; padding: 0; height: 100%; box-sizing: border-box;">
+    <div id="menu" class="menu" style="border-bottom: 1px silver solid; box-sizing: border-box;">
+        <div class="menu-item" >
+            <button data-button="item1" data-page="page0.html">Home</button>
+            <button data-button="item1" data-page="page1.html">Item 1</button>
+            <button data-button="item2" data-page="page2.html">Item 2</button>
+            <button data-button="item3" data-page="page3.html">Item 3</button>
+        </div>
+    </div>
+    <div id="body">
+        <iframe id="content" style="width: 100%; border: none; " src="page0.html"></iframe>
+    </div>
+    <script> 
+        // Set height of the iframe based on the space available in this viewport
+        function setHeight() {
+            var menu = document.getElementById('menu');
+            var menuHeight = menu.getBoundingClientRect().height;
+            var viewportHeight = document.body.getBoundingClientRect().height;
+            var availableHeight = viewportHeight - menuHeight;
+            var body = document.getElementById('body');
+            var content = document.getElementById('content');
+            content.style.height = (availableHeight) + 'px';
+        }
+        window.addEventListener('resize', function () {
+            setHeight();
+        });
+        setHeight();
+
+        // Set up button listeners.    
+        var buttons = document.querySelectorAll('[data-button]');
+        for (var i = 0; i < buttons.length; i += 1) {
+            buttons[i].addEventListener('click', function(e) {
+                var page = e.target.getAttribute('data-page');
+                var content = '<iframe id="content" style="width: 100%;   border: none;" src="' + page + '"></iframe>';
+                var body = document.getElementById('body');
+                body.innerHTML = content;
+                setHeight();
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+#
+# define display information
+#
+name: FeatureSet/SequenceSet Object Info
+tooltip: |
+    Create text reports based on a FeatureSet or a SequenceSet
+screenshots: []
+
+icon: kaleidoscope.png
+
+#
+# define a set of similar methods that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            []
+        next:
+            []
+    methods:
+        related:
+            []
+        next:
+            []
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    feature_sequence_input_ref :
+        ui-name : |
+            FeatureSet/SequenceSet
+        short-hint : |
+            The FeatureSet or SequenceSet to be used in the report
+    report_format:
+        ui-name : |
+            Report_format
+        short-hint : |
+            Format for the report
+description : |
+    <p>This intended purpose of this app is to produce a downloadable <b>TEXT</b> report about an object.</p>
+    
+    <p>Most KBase data objects already have some type of pretty HTML table,
+    either as output from an app or by dragging the object onto the narrative.
+    This app serves a different purpose. This app creates one or more files that
+    are downloadable and used with local tools such as Excel or computer scripts.
+    </p>
+     
+    <p>This app creates a report on the contents of a FeatureSet or a SequenceSet.
+    Short reports will display as TEXT in the Summary section of the output.
+    Longer reports will instead have a link to open the TEXT in a new html browser tab.
+    In the Files section of the output will be a link for downloading the files. 
+    Whether short or long, the Summary/Link section is intended to be a preview
+    of the downloadable file. If the report is tab or comma delimited, it may be
+    misaligned on the screen but readable by a computer script.</p>
+    
+    <p>The inputs are:
+    <ul>
+        <li>The KBase FeatureSet or SequenceSet object (output from several app)</li>
+        <li>A download option:
+        <ul>
+            <li>Tab-delimited. A report with tab-delimited columns.</li>
+            <li>Comma-delimited. A report with comma-delimited columns.</li>
+        </ul></li>
+    </ul>
+    </p>
+    
+    <p>The output:
+    <ol>
+        <li>The output depends on the input feature set or sequence set. In general, sequence sets
+        will be a fasta file and feature sets will be a listing of the references to the features
+        in the set. For example 'BW244_0025	27092/5/1' is the feature 'BW244_0025' and it
+        can be found in narrative 27092 in the object with the ID of '27092/5/1'.
+        </li>
+    </ol>
+    </p>
+
+    
+publications :
+    -
+        display-text: |
+            Arkin AP, Cottingham RW, Henry CS, Harris NL, Stevens RL, Maslov S, et al. KBase: The United States Department of Energy Systems Biology Knowledgebase. Nature Biotechnology. 2018;36: 566. doi: 10.1038/nbt.4163
+        link: https://www.nature.com/articles/nbt.4163

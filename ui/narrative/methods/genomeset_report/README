@@ -1,0 +1,13 @@
+List of things I need to do to make these official:
+
+1. CHECK: Give better description of the output options in the display.yaml
+2. CHECK: Get better test objects instead of pointing to things in my narratives
+3. CHECK: Decide if DataTableJS should be used in the html versions
+4. CHECK: Why am I creating the HTML version? Is it the alternative viewing option when the output is long?
+5. Someday switch over to the official way to do GFF
+6. Keep an eye on genome object changes coming
+7. How can I do multiple formats at the same time?
+8. Better report names based on user input
+9. Should display.yml make it clear that these are not offical KBase apps? Can't call them 3rd-party but they aren't blessed either.
+10. There should be space-delimited version as well
+11. Will I support other features in the genome tab-delimited report

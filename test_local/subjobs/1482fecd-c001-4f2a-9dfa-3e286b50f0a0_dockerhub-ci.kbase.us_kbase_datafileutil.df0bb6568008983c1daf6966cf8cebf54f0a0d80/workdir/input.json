@@ -1,0 +1,1 @@
+{"id":"8239358141709524","method":"DataFileUtil.unpack_file","params":[{"file_path":"/kb/module/work/tmp/minimal_test_genome_assembly.fasta"}],"version":"1.1","context":{"call_stack":[{"time":"2020-04-29T14:18:12+0000","method":"DataFileUtil._unpack_file_submit"}],"service_ver":"release"}}
