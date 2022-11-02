@@ -1,0 +1,81 @@
+#
+# define display information
+#
+name: Assembly Object Info - Metadata
+tooltip: |
+    Create a text report for an Assembly Object.
+screenshots: []
+
+icon: kaleidoscope.png
+
+#
+# define a set of similar methods that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            []
+        next:
+            []
+    methods:
+        related:
+            []
+        next:
+            []
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    assembly_input_ref :
+        ui-name : |
+            Assembly
+        short-hint : |
+            The Assembly object to analyze.
+    showContigs:
+        ui-name : |
+            Include a FASTA of the Contigs
+        short-hint : |
+            Include a FASTA listing of the contigs in the Assembly.
+description : |
+    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> report about an object.</p>
+
+    <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. This App creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
+
+    <p>This App creates reports on the contents of an Assembly object. Short reports will display as TEXT in the Summary section of the output. Longer reports will instead have a link to open the TEXT in a new HTML browser tab. There will be a link for downloading the files in the Files section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the report is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
+
+    <p>The inputs are:
+    <ul>
+      <li>The KBase Assembly object (uploaded or output from an app)</li>
+      <li>A checkbox for whether or not to include the FASTA of the Assembly object</li>
+    </ul>
+    </p>
+
+    <p>The outputs are:
+    <ol>
+      <li>A <b>Link</b> section with a link to the requested report that can be opened in another browser tab.</li>
+      <li>One downloadable file in the <b>Files</b> section. The report has the following sections:
+        <ol>
+          <li>The metadata of the Assembly object. This includes the length of the DNA sequence, the number of contigs, the fraction GC content, a taxon reference, and a FASTA handle reference.</li>
+          <li>A count of the As, Cs, Gs, and Ts in the Assembly</li>
+          <li>A list of the contigs in the Assembly
+            <ul>
+              <li>Contig name (e.g., AKKW01000148)</li>
+              <li>Length of the contig</li>
+              <li>GC fraction of the contig</li>
+              <li>Number of Ns</li>
+              <li>Contig ID (can be the same as the name)</li>
+              <li>Contig description from the FASTA header line</li>
+            </ul>
+          </li>
+          <li>OPTIONALLY: the DNA of the contigs in FASTA format.</li>
+        </ol>
+        </li>
+      </ol>
+    </p>
+
+publications :
+    -
+        display-text: |
+            Arkin AP, Cottingham RW, Henry CS, Harris NL, Stevens RL, Maslov S, et al. KBase: The United States Department of Energy Systems Biology Knowledgebase. Nature Biotechnology. 2018;36: 566. doi: 10.1038/nbt.4163
+        link: https://www.nature.com/articles/nbt.4163

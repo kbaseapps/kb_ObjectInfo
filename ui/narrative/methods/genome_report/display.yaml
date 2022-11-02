@@ -1,0 +1,77 @@
+#
+# define display information
+#
+name: Genome Object Info
+tooltip: |
+    Create a text report based on a Genome object.
+screenshots: []
+
+icon: kaleidoscope.png
+
+#
+# define a set of similar methods that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            []
+        next:
+            []
+    methods:
+        related:
+            []
+        next:
+            []
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    genome_input_ref :
+        ui-name : |
+            Genome
+        short-hint : |
+            The Genome to be used in the report.
+    report_format:
+        ui-name : |
+            Report Format
+        short-hint : |
+            Specify the format for the report.
+description : |
+    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> report about an object.</p>
+
+    <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. It creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
+
+    <p>This App creates reports on a Genome. Short reports will display as TEXT in the “Summary” section of the output. Longer reports will instead have a link to open the TEXT in a new html browser tab. There is a link for downloading the file in the “Files” section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the report is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
+
+    <p><b>Inputs:</b>
+    <ul>
+      <li>The KBase Genome object.</li>
+      <li>A download option:
+        <ul>
+          <li>DNA FASTA format. Create a FASTA file of the genomic DNA.</li>
+          <li>Features, Tab-delimited. A report where the rows are the genes in the Genome and the columns are information about the genes. Columns are separated with tabs.</li>
+          <li>Features, Comma-delimited. A report where the rows are the genes in the Genome and the columns are information about the genes. Columns are separated with commas.</li>
+          <li>Features, GFF3 format. A GFF3 (General Feature Format) file of the genes in the Genome.</li>
+          <li>FASTA, translated CDSs. A FASTA-formatted file of the amino acid sequences of the genes.</li>
+          <li>FASTA, of mRNAs. A FASTA-formatted file of the mRNA sequences of the genes.</li>
+        </ul></li>
+    </ul>
+    </p>
+
+    <p><b>Output:</b>
+    <ol>
+      <li>The <b>Summary</b> or <b>Link</b> section has text version of the requested file.</li>
+      <li>One downloadable file in the <b>Files</b> section. The name and content of the file will depend on the requested file format.
+        <ol>
+          <li>FASTA files will be in FASTA format. The file name will end in .fna for nucleotide files and .faa for amino acid files.</li>
+          <li>Feature lists will include the FeatureID, Feature Type, Contig, Location (Feature Coordinates), Strand, Feature Function, and, if applicable, Aliases. Tab-delimited, comma-delimited, and GFF files will end in .tab, .csv and .gff, respectively.</li>
+        </ol></li>
+    </ol>
+    </p>
+
+publications :
+    -
+        display-text: |
+            Arkin AP, Cottingham RW, Henry CS, Harris NL, Stevens RL, Maslov S, et al. KBase: The United States Department of Energy Systems Biology Knowledgebase. Nature Biotechnology. 2018;36: 566. doi: 10.1038/nbt.4163
+        link: https://www.nature.com/articles/nbt.4163

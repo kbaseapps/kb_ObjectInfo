@@ -1,0 +1,84 @@
+#
+# define display information
+#
+name: Domain Annotation Object Info
+tooltip: |
+    Create text reports based on a DomainAnnotation object.
+screenshots: []
+
+icon: kaleidoscope.png
+
+#
+# define a set of similar methods that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            []
+        next:
+            []
+    methods:
+        related:
+            []
+        next:
+            []
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    domain_annotation_input_ref :
+        ui-name : |
+            DomainAnnotation
+        short-hint : |
+            The DomainAnnotation object to be used in the report.
+    evalue_cutoff :
+        ui-name : |
+            Cutoff
+        short-hint : |
+            The cutoff e-value for filtering the report.
+    report_format:
+        ui-name : |
+            Report Format
+        short-hint : |
+            The format for the report.
+description : |
+    <p>The intended purpose of this App is to produce a downloadable <b>TEXT</b> report about an object.</p>
+
+    <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. This App creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
+
+    <p>This App creates reports on the annotated domains associated with a Genome. Short reports will display as TEXT in the “Summary” section of the output. Longer reports will instead have a link to open the TEXT in a new HTML browser tab. There will be a link for downloading files in the “Files” section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the report is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
+
+    <p>The inputs are:
+    <ul>
+      <li>The KBase Domain annotation object (output from Domain Annotation app)</li>
+      <li>An evalue used to filter out the more distant hits.</li>
+      <li>A download option:
+        <ul>
+          <li>Tab-delimited. A report with tab-delimited columns.</li>
+          <li>Comma-delimited. A report with comma-delimited columns.</li>
+        </ul>
+      </li>
+    </ul>
+    </p>
+
+    <p>The outputs are:
+    <ol>
+      <li>The frequency count of each Domain in the annotation file. </li>
+      <li>Two downloadable files in the <b>Files</b> section:
+        <ol>
+          <li>A list of the frequency counts (same as the Summary above)</li>
+          <li>A list of the genes and their predicted domains. One line per gene and domain combination. The list of columns includes the
+            identities of the contig, gene, and domain, the location of the gene, the E-value of the domain hit, the domain name, and higher levels of aggregation for the domain. For example, COG0021, has a domain name of 'Transketolase' and is categorized in the G category (Carbohydrate transport and metabolism), and is part of the general category of METABOLISM.</li>
+        </ol>
+      </li>
+    </ol>
+    </p>
+
+    <p><b>NOTE:</b> This report will include all domains that were in the Domain Annotation App output. The App may have included just one domain model source (e.g. TIGRFAM) or it may have included all available sources. If only one source was included in the annotation App, this report will only include that one source.</p>
+
+publications :
+    -
+        display-text: |
+            Arkin AP, Cottingham RW, Henry CS, Harris NL, Stevens RL, Maslov S, et al. KBase: The United States Department of Energy Systems Biology Knowledgebase. Nature Biotechnology. 2018;36: 566. doi: 10.1038/nbt.4163
+        link: https://www.nature.com/articles/nbt.4163

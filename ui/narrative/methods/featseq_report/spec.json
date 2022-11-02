@@ -1,0 +1,84 @@
+{
+    "ver": "0.0.1",
+    "authors": [
+        "landml"
+    ],
+    "contact": "https://kbase.us/contact-us/",
+    "categories": ["active","util"],
+    "widgets": {
+        "input": null,
+        "output": "no-display"
+    },
+    "parameters": [ 
+        {
+            "id": "feature_sequence_input_ref",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ "KBaseSequences.SequenceSet", "KBaseCollections.FeatureSet" ]
+            }
+        },
+        {
+            "id": "report_format",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [
+                "tab"
+            ],
+            "field_type": "dropdown",
+            "dropdown_options": {
+                "options": [ 
+					{
+						"value": "tab",
+						"display": "Tab-delimited"
+					},
+					{
+						"value": "csv",
+						"display": "Comma-delimited"
+					}
+				]
+            }
+        }
+    ],
+    "behavior": {
+        "service-mapping": {
+            "url": "",
+            "name":"kb_ObjectInfo",
+            "method": "featseq_report",
+            "input_mapping": [
+                {
+                    "narrative_system_variable": "workspace",
+                    "target_property": "workspace_name"
+                },
+                {
+                    "input_parameter": "feature_sequence_input_ref",
+                    "target_property": "feature_sequence_input_ref",
+                    "target_type_transform": "resolved-ref"
+                },
+                {
+                    "input_parameter": "report_format",
+                    "target_property": "report_format"
+                }
+            ],
+            "output_mapping": [
+                {
+                    "service_method_output_path": [0,"report_name"],
+                    "target_property": "report_name"
+                },
+                {
+                    "service_method_output_path": [0,"report_ref"],
+                    "target_property": "report_ref"
+                },
+                {
+                    "narrative_system_variable": "workspace",
+                    "target_property": "workspace_name"
+                }
+            ]
+        }
+    },
+    "job_id_output_field": "docker"
+}

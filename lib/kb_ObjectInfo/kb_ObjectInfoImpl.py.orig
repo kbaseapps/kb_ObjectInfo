@@ -1,0 +1,239 @@
+# -*- coding: utf-8 -*-
+#BEGIN_HEADER
+import logging
+import os
+
+from installed_clients.KBaseReportClient import KBaseReport
+#END_HEADER
+
+
+class kb_ObjectInfo:
+    '''
+    Module Name:
+    kb_ObjectInfo
+
+    Module Description:
+    A KBase module: kb_ObjectInfo
+    '''
+
+    ######## WARNING FOR GEVENT USERS ####### noqa
+    # Since asynchronous IO can lead to methods - even the same method -
+    # interrupting each other, you must be *very* careful when using global
+    # state. A method could easily clobber the state set by another while
+    # the latter method is running.
+    ######################################### noqa
+    VERSION = "0.0.1"
+    GIT_URL = ""
+    GIT_COMMIT_HASH = ""
+
+    #BEGIN_CLASS_HEADER
+    #END_CLASS_HEADER
+
+    # config contains contents of config file in a hash or None if it couldn't
+    # be found
+    def __init__(self, config):
+        #BEGIN_CONSTRUCTOR
+        self.callback_url = os.environ['SDK_CALLBACK_URL']
+        self.shared_folder = config['scratch']
+        logging.basicConfig(format='%(created)s %(levelname)s: %(message)s',
+                            level=logging.INFO)
+        #END_CONSTRUCTOR
+        pass
+
+
+    def assembly_metadata_report(self, ctx, params):
+        """
+        This example function accepts any number of parameters and returns results in a KBaseReport
+        :param params: instance of type "AssemblyMetadataReportParams" (A
+           'typedef' can also be used to define compound or container
+           objects, like lists, maps, and structures.  The standard KBase
+           convention is to use structures, as shown here, to define the
+           input and output of your function.  Here the input is a reference
+           to the Assembly data object, a workspace to save output, and a
+           length threshold for filtering. To define lists and maps, use a
+           syntax similar to C++ templates to indicate the type contained in
+           the list or map.  For example: list <string> list_of_strings;
+           mapping <string, int> map_of_ints;) -> structure: parameter
+           "assembly_input_ref" of type "assembly_ref", parameter
+           "workspace_name" of String, parameter "showContigs" of type
+           "boolean" (A boolean. 0 = false, other = true.)
+        :returns: instance of type "ReportResults" (Here is the definition of
+           the output of the function.  The output can be used by other SDK
+           modules which call your code, or the output visualizations in the
+           Narrative.  'report_name' and 'report_ref' are special output
+           fields- if defined, the Narrative can automatically render your
+           Report.) -> structure: parameter "report_name" of String,
+           parameter "report_ref" of String
+        """
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN assembly_metadata_report
+        #END assembly_metadata_report
+
+        # At some point might do deeper type checking...
+        if not isinstance(output, dict):
+            raise ValueError('Method assembly_metadata_report return value ' +
+                             'output is not type dict as required.')
+        # return the results
+        return [output]
+
+    def genome_report(self, ctx, params):
+        """
+        :param params: instance of type "GenomeReportParams" -> structure:
+           parameter "genome_input_ref" of type "genome_ref", parameter
+           "workspace_name" of String, parameter "report_format" of String
+        :returns: instance of type "ReportResults" (Here is the definition of
+           the output of the function.  The output can be used by other SDK
+           modules which call your code, or the output visualizations in the
+           Narrative.  'report_name' and 'report_ref' are special output
+           fields- if defined, the Narrative can automatically render your
+           Report.) -> structure: parameter "report_name" of String,
+           parameter "report_ref" of String
+        """
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN genome_report
+        #END genome_report
+
+        # At some point might do deeper type checking...
+        if not isinstance(output, dict):
+            raise ValueError('Method genome_report return value ' +
+                             'output is not type dict as required.')
+        # return the results
+        return [output]
+
+    def genomeset_report(self, ctx, params):
+        """
+        :param params: instance of type "GenomeSetReportParams" -> structure:
+           parameter "genomeset_input_ref" of type "genomeset_ref", parameter
+           "workspace_name" of String, parameter "report_format" of String
+        :returns: instance of type "ReportResults" (Here is the definition of
+           the output of the function.  The output can be used by other SDK
+           modules which call your code, or the output visualizations in the
+           Narrative.  'report_name' and 'report_ref' are special output
+           fields- if defined, the Narrative can automatically render your
+           Report.) -> structure: parameter "report_name" of String,
+           parameter "report_ref" of String
+        """
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN genomeset_report
+        #END genomeset_report
+
+        # At some point might do deeper type checking...
+        if not isinstance(output, dict):
+            raise ValueError('Method genomeset_report return value ' +
+                             'output is not type dict as required.')
+        # return the results
+        return [output]
+
+    def domain_report(self, ctx, params):
+        """
+        :param params: instance of type "DomainReportParams" -> structure:
+           parameter "domain_annotation_input_ref" of type "domain_ref",
+           parameter "evalue_cutoff" of Double, parameter "workspace_name" of
+           String, parameter "report_format" of String
+        :returns: instance of type "ReportResults" (Here is the definition of
+           the output of the function.  The output can be used by other SDK
+           modules which call your code, or the output visualizations in the
+           Narrative.  'report_name' and 'report_ref' are special output
+           fields- if defined, the Narrative can automatically render your
+           Report.) -> structure: parameter "report_name" of String,
+           parameter "report_ref" of String
+        """
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN domain_report
+        #END domain_report
+
+        # At some point might do deeper type checking...
+        if not isinstance(output, dict):
+            raise ValueError('Method domain_report return value ' +
+                             'output is not type dict as required.')
+        # return the results
+        return [output]
+
+    def tree_report(self, ctx, params):
+        """
+        :param params: instance of type "TreeReportParams" -> structure:
+           parameter "tree_input_ref" of type "tree_ref", parameter
+           "workspace_name" of String, parameter "report_format" of String
+        :returns: instance of type "ReportResults" (Here is the definition of
+           the output of the function.  The output can be used by other SDK
+           modules which call your code, or the output visualizations in the
+           Narrative.  'report_name' and 'report_ref' are special output
+           fields- if defined, the Narrative can automatically render your
+           Report.) -> structure: parameter "report_name" of String,
+           parameter "report_ref" of String
+        """
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN tree_report
+        #END tree_report
+
+        # At some point might do deeper type checking...
+        if not isinstance(output, dict):
+            raise ValueError('Method tree_report return value ' +
+                             'output is not type dict as required.')
+        # return the results
+        return [output]
+
+    def featseq_report(self, ctx, params):
+        """
+        :param params: instance of type "FeatSeqReportParams" -> structure:
+           parameter "feature_sequence_input_ref" of type "featseq_ref",
+           parameter "workspace_name" of String, parameter "report_format" of
+           String
+        :returns: instance of type "ReportResults" (Here is the definition of
+           the output of the function.  The output can be used by other SDK
+           modules which call your code, or the output visualizations in the
+           Narrative.  'report_name' and 'report_ref' are special output
+           fields- if defined, the Narrative can automatically render your
+           Report.) -> structure: parameter "report_name" of String,
+           parameter "report_ref" of String
+        """
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN featseq_report
+        #END featseq_report
+
+        # At some point might do deeper type checking...
+        if not isinstance(output, dict):
+            raise ValueError('Method featseq_report return value ' +
+                             'output is not type dict as required.')
+        # return the results
+        return [output]
+
+    def protcomp_report(self, ctx, params):
+        """
+        :param params: instance of type "ProtCompReportParams" -> structure:
+           parameter "protcomp_input_ref" of type "protcomp_ref", parameter
+           "workspace_name" of String, parameter "report_format" of String
+        :returns: instance of type "ReportResults" (Here is the definition of
+           the output of the function.  The output can be used by other SDK
+           modules which call your code, or the output visualizations in the
+           Narrative.  'report_name' and 'report_ref' are special output
+           fields- if defined, the Narrative can automatically render your
+           Report.) -> structure: parameter "report_name" of String,
+           parameter "report_ref" of String
+        """
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN protcomp_report
+        #END protcomp_report
+
+        # At some point might do deeper type checking...
+        if not isinstance(output, dict):
+            raise ValueError('Method protcomp_report return value ' +
+                             'output is not type dict as required.')
+        # return the results
+        return [output]
+    def status(self, ctx):
+        #BEGIN_STATUS
+        returnVal = {'state': "OK",
+                     'message': "",
+                     'version': self.VERSION,
+                     'git_url': self.GIT_URL,
+                     'git_commit_hash': self.GIT_COMMIT_HASH}
+        #END_STATUS
+        return [returnVal]
