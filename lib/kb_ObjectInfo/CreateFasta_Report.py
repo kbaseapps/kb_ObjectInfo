@@ -40,6 +40,11 @@ class CreateFasta:
         for feat in myFeat:
             if 'function' not in feat:
                 feat['function'] = 'unknown'
+            else:
+                if feat['function'] in seed_cat:
+                    domfam = feat['function']
+                    cat = seed_cat[domfam]
+                    
             if 'functions' in feat:
                 feat['function'] = ', '.join(feat['functions'])
                 for func in feat['functions']:
@@ -67,6 +72,11 @@ class CreateFasta:
         for feat in myFeat:
             if 'function' not in feat:
                 feat['function'] = 'unknown'
+            else:
+                if feat['function'] in seed_cat:
+                    domfam = feat['function']
+                    cat = seed_cat[domfam]
+                    
             if 'functions' in feat:
                 feat['function'] = ', '.join(feat['functions'])
                 for func in feat['functions']:
@@ -95,6 +105,11 @@ class CreateFasta:
         for feat in myFeat:
             if 'function' not in feat:
                 feat['function'] = 'unknown'
+            else:
+                if feat['function'] in seed_cat:
+                    domfam = feat['function']
+                    cat = seed_cat[domfam]
+                    
             if 'functions' in feat:
                 feat['function'] = ', '.join(feat['functions'])
                 for func in feat['functions']:
