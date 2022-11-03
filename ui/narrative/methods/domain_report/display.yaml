@@ -6,7 +6,7 @@ tooltip: |
     Create text reports based on a DomainAnnotation object.
 screenshots: []
 
-icon: kaleidoscope.png
+icon: report.png
 
 #
 # define a set of similar methods that might be useful to the user

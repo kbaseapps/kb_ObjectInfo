@@ -6,7 +6,7 @@ tooltip: |
     Create a text report based on a Genome object.
 screenshots: []
 
-icon: kaleidoscope.png
+icon: report.png
 
 #
 # define a set of similar methods that might be useful to the user
