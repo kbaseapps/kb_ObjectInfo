@@ -40,6 +40,14 @@ class CreateFasta:
         for feat in myFeat:
             if 'function' not in feat:
                 feat['function'] = 'unknown'
+            if 'functions' in feat:
+                feat['function'] = ', '.join(feat['functions'])
+                for func in feat['functions']:
+                    if func in seed_cat:
+                        domfam = func
+                        cat = seed_cat[domfam]
+                    break # Taking just the first
+                    
             if 'type' in feat and feat['type'] not in ['CDS', 'gene']:
                 continue
 
@@ -59,7 +67,15 @@ class CreateFasta:
         for feat in myFeat:
             if 'function' not in feat:
                 feat['function'] = 'unknown'
-            if 'type' in feat and feat['type'] not in ['CDS', 'gene']:
+            if 'functions' in feat:
+                feat['function'] = ', '.join(feat['functions'])
+                for func in feat['functions']:
+                    if func in seed_cat:
+                        domfam = func
+                        cat = seed_cat[domfam]
+                    break # Taking just the first
+                    
+             if 'type' in feat and feat['type'] not in ['CDS', 'gene']:
                 continue
 
             if ('dna_sequence' in feat):
@@ -79,7 +95,15 @@ class CreateFasta:
         for feat in myFeat:
             if 'function' not in feat:
                 feat['function'] = 'unknown'
-            if 'type' in feat and feat['type'] not in ['CDS', 'gene']:
+            if 'functions' in feat:
+                feat['function'] = ', '.join(feat['functions'])
+                for func in feat['functions']:
+                    if func in seed_cat:
+                        domfam = func
+                        cat = seed_cat[domfam]
+                    break # Taking just the first
+                    
+             if 'type' in feat and feat['type'] not in ['CDS', 'gene']:
                 continue
 
             if ('protein_translation' in feat):

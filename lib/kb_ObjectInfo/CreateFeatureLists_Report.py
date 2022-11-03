@@ -181,7 +181,6 @@ class CreateFeatureLists:
             if 'function' not in feat:
                 feat['function'] = 'unknown'
             else:
-
                 if feat['function'] in seed_cat:
                     domfam = feat['function']
                     cat = seed_cat[domfam]
@@ -267,7 +266,15 @@ class CreateFeatureLists:
         for feat in genome[features]:
             if 'function' not in feat:
                 feat['function'] = 'unknown'
-
+            if 'functions' in feat:
+                feat['function'] = ', '.join(feat['functions'])
+                for func in feat['functions']:
+                    if func in seed_cat:
+                        domfam = func
+                        cat = seed_cat[domfam]
+                    break # Taking just the first
+                    
+ 
             aliases = ''
             if 'aliases' in feat:
                 for al in feat['aliases']:
