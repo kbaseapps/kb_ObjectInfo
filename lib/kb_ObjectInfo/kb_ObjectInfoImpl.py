@@ -109,7 +109,7 @@ class kb_ObjectInfo:
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-        print('Validating parameters.')
+#        print('Validating parameters.')
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -233,7 +233,7 @@ class kb_ObjectInfo:
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-        print('Validating parameters.')
+#        print('Validating parameters.')
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -245,7 +245,7 @@ class kb_ObjectInfo:
         genome = data_file_cli.get_objects({'object_refs': [genome_input_ref]})
         genome_data = genome['data'][0]['data']
 
-        print (list(genome_data.keys()))
+        #print (list(genome_data.keys()))
 
         report_format = params['report_format']
         string = ''
@@ -434,7 +434,7 @@ class kb_ObjectInfo:
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-        print('Validating parameters.')
+#        print('Validating parameters.')
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -549,7 +549,7 @@ class kb_ObjectInfo:
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-        print('Validating parameters.')
+#        print('Validating parameters.')
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -629,7 +629,7 @@ class kb_ObjectInfo:
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-        print('Validating parameters.')
+#        print('Validating parameters.')
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']

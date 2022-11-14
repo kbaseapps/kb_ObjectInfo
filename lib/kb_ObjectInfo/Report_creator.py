@@ -116,7 +116,7 @@ class Report_creator:
             'file_links': output_zip_files,
             'html_links': [],
             'workspace_name': ws,
-            'report_object_name': 'Report_util_report'
+            'report_object_name': 'kb_ObjectInfo_report'
         }
         if len(report_string) > 1000000:
             report_params = {
@@ -127,7 +127,7 @@ class Report_creator:
                 'file_links': output_zip_files,
                 'html_links': output_html_files,
                 'workspace_name': ws,
-                'report_object_name': 'Report_util_report'
+                'report_object_name': 'kb_ObjectInfo_report'
             }
         kbase_report_client = KBaseReport(self.callback_url, token=token)
         output = kbase_report_client.create_extended_report(report_params)
