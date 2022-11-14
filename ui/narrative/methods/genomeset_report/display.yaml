@@ -1,7 +1,9 @@
 #
+jb
+
 # define display information
 #
-name: GenomeSet Ojbect Info
+name: GenomeSet Object Info
 tooltip: |
     Create a text report based on a GenomeSet object.
 screenshots: []
