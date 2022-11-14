@@ -67,6 +67,22 @@ class kb_ObjectInfoTest(unittest.TestCase):
 #       Copy from local to scratch
         shutil.copy(os.path.join("data", cls.test_filename), cls.test_path)
 
+#       Prepare a minimal Genome from gbff File
+        cls.genbank_file_name = 'minimal.gbff'
+#       Set the path to file in scratch
+        cls.genbank_file_path = os.path.join(cls.scratch, cls.genbank_file_name)
+#       Copy from local to scratch
+        shutil.copy(os.path.join('data', cls.genbank_file_name), cls.genbank_file_path)
+#       Convert gbff to Genome Object and save the genome_ref
+        cls.gfu = GenomeFileUtil(cls.callback_url)
+        genome_object_name = 'minimal_Genome'
+        cls.minimal_genome_ref = cls.gfu.genbank_to_genome({'file': {'path': cls.genbank_file_path},
+                                                    'workspace_name': cls.ws_info[1],
+                                                    'genome_name': 'minimal_test_genome',
+                                                    "generate_ids_if_needed": 1,
+                                                    "generate_missing_genes": 1
+                                                    })['genome_ref']
+                                                    
 #       Prepare the Genome from gbff File
         cls.genbank_file_name = 'Carsonella_ruddii_HT_isolate_Thao2000.gbff'
 #       Set the path to file in scratch
@@ -80,7 +96,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         genome_ref = "40843/4/1"
         cls.genome_ref = cls.gfu.genbank_to_genome({'file': {'path': cls.genbank_file_path},
                                                     'workspace_name': cls.ws_info[1],
-                                                    'genome_name': 'minimal_test_genome',
+                                                    'genome_name': 'first_test_genome',
                                                     "generate_ids_if_needed": 1,
                                                     "generate_missing_genes": 1
                                                     })['genome_ref']
@@ -203,14 +219,14 @@ class kb_ObjectInfoTest(unittest.TestCase):
         }
         testGS['elements']['Carsonella 1'] = {'ref': self.genome_ref}
         testGS['elements']['Carsonella 2'] = {'ref': self.genome_ref2}
-
+        print ("OLD:",self.genome_ref,'  ',self.genome_ref2)
         new_obj_info = self.getWsClient().save_objects({'workspace': self.ws_info[1],
                                                         'objects': [
                                                         {
                                                             'type': 'KBaseSearch.GenomeSet',
                                                             'data': testGS,
                                                             'name': 'test_genomeset',
-                                                            'meta': {},
+                                                            'meta':  {},
                                                             'provenance': [
                                                                 {
                                                                     'service': 'kb_phylogenomics',
@@ -219,7 +235,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                                             ]
                                                         }]
                                                         })[0]
-#        print "NEW:", new_obj_info
+#        print ("NEW:", new_obj_info)
 #
         return str(new_obj_info[6]) + "/" + str(new_obj_info[0]) + "/" + str(new_obj_info[4])
 
@@ -233,28 +249,31 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                                        'showContigs': 1
                                                        })
         # Validate the returned data
-#       print  ret
+        print(("ASSEMBLY METADATA RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
 
     def mytest_genome_tab(self):
+        genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'genome_input_ref': self.genome_ref,
                                             'report_format': 'tab'
                                             })
+        print(("GENOME TAB RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
 
-    def test_genome_gff(self):
-        #genome_ref = '40843/4/1'
+    def mytest_genome_gff(self):
+        genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'genome_input_ref': self.genome_ref,
                                             'report_format': 'gff'
                                             })
+        print(("GENOME GFF RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -262,29 +281,34 @@ class kb_ObjectInfoTest(unittest.TestCase):
     def mytest_genome_fasta(self):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'genome_input_ref': self.genome_ref,
+                                            'genome_input_ref': self.minimal_genome_ref,
                                             'report_format': 'fasta'
                                             })
+        print(("GENOME FASTA RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
 
     def mytest_genome_mrna(self):
+        genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'genome_input_ref': self.genome_ref,
+                                            'genome_input_ref': self.minimal_genome_ref,
                                             'report_format': 'mRNA'
                                             })
+        print(("GENOME MRNA RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
 
     def mytest_genome_DNA(self):
+        genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'genome_input_ref': self.genome_ref,
+                                            'genome_input_ref': self.minimal_genome_ref,
                                             'report_format': 'DNA'
                                             })
+        print(("GENOME DNA RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -297,6 +321,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                             'domain_annotation_input_ref': domain_ref,
                                             'report_format': 'tab'
                                             })
+        print(("DOMAIN ANNOTATION RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -308,6 +333,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                                'genomeset_input_ref': genomeset_ref,
                                                'report_format': 'meta'
                                                })
+        print(("GENOME SET META RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -319,6 +345,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                                'genomeset_input_ref': genomeset_ref,
                                                'report_format': 'list'
                                                })
+        print(("GENOME SET LIST RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -330,6 +357,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                                'genomeset_input_ref': genomeset_ref,
                                                'report_format': 'tab'
                                                })
+        print(("GENOME SET TAB RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -341,6 +369,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                                'genomeset_input_ref': genomeset_ref,
                                                'report_format': 'csv'
                                                })
+        print(("GENOME SET CSV RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -352,7 +381,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                                'genomeset_input_ref': genomeset_ref,
                                                'report_format': 'fasta'
                                                })
-        print(("RETURNED", ret))
+        print(("GENOME SET FASTA RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -364,6 +393,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                             'feature_sequence_input_ref': featset_ref,
                                             'report_format': 'csv'
                                             })
+        print(("FEATURE SET ORDERED RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -375,6 +405,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                             'feature_sequence_input_ref': featset_ref,
                                             'report_format': 'csv'
                                             })
+        print(("FEATURE SET UNORDERED RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -386,17 +417,19 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                             'protcomp_input_ref': protcomp_ref,
                                             'report_format': 'csv'
                                             })
+        print(("PROTEOME COMPARISON RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
     
-    def mytest_sequenceSet(self):
+    def test_sequenceSet(self):
         featset_ref = '27092/23/1'
         ret = self.getImpl().featseq_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'feature_sequence_input_ref': featset_ref,
                                             'report_format': 'tab'
                                             })
+        print(("SEQUENCE SET RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
