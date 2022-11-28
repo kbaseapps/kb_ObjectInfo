@@ -377,7 +377,7 @@ class kb_ObjectInfo:
                  report_txt = open(report_path, "w")
                  report_txt.write(dna)
                  report_txt.close()
-                 string += assembly_ref+"\t"+sci_name+"\t"+'G'+assembly_ref.replace('/', '_')+'.fna'+\n"
+                 string += assembly_ref+"\t"+sci_name+"\t"+'G'+assembly_ref.replace('/', '_')+'.fna'+"\n"
             report_path = os.path.join(self.scratch, 'genomeset_file.txt')
         else:
             raise ValueError('Invalid report option.' + str(report_format))
