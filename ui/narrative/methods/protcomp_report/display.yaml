@@ -3,7 +3,7 @@
 #
 name: Proteome Comparison Object Info
 tooltip: |
-    Create text reports based on a Proteome Comparison data object
+    Create text info files based on a Proteome Comparison data object
 screenshots: []
 
 icon: ObjectInfo_icon.png
@@ -29,16 +29,16 @@ suggestions:
 parameters :
     protcomp_input_ref :
         ui-name : |
-            ProteomeComparison
+            Proteome Comparison
         short-hint : |
-            The ProteomeComparison to be used in the report
+            The Proteome Comparison to be used by the app
     report_format:
         ui-name : |
-            Report_format
+            File format
         short-hint : |
-            Format for the report
+            Format for the file
 description : |
-    <p>This intended purpose of this app is to produce a downloadable <b>TEXT</b> report about an object.</p>
+    <p>This intended purpose of this app is to produce a downloadable <b>TEXT</b> file about an object.</p>
     
     <p>Most KBase data objects already have some type of pretty HTML table,
     either as output from an app or by dragging the object onto the narrative.
@@ -46,13 +46,13 @@ description : |
     are downloadable and used with local tools such as Excel or computer scripts.
     </p>
      
-    <p>This app creates a report on the contents of a ProteomeComparison.
+    <p>This app creates a file on the contents of a ProteomeComparison.
     This object is created with the app <a href="https://narrative.kbase.us/#/appcatalog">Compare Two Proteomes</a>.
-    Short reports will display as TEXT in the Summary section of the output.
-    Longer reports will instead have a link to open the TEXT in a new html browser tab.
+    Short output will display as TEXT in the Summary section of the output.
+    Longer output will instead have a link to open the TEXT in a new html browser tab.
     In the Files section of the output will be a link for downloading the files. 
     Whether short or long, the Summary/Link section is intended to be a preview
-    of the downloadable file. If the report is tab or comma delimited, it may be
+    of the downloadable file. If the file is tab or comma delimited, it may be
     misaligned on the screen but readable by a computer script.</p>
     
     <p>The inputs are:
@@ -60,8 +60,8 @@ description : |
         <li>The KBase ProteomeComparison object (output from several app)</li>
         <li>A download option:
         <ul>
-            <li>Tab-delimited. A report with tab-delimited columns.</li>
-            <li>Comma-delimited. A report with comma-delimited columns.</li>
+            <li>Tab-delimited. A file with tab-delimited columns.</li>
+            <li>Comma-delimited. A file with comma-delimited columns.</li>
         </ul></li>
     </ul>
     </p>

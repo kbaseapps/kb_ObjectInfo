@@ -3,7 +3,7 @@
 #
 name: FeatureSet/SequenceSet Object Info
 tooltip: |
-    Create text reports based on a FeatureSet or a SequenceSet
+    Create text info files based on a FeatureSet or a SequenceSet
 screenshots: []
 
 icon: ObjectInfo_icon.png
@@ -31,14 +31,14 @@ parameters :
         ui-name : |
             FeatureSet/SequenceSet
         short-hint : |
-            The FeatureSet or SequenceSet to be used in the report
+            The FeatureSet or SequenceSet to be used by the app
     report_format:
         ui-name : |
-            Report_format
+            File format
         short-hint : |
-            Format for the report
+            Format for the file
 description : |
-    <p>This intended purpose of this app is to produce a downloadable <b>TEXT</b> report about an object.</p>
+    <p>This intended purpose of this app is to produce a downloadable <b>TEXT</b> file about an object.</p>
     
     <p>Most KBase data objects already have some type of pretty HTML table,
     either as output from an app or by dragging the object onto the narrative.
@@ -46,12 +46,12 @@ description : |
     are downloadable and used with local tools such as Excel or computer scripts.
     </p>
      
-    <p>This app creates a report on the contents of a FeatureSet or a SequenceSet.
-    Short reports will display as TEXT in the Summary section of the output.
-    Longer reports will instead have a link to open the TEXT in a new html browser tab.
+    <p>This app creates a file on the contents of a FeatureSet or a SequenceSet.
+    Short output will display as TEXT in the Summary section of the output.
+    Longer output will instead have a link to open the TEXT in a new html browser tab.
     In the Files section of the output will be a link for downloading the files. 
     Whether short or long, the Summary/Link section is intended to be a preview
-    of the downloadable file. If the report is tab or comma delimited, it may be
+    of the downloadable file. If the file is tab or comma delimited, it may be
     misaligned on the screen but readable by a computer script.</p>
     
     <p>The inputs are:
@@ -59,8 +59,8 @@ description : |
         <li>The KBase FeatureSet or SequenceSet object (output from several app)</li>
         <li>A download option:
         <ul>
-            <li>Tab-delimited. A report with tab-delimited columns.</li>
-            <li>Comma-delimited. A report with comma-delimited columns.</li>
+            <li>Tab-delimited. A file with tab-delimited columns.</li>
+            <li>Comma-delimited. A file with comma-delimited columns.</li>
         </ul></li>
     </ul>
     </p>

@@ -254,7 +254,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
 
-    def mytest_genome_tab(self):
+    def test_genome_tab(self):
         genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
@@ -422,7 +422,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
     
-    def test_sequenceSet(self):
+    def mytest_sequenceSet(self):
         featset_ref = '27092/23/1'
         ret = self.getImpl().featseq_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],

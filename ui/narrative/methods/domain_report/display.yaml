@@ -3,7 +3,7 @@
 #
 name: Domain Annotation Object Info
 tooltip: |
-    Create text reports based on a DomainAnnotation object.
+    Create text info files based on a DomainAnnotation object.
 screenshots: []
 
 icon: ObjectInfo_icon.png
@@ -29,25 +29,25 @@ suggestions:
 parameters :
     domain_annotation_input_ref :
         ui-name : |
-            DomainAnnotation
+            Domain Annotation
         short-hint : |
-            The DomainAnnotation object to be used in the report.
+            The Domain Annotation object to be used by the app.
     evalue_cutoff :
         ui-name : |
             Cutoff
         short-hint : |
-            The cutoff e-value for filtering the report.
+            The cutoff e-value for filtering the results.
     report_format:
         ui-name : |
-            Report Format
+            File Format
         short-hint : |
-            The format for the report.
+            The format for the file.
 description : |
-    <p>The intended purpose of this App is to produce a downloadable <b>TEXT</b> report about an object.</p>
+    <p>The intended purpose of this App is to produce a downloadable <b>TEXT</b> file about an object.</p>
 
     <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. This App creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
 
-    <p>This App creates reports on the annotated domains associated with a Genome. Short reports will display as TEXT in the “Summary” section of the output. Longer reports will instead have a link to open the TEXT in a new HTML browser tab. There will be a link for downloading files in the “Files” section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the report is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
+    <p>This App creates files on the annotated domains associated with a Genome. Short output will display as TEXT in the “Summary” section of the output. Longer output will instead have a link to open the TEXT in a new HTML browser tab. There will be a link for downloading files in the “Files” section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
 
     <p>The inputs are:
     <ul>
@@ -55,8 +55,8 @@ description : |
       <li>An evalue used to filter out the more distant hits.</li>
       <li>A download option:
         <ul>
-          <li>Tab-delimited. A report with tab-delimited columns.</li>
-          <li>Comma-delimited. A report with comma-delimited columns.</li>
+          <li>Tab-delimited. A file with tab-delimited columns.</li>
+          <li>Comma-delimited. A file with comma-delimited columns.</li>
         </ul>
       </li>
     </ul>
@@ -75,7 +75,7 @@ description : |
     </ol>
     </p>
 
-    <p><b>NOTE:</b> This report will include all domains that were in the Domain Annotation App output. The App may have included just one domain model source (e.g. TIGRFAM) or it may have included all available sources. If only one source was included in the annotation App, this report will only include that one source.</p>
+    <p><b>NOTE:</b> This file will include all domains that were in the Domain Annotation App output. The App may have included just one domain model source (e.g. TIGRFAM) or it may have included all available sources. If only one source was included in the annotation App, this file will only include that one source.</p>
 
 publications :
     -

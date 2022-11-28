@@ -168,7 +168,7 @@ class CreateFeatureLists:
         seed_cat = self.domfam2cat
         
         line = ""
-        lineList = ["Feature ID", "Feature type", "Contig", "Location", "Strand", "Feature function", "Aliases",
+        lineList = ["Feature ID", "Feature type", "Contig", "Location", "Strand", "Feature Function", "Aliases",
                     "RAST Functional Assignment", "RAST Functional Group 1", "RAST Functional Group 2"]
         if format == 'tab':
             line += "\t".join(lineList) + "\n"
@@ -494,7 +494,7 @@ class CreateFeatureLists:
 #   Type 1 - Order matters
 #
         if 'description' in pyStr and 'elements' in pyStr and 'element_ordering' in pyStr:
-            lineList.append(['Description', str(pyStr['description']), "\nOrdered Elements:"])
+            lineList.append(['Description', str(pyStr['description']), "\n\nOrdered Elements:\nIndex\tFeature ID\tSource Genome Object ID"])
             eleOrder = pyStr['element_ordering']
             count = 1
             for index in eleOrder:
@@ -506,7 +506,7 @@ class CreateFeatureLists:
 #
         elif 'description' in pyStr and 'elements' in pyStr:
             lineList.append(['Description', pyStr['description']])
-            lineList.append(["\nUnordered Elements:"])
+            lineList.append(["\n\nUnordered Elements:\nFeature ID\tSource Genome Object ID"])
             myElements = pyStr['elements']
             count = 0
             for element in myElements:
@@ -560,7 +560,10 @@ class CreateFeatureLists:
 
     def readProtComp(self, pyStr,format):
 # Header
-        line = ""
+ 
+        id1 = pyStr["genome1ref"]
+        id2 = pyStr["genome2ref"]
+        line = "Genome1 ID="+id1+" and Genome2 ID="+id2+"\n\n"
         lineList = ["Genome-name1", "Genome-name2", "bit-score", "bbh-percent"]
     
     #   Check for valid formats

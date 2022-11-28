@@ -3,7 +3,7 @@
 #
 name: Genome Object Info
 tooltip: |
-    Create a text report based on a Genome object.
+    Create a text info file based on a Genome object.
 screenshots: []
 
 icon: ObjectInfo_icon.png
@@ -31,18 +31,18 @@ parameters :
         ui-name : |
             Genome
         short-hint : |
-            The Genome to be used in the report.
+            The Genome to be used by the app.
     report_format:
         ui-name : |
-            Report Format
+            File Format
         short-hint : |
-            Specify the format for the report.
+            Specify the format for the file.
 description : |
-    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> report about an object.</p>
+    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> file about an object.</p>
 
     <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. It creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
 
-    <p>This App creates reports on a Genome. Short reports will display as TEXT in the “Summary” section of the output. Longer reports will instead have a link to open the TEXT in a new html browser tab. There is a link for downloading the file in the “Files” section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the report is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
+    <p>This App creates files on a Genome. Short output will display as TEXT in the “Summary” section of the output. Longer output will instead have a link to open the TEXT in a new html browser tab. There is a link for downloading the file in the “Files” section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
 
     <p><b>Inputs:</b>
     <ul>
@@ -50,8 +50,8 @@ description : |
       <li>A download option:
         <ul>
           <li>DNA FASTA format. Create a FASTA file of the genomic DNA.</li>
-          <li>Features, Tab-delimited. A report where the rows are the genes in the Genome and the columns are information about the genes. Columns are separated with tabs.</li>
-          <li>Features, Comma-delimited. A report where the rows are the genes in the Genome and the columns are information about the genes. Columns are separated with commas.</li>
+          <li>Features, Tab-delimited. A file where the rows are the genes in the Genome and the columns are information about the genes. Columns are separated with tabs.</li>
+          <li>Features, Comma-delimited. A file where the rows are the genes in the Genome and the columns are information about the genes. Columns are separated with commas.</li>
           <li>Features, GFF3 format. A GFF3 (General Feature Format) file of the genes in the Genome.</li>
           <li>FASTA, translated CDSs. A FASTA-formatted file of the amino acid sequences of the genes.</li>
           <li>FASTA, of mRNAs. A FASTA-formatted file of the mRNA sequences of the genes.</li>

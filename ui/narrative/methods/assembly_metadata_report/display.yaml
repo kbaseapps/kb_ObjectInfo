@@ -3,7 +3,7 @@
 #
 name: Assembly Object Info 
 tooltip: |
-    Create a text report for an Assembly Object.
+    Create a text info file for an Assembly Object.
 screenshots: []
 
 icon: ObjectInfo_icon.png
@@ -38,11 +38,11 @@ parameters :
         short-hint : |
             Include a FASTA listing of the contigs in the Assembly.
 description : |
-    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> report about an object.</p>
+    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> file about an object.</p>
 
     <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. This App creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
 
-    <p>This App creates reports on the contents of an Assembly object. Short reports will display as TEXT in the Summary section of the output. Longer reports will instead have a link to open the TEXT in a new HTML browser tab. There will be a link for downloading the files in the Files section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the report is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
+    <p>This App creates files on the contents of an Assembly object. Short output will display as TEXT in the Summary section of the output. Longer output will instead have a link to open the TEXT in a new HTML browser tab. There will be a link for downloading the files in the Files section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
 
     <p>The inputs are:
     <ul>
@@ -53,8 +53,8 @@ description : |
 
     <p>The outputs are:
     <ol>
-      <li>A <b>Link</b> section with a link to the requested report that can be opened in another browser tab.</li>
-      <li>One downloadable file in the <b>Files</b> section. The report has the following sections:
+      <li>A <b>Link</b> section with a link to the requested file that can be opened in another browser tab.</li>
+      <li>One downloadable file in the <b>Files</b> section. The file has the following sections:
         <ol>
           <li>The metadata of the Assembly object. This includes the length of the DNA sequence, the number of contigs, the fraction GC content, a taxon reference, and a FASTA handle reference.</li>
           <li>A count of the As, Cs, Gs, and Ts in the Assembly</li>

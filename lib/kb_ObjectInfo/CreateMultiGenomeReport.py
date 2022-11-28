@@ -55,9 +55,9 @@ class CreateMultiGenomeReport:
         line = ''
         if format == 'list':
             line = name + "\n"
-            line += "\tObjectID:     {0:s}\n\tScientName:   {1:s}\n\tSize:         {2}\n\tSource:       {3:s}\n\tDomain:       {4:s}\n\tAssembly Ref: {5:s}\n".format(
+            line += "\tObject ID:     {0:s}\n\tScientific Name:   {1:s}\n\tSize:         {2}\n\tSource:       {3:s}\n\tDomain:       {4:s}\n\tAssembly Reference: {5:s}\n".format(
                 obj_id, sci_name, size, source, domain, assembly)
-            line += "\tFeatures:     {0}\n\tContigs:      {1}\n\tPct. GC:      {2}\n\tGenetic Code: {3}\n".format(num_feat, num_ctg, gc_cont, gen_code)
+            line += "\tFeatures:     {0}\n\tContigs:      {1}\n\tPercent GC:      {2}\n\tGenetic Code: {3}\n".format(num_feat, num_ctg, gc_cont, gen_code)
 
             for feat in sorted(features):
                 line += "\t{:8s}      {}\n".format(feat, features[feat])
@@ -86,7 +86,7 @@ class CreateMultiGenomeReport:
         line += "Created By   {}\n".format(obj_data['info'][5])
         line += "Narrative    {}\n".format(obj_data['info'][7])
         line += "Description  {}\n".format(obj_data['data']['description'])
-        line += "Num Elements {}\n".format(str(len(obj_data['data']['elements'])))
+        line += "Number of Elements {}\n".format(str(len(obj_data['data']['elements'])))
         for ele in obj_data['data']['elements']:
             line += "  Element:   {}\n".format(ele)
         return line
@@ -99,12 +99,12 @@ class CreateMultiGenomeReport:
         if format == 'list':
             line = "Description for: " + obj_name + "\n"
         if format == 'tab':
-            lst = ["Name", "ObjectID", "ScientName", "Size", "Source", "Domain", "Assembly Ref", "Features", "Contigs", "Pct. GC",
-                   "Genetic Code", "Num CDS", "Num gene", "Num other", "Num rRNA", "Num tRNA"]
+            lst = ["Name", "Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Reference", "Features", "Contigs", "Percent GC",
+                   "Genetic Code", "Number of CDS", "Number of gene", "Number of other", "Number of rRNA", "Number of tRNA"]
             line = "\t".join(lst) + "\n"
         if format == 'csv':
-            lst = ["Name", "ObjectID", "ScientName", "Size", "Source", "Domain", "Assembly Ref", "Features", "Contigs", "Pct. GC",
-                   "Genetic Code", "Num CDS", "Num gene", "Num other", "Num rRNA", "Num tRNA"]
+            lst = ["Name", "Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Reference", "Features", "Contigs", "Percent GC",
+                   "Genetic Code", "Number of CDS", "Number of gene", "Number of other", "Number of rRNA", "Number of tRNA"]
             line = ",".join(lst) + "\n"
 
         for ele in myGS:

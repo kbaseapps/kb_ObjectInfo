@@ -103,7 +103,7 @@ class kb_ObjectInfo:
         token = ctx['token']
 
         # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting Assembly MetaData Report Function. Params=')
+        print('Starting Assembly MetaData Object Info. Params=')
         pprint(params)
 
         # Step 1 - Parse/examine the parameters and catch any errors
@@ -179,12 +179,12 @@ class kb_ObjectInfo:
             string += "\nFASTA of the DNA Sequences\n"
             string += self.get_assembly_sequence(assembly_input_ref)
 
-        report_path = os.path.join(self.scratch, 'assembly_metadata_report.txt')
+        report_path = os.path.join(self.scratch, 'assembly_metadata_file.tab')
         report_txt = open(report_path, "w")
         report_txt.write(string)
 
         report_txt.close()
-        report_path = os.path.join(self.scratch, 'assembly_metadata_report.html')
+        report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + string + "</pre>")
         report_txt.close()
@@ -203,7 +203,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method assembly_metadata_report return value ' +
+            raise ValueError('Method assembly_metadata_file return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -227,7 +227,7 @@ class kb_ObjectInfo:
         token = ctx['token']
 
         # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting Genome Report Function. Params=')
+        print('Starting Genome Object Info. Params=')
         pprint(params)
 
         # Step 1 - Parse/examine the parameters and catch any errors
@@ -252,26 +252,26 @@ class kb_ObjectInfo:
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
             string = cf.delimitedTable(genome_data, 'tab', 'features')
-            report_path = os.path.join(self.scratch, 'genome_report.tsv')
+            report_path = os.path.join(self.scratch, 'genome_file.tsv')
         elif report_format == 'csv':
             cf = CreateFeatureLists(self.config)
             string = cf.delimitedTable(genome_data, 'csv', 'features')
-            report_path = os.path.join(self.scratch, 'genome_report.csv')
+            report_path = os.path.join(self.scratch, 'genome_file.csv')
         elif report_format == 'gff':
             cf = CreateFeatureLists(self.config)
             string = cf.gff3(genome_data, 'features')
-            report_path = os.path.join(self.scratch, 'genome_report.gff')
+            report_path = os.path.join(self.scratch, 'genome_file.gff')
         elif report_format == 'fasta':
             cf = CreateFasta(self.config)
             string = cf.create_Fasta_from_features(genome_data['features'])
-            report_path = os.path.join(self.scratch, 'genome_report.faa')
+            report_path = os.path.join(self.scratch, 'genome_file.faa')
         elif report_format == 'mRNA':
             cf = CreateFasta(self.config)
             string = cf.create_Fasta_from_mRNA(genome_data['features'])
-            report_path = os.path.join(self.scratch, 'genome_report.fna')
+            report_path = os.path.join(self.scratch, 'genome_file.fna')
         elif report_format == 'DNA':
 #            string += "\nFASTA of the DNA Sequences\n"
-            report_path = os.path.join(self.scratch, 'genome_dna_report.fna')
+            report_path = os.path.join(self.scratch, 'genome_dna_file.fna')
             if 'assembly_ref' in genome_data:
                 assembly_input_ref = genome_data['assembly_ref']
                 string += self.get_assembly_sequence(assembly_input_ref)
@@ -285,7 +285,7 @@ class kb_ObjectInfo:
         report_txt = open(report_path, "w")
         report_txt.write(string)
         report_txt.close()
-        report_path = os.path.join(self.scratch, 'text_report.html')
+        report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + string + "</pre>")
         report_txt.close()
@@ -303,7 +303,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method genome_report return value ' +
+            raise ValueError('Method genome_file return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -327,7 +327,7 @@ class kb_ObjectInfo:
         token = ctx['token']
 
         # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting Genome Set Report Function. Params=')
+        print('Starting Genome Set Object Info. Params=')
         pprint(params)
 
         # Step 1 - Parse/examine the parameters and catch any errors
@@ -353,23 +353,23 @@ class kb_ObjectInfo:
         if report_format == 'tab':
             gsr = CreateMultiGenomeReport(self.config)
             string = gsr.readGenomeSet(genome_name, genomeset_data, 'tab')
-            report_path = os.path.join(self.scratch, 'genomeset_report.tsv')
+            report_path = os.path.join(self.scratch, 'genomeset_file.tsv')
         elif report_format == 'csv':
             gsr = CreateMultiGenomeReport(self.config)
             string = gsr.readGenomeSet(genome_name, genomeset_data, 'csv')
-            report_path = os.path.join(self.scratch, 'genomeset_report.csv')
+            report_path = os.path.join(self.scratch, 'genomeset_file.csv')
         elif report_format == 'list':
             gsr = CreateMultiGenomeReport(self.config)
             string = gsr.readGenomeSet(genome_name, genomeset_data, 'list')
-            report_path = os.path.join(self.scratch, 'genomeset_report.txt')
+            report_path = os.path.join(self.scratch, 'genomeset_file.tab')
         elif report_format == 'meta':
             gsr = CreateMultiGenomeReport(self.config)
             string = gsr.getGenomeSetMeta(genomeset['data'][0])
-            report_path = os.path.join(self.scratch, 'genomeset_report.txt')
+            report_path = os.path.join(self.scratch, 'genomeset_file.tab')
         elif report_format == 'fasta':
             gsr = CreateMultiGenomeReport(self.config)
             assembly_list = gsr.getAssemblyRef(genomeset['data'][0])
-            string = ''
+            string = "Assembly Reference\tScientific Name\tFile Name"
             for assembly in assembly_list:
                  assembly_ref, sci_name = assembly.split(':')
                  dna = self.get_assembly_sequence(assembly_ref)
@@ -377,15 +377,15 @@ class kb_ObjectInfo:
                  report_txt = open(report_path, "w")
                  report_txt.write(dna)
                  report_txt.close()
-                 string += assembly_ref+'-'+sci_name+"\n"
-            report_path = os.path.join(self.scratch, 'genomeset_report.txt')
+                 string += assembly_ref+"\t"+sci_name+"\t"+'G'+assembly_ref.replace('/', '_')+'.fna'+\n"
+            report_path = os.path.join(self.scratch, 'genomeset_file.txt')
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
         report_txt = open(report_path, "w")
         report_txt.write(string)
         report_txt.close()
-        report_path = os.path.join(self.scratch, 'text_report.html')
+        report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + string + "</pre>")
         report_txt.close()
@@ -403,7 +403,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method genomeset_report return value ' +
+            raise ValueError('Method genomeset_file return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -428,7 +428,7 @@ class kb_ObjectInfo:
         token = ctx['token']
 
         # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting Domain Annotation Report Function. Params=')
+        print('Starting Domain Annotation Object Info. Params=')
         pprint(params)
 
         # Step 1 - Parse/examine the parameters and catch any errors
@@ -473,7 +473,7 @@ class kb_ObjectInfo:
         report_txt.write(string2)
         report_txt.close()
 
-        report_path = os.path.join(self.scratch, 'text_report.html')
+        report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + string2 + "</pre>")
         report_txt.write("<pre>" + string1 + "</pre>")
@@ -493,7 +493,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method domain_report return value ' +
+            raise ValueError('Method domain_file return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -518,7 +518,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method tree_report return value ' +
+            raise ValueError('Method tree_file return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -543,7 +543,7 @@ class kb_ObjectInfo:
         token = ctx['token']
 
         # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting FeatureSeq/SequenceSet Report Function. Params=')
+        print('Starting FeatureSeq/SequenceSet Object Info. Params=')
         pprint(params)
 
         # Step 1 - Parse/examine the parameters and catch any errors
@@ -580,7 +580,7 @@ class kb_ObjectInfo:
         report_txt.write(string1)
         report_txt.close()
 
-        report_path = os.path.join(self.scratch, 'text_report.html')
+        report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + string1 + "</pre>")
         report_txt.close()
@@ -599,7 +599,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method featseq_report return value ' +
+            raise ValueError('Method featseq_file return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -623,7 +623,7 @@ class kb_ObjectInfo:
         token = ctx['token']
 
         # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting ProteomeComparison Report. Params=')
+        print('Starting ProteomeComparison Object Info. Params=')
         pprint(params)
 
         # Step 1 - Parse/examine the parameters and catch any errors
@@ -660,7 +660,7 @@ class kb_ObjectInfo:
         report_txt.write(string1)
         report_txt.close()
 
-        report_path = os.path.join(self.scratch, 'text_report.html')
+        report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + string1 + "</pre>")
         report_txt.close()
@@ -678,7 +678,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method protcomp_report return value ' +
+            raise ValueError('Method protcomp_file return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
