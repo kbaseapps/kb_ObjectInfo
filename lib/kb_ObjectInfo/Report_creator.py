@@ -111,7 +111,7 @@ class Report_creator:
         short_report = report_string[0:1000]
         report_params = {
             'objects_created': [],
-            'message': "PREVIEW of the first 1000 characters of the output. Tab and comma-delimited output may look funny on the screen because they are intended to be read by a computer. For a 'pretty' output, use the data panel and the objects data viewer, either in the narrative or the landing page.\nLinks in the 'HTML' section below will open in a new window. Links in the 'Files' section below will download the output when you click on the name.\n\n" + short_report,
+            'message': "PREVIEW of the first 1000 characters of the output. Tab and comma-delimited output may look funny on the screen because they are intended to be read by a computer. For a 'pretty' output, use the data panel and the objects data viewer, either in the narrative or the landing page.\nFiles in the 'Links' section below will open in a new browser window. Links in the 'Files' section below will download the output when you click on the name.\n\n" + short_report,
             'direct_html': '',
             'direct_html_link_index': None,
             'file_links': output_zip_files,

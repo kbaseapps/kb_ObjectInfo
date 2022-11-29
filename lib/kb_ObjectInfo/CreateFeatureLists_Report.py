@@ -168,7 +168,7 @@ class CreateFeatureLists:
         seed_cat = self.domfam2cat
         
         line = ""
-        lineList = ["Feature ID", "Feature type", "Contig", "Location", "Strand", "Feature Function", "Aliases",
+        lineList = ["Feature ID", "Feature type", "Contig", "Start", "Stop", "Strand", "Feature Function", "Aliases",
                     "RAST Functional Assignment", "RAST Functional Group 1", "RAST Functional Group 2"]
         if format == 'tab':
             line += "\t".join(lineList) + "\n"
@@ -217,6 +217,8 @@ class CreateFeatureLists:
             location = ''
             contig = ''
             strand = ''
+            start = 0
+            stop = 0
             if len(feat['location']) > 0:
                 locList = []
                 # For those REALLY rare occassions when there is more than one location in Prokaryotes
@@ -242,13 +244,13 @@ class CreateFeatureLists:
                     subgroup = self.domfam2name[domfam]
  
             if format == 'tab':
-                lineList = [feat['id'], feat['type'], contig, location, strand, feat['function'], aliases, cat, subgroup, catgroup]
+                lineList = [feat['id'], feat['type'], contig, str(start), str(stop), strand, feat['function'], aliases, cat, subgroup, catgroup]
                 line += "\t".join(lineList) + "\n"
             else:
                 feat['function'] = '"' + feat['function'] + '"'
                 aliases = '"' + aliases + '"'
                 location = '"' + location + '"'
-                lineList = [feat['id'], feat['type'], contig, location, strand, feat['function'], aliases, cat, subgroup, catgroup]
+                lineList = [feat['id'], feat['type'], contig, str(start), str(stop), strand, feat['function'], aliases, cat, subgroup, catgroup]
                 line += ",".join(lineList) + "\n"
 
         return line
@@ -571,9 +573,9 @@ class CreateFeatureLists:
             print ("Invalid format. Valid formats are tab and csv")
             return
         elif format == 'tab':
-            line = "\t".join(lineList)
+            line += "\t".join(lineList)
         elif format == 'csv':
-            line = "'" + ",".join(lineList)
+            line += "'" + ",".join(lineList)
         # Add line-end to the header
         line += "\n"
         #print (pyStr)

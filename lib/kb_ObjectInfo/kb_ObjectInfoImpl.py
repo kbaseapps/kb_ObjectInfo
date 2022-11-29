@@ -162,7 +162,7 @@ class kb_ObjectInfo:
             string += "\t" + base + "\t" +  str(assembly_metadata['base_counts'][base]) + "\t" + str(pct) + "\n"
 
         string += "\nCONTIGS in the Assembly"
-        string += "\nName\tLength\tGC content\tNum of Ns\tContigID\tDescription\n"
+        string += "\nName\tLength\tGC content\tNumber of Ns\tContig ID\tDescription\n"
         if 'contigs' in assembly_metadata:
             myContig = assembly_metadata['contigs']
             for ctg in myContig:
@@ -369,7 +369,7 @@ class kb_ObjectInfo:
         elif report_format == 'fasta':
             gsr = CreateMultiGenomeReport(self.config)
             assembly_list = gsr.getAssemblyRef(genomeset['data'][0])
-            string = "Assembly Reference\tScientific Name\tFile Name"
+            string = "Assembly Reference\tScientific Name\tFile Name\n"
             for assembly in assembly_list:
                  assembly_ref, sci_name = assembly.split(':')
                  dna = self.get_assembly_sequence(assembly_ref)
