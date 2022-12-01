@@ -12,7 +12,7 @@ You will need to have the SDK installed to use this module. [Learn more about th
 
 You can also learn more about the apps implemented in this module from its [catalog page](https://narrative.kbase.us/#catalog/modules/kb_ObjectInfo) or its [spec file]($module_name.spec).
 
-# Setup and test
+## Setup and test
 
 Add your KBase developer token to `test_local/test.cfg` and run the following:
 
@@ -23,10 +23,10 @@ $ kb-sdk test
 
 After making any additional changes to this repo, run `kb-sdk test` again to verify that everything still works.
 
-# Installation from another module
+## Installation from another module
 
 To use this code in another SDK module, call `kb-sdk install kb_ObjectInfo` in the other module's root directory.
 
-# Help
+## Help
 
 You may find the answers to your questions in our [FAQ](https://kbase.github.io/kb_sdk_docs/references/questions_and_answers.html) or [Troubleshooting Guide](https://kbase.github.io/kb_sdk_docs/references/troubleshooting.html).

@@ -99,11 +99,11 @@ class CreateMultiGenomeReport:
         if format == 'list':
             line = "Description for: " + obj_name + "\n"
         if format == 'tab':
-            lst = ["Name", "Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Reference", "Features", "Contigs", "Percent GC",
+            lst = ["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features", "Contigs", "Percent GC",
                    "Genetic Code", "Number of CDS", "Number of gene", "Number of other", "Number of rRNA", "Number of tRNA"]
             line = "\t".join(lst) + "\n"
         if format == 'csv':
-            lst = ["Name", "Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Reference", "Features", "Contigs", "Percent GC",
+            lst = ["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features", "Contigs", "Percent GC",
                    "Genetic Code", "Number of CDS", "Number of gene", "Number of other", "Number of rRNA", "Number of tRNA"]
             line = ",".join(lst) + "\n"
 

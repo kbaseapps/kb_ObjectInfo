@@ -149,7 +149,7 @@ class kb_ObjectInfo:
                 'fasta_handle_ref', 'md5', 'type', 'taxon_ref']
         for item in list:
             if item in assembly_metadata:
-                string += "\t" + item + "\t" + str(assembly_metadata[item]) + "\n"
+                string += item + "\t" + str(assembly_metadata[item]) + "\n"
                 if item == 'dna_size':
                     dna_size = assembly_metadata['dna_size']
 
@@ -159,7 +159,7 @@ class kb_ObjectInfo:
         pct = 1.00
         for base in assembly_metadata['base_counts']:
             pct = 100 * assembly_metadata['base_counts'][base] / dna_size
-            string += "\t" + base + "\t" +  str(assembly_metadata['base_counts'][base]) + "\t" + str(pct) + "\n"
+            string += base + "\t" +  str(assembly_metadata['base_counts'][base]) + "\t" + str(pct) + "\n"
 
         string += "\nCONTIGS in the Assembly"
         string += "\nName\tLength\tGC content\tNumber of Ns\tContig ID\tDescription\n"
@@ -179,7 +179,7 @@ class kb_ObjectInfo:
             string += "\nFASTA of the DNA Sequences\n"
             string += self.get_assembly_sequence(assembly_input_ref)
 
-        report_path = os.path.join(self.scratch, 'assembly_metadata_file.tab')
+        report_path = os.path.join(self.scratch, 'assembly_metadata_file.tsv')
         report_txt = open(report_path, "w")
         report_txt.write(string)
 
@@ -361,11 +361,11 @@ class kb_ObjectInfo:
         elif report_format == 'list':
             gsr = CreateMultiGenomeReport(self.config)
             string = gsr.readGenomeSet(genome_name, genomeset_data, 'list')
-            report_path = os.path.join(self.scratch, 'genomeset_file.tab')
+            report_path = os.path.join(self.scratch, 'genomeset_file.tsv')
         elif report_format == 'meta':
             gsr = CreateMultiGenomeReport(self.config)
             string = gsr.getGenomeSetMeta(genomeset['data'][0])
-            report_path = os.path.join(self.scratch, 'genomeset_file.tab')
+            report_path = os.path.join(self.scratch, 'genomeset_file.tsv')
         elif report_format == 'fasta':
             gsr = CreateMultiGenomeReport(self.config)
             assembly_list = gsr.getAssemblyRef(genomeset['data'][0])

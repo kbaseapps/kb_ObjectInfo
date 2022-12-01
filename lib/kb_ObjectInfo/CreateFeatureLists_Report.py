@@ -589,7 +589,7 @@ class CreateFeatureLists:
         for pos1, name1 in enumerate(names1):
             if not pairs1[pos1]:
                 # The list is empty, no genome2 gene
-                lineList = [name1, '--']
+                lineList = [name1, 'NA']
                 if format == 'tab':
                     line += "\t".join(lineList) + "\n"
                 elif format == 'csv':
@@ -613,7 +613,7 @@ class CreateFeatureLists:
         for pos2, name2 in enumerate(names2):
             if not pairs2[pos2]:
                 # The list is empty, no genome1 gene
-                lineList = ['--', name2]
+                lineList = ['NA', name2]
                 if format == 'tab':
                     line += "\t".join(lineList) + "\n"
                 elif format == 'csv':

@@ -9,6 +9,9 @@ module kb_ObjectInfo {
         'float'.  Here we define a type named assembly_ref to indicate
         a string that should be set to a KBase ID reference to an
         Assembly data object.
+        
+        KIDL Specification, KBase SDK 1.2.0 documentation
+        (https://kbase.github.io/kb_sdk_docs/references/KIDL_spec.html)
     */
 
     /* A boolean. 0 = false, other = true. */
@@ -28,12 +31,6 @@ module kb_ObjectInfo {
         input and output of your function.  Here the input is a
         reference to the Assembly data object, a workspace to save
         output, and a length threshold for filtering.
-
-        To define lists and maps, use a syntax similar to C++ templates
-        to indicate the type contained in the list or map.  For example:
-
-            list <string> list_of_strings;
-            mapping <string, int> map_of_ints;
     */
 
     typedef structure {
