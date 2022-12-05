@@ -6,7 +6,7 @@ tooltip: |
     Create a text info file for an Assembly Object.
 screenshots: []
 
-icon: ObjectInfo_icon.png
+icon: assembly_info.png
 
 #
 # define a set of similar methods that might be useful to the user

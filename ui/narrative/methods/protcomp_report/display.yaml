@@ -6,7 +6,7 @@ tooltip: |
     Create text info files based on a Proteome Comparison data object
 screenshots: []
 
-icon: ObjectInfo_icon.png
+icon: proteomeComp_info.png
 
 #
 # define a set of similar methods that might be useful to the user

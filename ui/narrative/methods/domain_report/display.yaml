@@ -6,7 +6,7 @@ tooltip: |
     Create text info files based on a DomainAnnotation object.
 screenshots: []
 
-icon: ObjectInfo_icon.png
+icon: domainAnn_info.png
 
 #
 # define a set of similar methods that might be useful to the user
