@@ -34,13 +34,13 @@ module kb_ObjectInfo {
     */
 
     typedef structure {
-        assembly_ref assembly_input_ref;
+        assembly_ref input_ref;
         string workspace_name;
         boolean showContigs;
     } AssemblyMetadataReportParams;
 
     typedef structure {
-        genome_ref genome_input_ref;
+        genome_ref input_ref;
         string workspace_name;
         string report_format;
     } GenomeReportParams;

@@ -245,7 +245,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                            'TestAssembly3')
         ret = self.getImpl().assembly_metadata_report(self.getContext(),
                                                       {'workspace_name': self.ws_info[1],
-                                                       'assembly_input_ref': assembly_ref,
+                                                       'input_ref': assembly_ref,
                                                        'showContigs': 1
                                                        })
         # Validate the returned data
@@ -258,7 +258,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'genome_input_ref': self.genome_ref,
+                                            'input_ref': self.genome_ref,
                                             'report_format': 'tab'
                                             })
         print(("GENOME TAB RETURNED", ret))
@@ -270,7 +270,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'genome_input_ref': self.genome_ref,
+                                            'input_ref': self.genome_ref,
                                             'report_format': 'gff'
                                             })
         print(("GENOME GFF RETURNED", ret))
@@ -281,7 +281,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
     def mytest_genome_fasta(self):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'genome_input_ref': self.minimal_genome_ref,
+                                            'input_ref': self.minimal_genome_ref,
                                             'report_format': 'fasta'
                                             })
         print(("GENOME FASTA RETURNED", ret))
@@ -293,7 +293,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'genome_input_ref': self.minimal_genome_ref,
+                                            'input_ref': self.minimal_genome_ref,
                                             'report_format': 'mRNA'
                                             })
         print(("GENOME MRNA RETURNED", ret))
@@ -305,7 +305,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'genome_input_ref': self.minimal_genome_ref,
+                                            'input_ref': self.minimal_genome_ref,
                                             'report_format': 'DNA'
                                             })
         print(("GENOME DNA RETURNED", ret))

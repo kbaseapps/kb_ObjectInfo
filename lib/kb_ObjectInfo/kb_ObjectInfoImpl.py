@@ -31,19 +31,19 @@ class kb_ObjectInfo:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "0.0.1"
-    GIT_URL = "https://github.com/landml/kb_ObjectInfo"
-    GIT_COMMIT_HASH = "10038bea57cfc5cac12d57929624d71a832f9f78"
+    VERSION = "1.0.0"
+    GIT_URL = "https://github.com/kbaseapps/kb_ObjectInfo"
+    GIT_COMMIT_HASH = "e496ab03ed3c38576a920bdf97d910f89af0146d"
 
     #BEGIN_CLASS_HEADER
 
-    def get_assembly_sequence(self,assembly_input_ref):
+    def get_assembly_sequence(self,input_ref):
         # Download the input data as a Fasta
         # We can use the AssemblyUtils module to download a FASTA file from our Assembly data object.
         # The return object gives us the path to the file that was created.
         print('Downloading Assembly data as a Fasta file.')
         assemblyUtil = AssemblyUtil(self.callback_url)
-        fasta_file = assemblyUtil.get_assembly_as_fasta({'ref': assembly_input_ref})
+        fasta_file = assemblyUtil.get_assembly_as_fasta({'ref': input_ref})
         cf = CreateFasta(self.config)
 
         string = ''
@@ -82,13 +82,10 @@ class kb_ObjectInfo:
            convention is to use structures, as shown here, to define the
            input and output of your function.  Here the input is a reference
            to the Assembly data object, a workspace to save output, and a
-           length threshold for filtering. To define lists and maps, use a
-           syntax similar to C++ templates to indicate the type contained in
-           the list or map.  For example: list <string> list_of_strings;
-           mapping <string, int> map_of_ints;) -> structure: parameter
-           "assembly_input_ref" of type "assembly_ref", parameter
-           "workspace_name" of String, parameter "showContigs" of type
-           "boolean" (A boolean. 0 = false, other = true.)
+           length threshold for filtering.) -> structure: parameter
+           "input_ref" of type "assembly_ref", parameter "workspace_name" of
+           String, parameter "showContigs" of type "boolean" (A boolean. 0 =
+           false, other = true.)
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -113,9 +110,9 @@ class kb_ObjectInfo:
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
-        if 'assembly_input_ref' not in params:
-            raise ValueError('Parameter assembly_input_ref is not set in input arguments')
-        assembly_input_ref = params['assembly_input_ref']
+        if 'input_ref' not in params:
+            raise ValueError('Parameter input_ref is not set in input arguments')
+        input_ref = params['input_ref']
         if 'showContigs' not in params:
             raise ValueError('Parameter showContigs is not set in input arguments')
         showContigs_orig = params['showContigs']
@@ -132,8 +129,8 @@ class kb_ObjectInfo:
 
         # Step 3 - Get the data and save the output to a file.
         data_file_cli = DataFileUtil(self.callback_url)
-#        assembly_metadata = data_file_cli.get_objects({'object_refs': ['assembly_input_ref']})['data'][0]['data']
-        assembly = data_file_cli.get_objects({'object_refs': [assembly_input_ref]})
+#        assembly_metadata = data_file_cli.get_objects({'object_refs': ['input_ref']})['data'][0]['data']
+        assembly = data_file_cli.get_objects({'object_refs': [input_ref]})
         name = "Assembly Data Object"
         object_type = ''
         if 'info' in assembly['data'][0]:
@@ -177,7 +174,7 @@ class kb_ObjectInfo:
 
         if showContigs:
             string += "\nFASTA of the DNA Sequences\n"
-            string += self.get_assembly_sequence(assembly_input_ref)
+            string += self.get_assembly_sequence(input_ref)
 
         report_path = os.path.join(self.scratch, 'assembly_metadata_file.tsv')
         report_txt = open(report_path, "w")
@@ -203,7 +200,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method assembly_metadata_file return value ' +
+            raise ValueError('Method assembly_metadata_report return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -211,7 +208,7 @@ class kb_ObjectInfo:
     def genome_report(self, ctx, params):
         """
         :param params: instance of type "GenomeReportParams" -> structure:
-           parameter "genome_input_ref" of type "genome_ref", parameter
+           parameter "input_ref" of type "genome_ref", parameter
            "workspace_name" of String, parameter "report_format" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
@@ -237,12 +234,12 @@ class kb_ObjectInfo:
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
-        if 'genome_input_ref' not in params:
-            raise ValueError('Parameter genome_input_ref is not set in input arguments')
-        genome_input_ref = params['genome_input_ref']
+        if 'input_ref' not in params:
+            raise ValueError('Parameter input_ref is not set in input arguments')
+        input_ref = params['input_ref']
 
         data_file_cli = DataFileUtil(self.callback_url)
-        genome = data_file_cli.get_objects({'object_refs': [genome_input_ref]})
+        genome = data_file_cli.get_objects({'object_refs': [input_ref]})
         genome_data = genome['data'][0]['data']
 
         #print (list(genome_data.keys()))
@@ -273,8 +270,8 @@ class kb_ObjectInfo:
 #            string += "\nFASTA of the DNA Sequences\n"
             report_path = os.path.join(self.scratch, 'genome_dna_file.fna')
             if 'assembly_ref' in genome_data:
-                assembly_input_ref = genome_data['assembly_ref']
-                string += self.get_assembly_sequence(assembly_input_ref)
+                input_ref = genome_data['assembly_ref']
+                string += self.get_assembly_sequence(input_ref)
             else:
                 string += 'Did not find the Assembly Reference\n'
 
@@ -303,7 +300,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method genome_file return value ' +
+            raise ValueError('Method genome_report return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -403,7 +400,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method genomeset_file return value ' +
+            raise ValueError('Method genomeset_report return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -493,7 +490,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method domain_file return value ' +
+            raise ValueError('Method domain_report return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -518,7 +515,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method tree_file return value ' +
+            raise ValueError('Method tree_report return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -599,7 +596,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method featseq_file return value ' +
+            raise ValueError('Method featseq_report return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -678,7 +675,7 @@ class kb_ObjectInfo:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method protcomp_file return value ' +
+            raise ValueError('Method protcomp_report return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
