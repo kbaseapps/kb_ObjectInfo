@@ -11,7 +11,7 @@
     },
     "parameters": [ 
         {
-            "id": "domain_annotation_input_ref",
+            "id": "input_ref",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -67,8 +67,8 @@
                     "target_property": "workspace_name"
                 },
                 {
-                    "input_parameter": "domain_annotation_input_ref",
-                    "target_property": "domain_annotation_input_ref",
+                    "input_parameter": "input_ref",
+                    "target_property": "input_ref",
                     "target_type_transform": "resolved-ref"
                 },
                 {

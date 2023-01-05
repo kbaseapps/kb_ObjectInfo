@@ -27,7 +27,7 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    protcomp_input_ref :
+    input_ref :
         ui-name : |
             Proteome Comparison
         short-hint : |

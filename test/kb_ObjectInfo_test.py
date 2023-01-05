@@ -318,7 +318,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().domain_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'evalue_cutoff': '1e-20',
-                                            'domain_annotation_input_ref': domain_ref,
+                                            'input_ref': domain_ref,
                                             'report_format': 'tab'
                                             })
         print(("DOMAIN ANNOTATION RETURNED", ret))
@@ -330,7 +330,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         genomeset_ref = self.getGenomeSet()
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
-                                               'genomeset_input_ref': genomeset_ref,
+                                               'input_ref': genomeset_ref,
                                                'report_format': 'meta'
                                                })
         print(("GENOME SET META RETURNED", ret))
@@ -342,7 +342,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         genomeset_ref = self.getGenomeSet()
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
-                                               'genomeset_input_ref': genomeset_ref,
+                                               'input_ref': genomeset_ref,
                                                'report_format': 'list'
                                                })
         print(("GENOME SET LIST RETURNED", ret))
@@ -354,7 +354,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         genomeset_ref = self.getGenomeSet()
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
-                                               'genomeset_input_ref': genomeset_ref,
+                                               'input_ref': genomeset_ref,
                                                'report_format': 'tab'
                                                })
         print(("GENOME SET TAB RETURNED", ret))
@@ -366,7 +366,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         genomeset_ref = self.getGenomeSet()
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
-                                               'genomeset_input_ref': genomeset_ref,
+                                               'input_ref': genomeset_ref,
                                                'report_format': 'csv'
                                                })
         print(("GENOME SET CSV RETURNED", ret))
@@ -378,7 +378,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         genomeset_ref = self.getGenomeSet()
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
-                                               'genomeset_input_ref': genomeset_ref,
+                                               'input_ref': genomeset_ref,
                                                'report_format': 'fasta'
                                                })
         print(("GENOME SET FASTA RETURNED", ret))
@@ -390,7 +390,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         featset_ref = '27092/14/1'
         ret = self.getImpl().featseq_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'feature_sequence_input_ref': featset_ref,
+                                            'input_ref': featset_ref,
                                             'report_format': 'csv'
                                             })
         print(("FEATURE SET ORDERED RETURNED", ret))
@@ -402,7 +402,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         featset_ref = '20563/36/1'
         ret = self.getImpl().featseq_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'feature_sequence_input_ref': featset_ref,
+                                            'input_ref': featset_ref,
                                             'report_format': 'csv'
                                             })
         print(("FEATURE SET UNORDERED RETURNED", ret))
@@ -414,7 +414,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         protcomp_ref = '29939/15/1'
         ret = self.getImpl().protcomp_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'protcomp_input_ref': protcomp_ref,
+                                            'input_ref': protcomp_ref,
                                             'report_format': 'csv'
                                             })
         print(("PROTEOME COMPARISON RETURNED", ret))
@@ -426,7 +426,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         featset_ref = '27092/23/1'
         ret = self.getImpl().featseq_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'feature_sequence_input_ref': featset_ref,
+                                            'input_ref': featset_ref,
                                             'report_format': 'tab'
                                             })
         print(("SEQUENCE SET RETURNED", ret))

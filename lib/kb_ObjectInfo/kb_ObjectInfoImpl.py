@@ -33,7 +33,7 @@ class kb_ObjectInfo:
     ######################################### noqa
     VERSION = "1.0.0"
     GIT_URL = "https://github.com/kbaseapps/kb_ObjectInfo"
-    GIT_COMMIT_HASH = "e496ab03ed3c38576a920bdf97d910f89af0146d"
+    GIT_COMMIT_HASH = "d2ea281e2eb74d3d6e4f3761eddc5ae1a3d23f2f"
 
     #BEGIN_CLASS_HEADER
 
@@ -308,7 +308,7 @@ class kb_ObjectInfo:
     def genomeset_report(self, ctx, params):
         """
         :param params: instance of type "GenomeSetReportParams" -> structure:
-           parameter "genomeset_input_ref" of type "genomeset_ref", parameter
+           parameter "input_ref" of type "genomeset_ref", parameter
            "workspace_name" of String, parameter "report_format" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
@@ -334,12 +334,12 @@ class kb_ObjectInfo:
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
-        if 'genomeset_input_ref' not in params:
-            raise ValueError('Parameter genomeset_input_ref is not set in input arguments')
-        genomeset_input_ref = params['genomeset_input_ref']
+        if 'input_ref' not in params:
+            raise ValueError('Parameter input_ref is not set in input arguments')
+        input_ref = params['input_ref']
 
         data_file_cli = DataFileUtil(self.callback_url)
-        genomeset = data_file_cli.get_objects({'object_refs': [genomeset_input_ref]})
+        genomeset = data_file_cli.get_objects({'object_refs': [input_ref]})
         genome_name = genomeset['data'][0]['info'][1]
         genomeset_data = genomeset['data'][0]['data']
 
@@ -408,9 +408,9 @@ class kb_ObjectInfo:
     def domain_report(self, ctx, params):
         """
         :param params: instance of type "DomainReportParams" -> structure:
-           parameter "domain_annotation_input_ref" of type "domain_ref",
-           parameter "evalue_cutoff" of Double, parameter "workspace_name" of
-           String, parameter "report_format" of String
+           parameter "input_ref" of type "domain_ref", parameter
+           "evalue_cutoff" of Double, parameter "workspace_name" of String,
+           parameter "report_format" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -435,12 +435,12 @@ class kb_ObjectInfo:
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
-        if 'domain_annotation_input_ref' not in params:
-            raise ValueError('Parameter domain_annotation_input_ref is not set in input arguments')
-        domain_annotation_input_ref = params['domain_annotation_input_ref']
+        if 'input_ref' not in params:
+            raise ValueError('Parameter input_ref is not set in input arguments')
+        input_ref = params['input_ref']
 
         data_file_cli = DataFileUtil(self.callback_url)
-        domain_anno = data_file_cli.get_objects({'object_refs': [domain_annotation_input_ref]})
+        domain_anno = data_file_cli.get_objects({'object_refs': [input_ref]})
         domain_data = domain_anno['data'][0]['data']
 #        print (list(domain_data.keys()))
 
@@ -498,7 +498,7 @@ class kb_ObjectInfo:
     def tree_report(self, ctx, params):
         """
         :param params: instance of type "TreeReportParams" -> structure:
-           parameter "tree_input_ref" of type "tree_ref", parameter
+           parameter "input_ref" of type "tree_ref", parameter
            "workspace_name" of String, parameter "report_format" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
@@ -523,9 +523,8 @@ class kb_ObjectInfo:
     def featseq_report(self, ctx, params):
         """
         :param params: instance of type "FeatSeqReportParams" -> structure:
-           parameter "feature_sequence_input_ref" of type "featseq_ref",
-           parameter "workspace_name" of String, parameter "report_format" of
-           String
+           parameter "input_ref" of type "featseq_ref", parameter
+           "workspace_name" of String, parameter "report_format" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -550,12 +549,12 @@ class kb_ObjectInfo:
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
-        if 'feature_sequence_input_ref' not in params:
-            raise ValueError('Parameter feature_sequence_input_ref is not set in input arguments')
-        feature_sequence_input_ref = params['feature_sequence_input_ref']
+        if 'input_ref' not in params:
+            raise ValueError('Parameter input_ref is not set in input arguments')
+        input_ref = params['input_ref']
 
         data_file_cli = DataFileUtil(self.callback_url)
-        setseq = data_file_cli.get_objects({'object_refs': [feature_sequence_input_ref]})
+        setseq = data_file_cli.get_objects({'object_refs': [input_ref]})
         setseq_data = setseq['data'][0]['data']
 
         #print (list(setseq_data.keys()))
@@ -604,7 +603,7 @@ class kb_ObjectInfo:
     def protcomp_report(self, ctx, params):
         """
         :param params: instance of type "ProtCompReportParams" -> structure:
-           parameter "protcomp_input_ref" of type "protcomp_ref", parameter
+           parameter "input_ref" of type "protcomp_ref", parameter
            "workspace_name" of String, parameter "report_format" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
@@ -630,12 +629,12 @@ class kb_ObjectInfo:
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
-        if 'protcomp_input_ref' not in params:
-            raise ValueError('Parameter protcomp_input_ref is not set in input arguments')
-        protcomp_input_ref = params['protcomp_input_ref']
+        if 'input_ref' not in params:
+            raise ValueError('Parameter input_ref is not set in input arguments')
+        input_ref = params['input_ref']
 
         data_file_cli = DataFileUtil(self.callback_url)
-        protcomp = data_file_cli.get_objects({'object_refs': [protcomp_input_ref]})
+        protcomp = data_file_cli.get_objects({'object_refs': [input_ref]})
         protcomp_data = protcomp['data'][0]['data']
 
         #print ("DEBUG KEYS: ", list(protcomp_data.keys()))

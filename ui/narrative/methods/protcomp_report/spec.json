@@ -11,7 +11,7 @@
     },
     "parameters": [ 
         {
-            "id": "protcomp_input_ref",
+            "id": "input_ref",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -55,8 +55,8 @@
                     "target_property": "workspace_name"
                 },
                 {
-                    "input_parameter": "protcomp_input_ref",
-                    "target_property": "protcomp_input_ref",
+                    "input_parameter": "input_ref",
+                    "target_property": "input_ref",
                     "target_type_transform": "resolved-ref"
                 },
                 {

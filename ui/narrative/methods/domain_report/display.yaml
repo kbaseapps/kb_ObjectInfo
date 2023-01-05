@@ -27,7 +27,7 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    domain_annotation_input_ref :
+    input_ref :
         ui-name : |
             Domain Annotation
         short-hint : |

@@ -46,32 +46,32 @@ module kb_ObjectInfo {
     } GenomeReportParams;
 
     typedef structure {
-        genomeset_ref genomeset_input_ref;
+        genomeset_ref input_ref;
         string workspace_name;
         string report_format;
     } GenomeSetReportParams;
 
     typedef structure {
-        domain_ref domain_annotation_input_ref;
+        domain_ref input_ref;
         float evalue_cutoff;
         string workspace_name;
         string report_format;
     } DomainReportParams;
 
     typedef structure {
-        tree_ref tree_input_ref;
+        tree_ref input_ref;
         string workspace_name;
         string report_format;
     } TreeReportParams;
 
     typedef structure {
-        featseq_ref feature_sequence_input_ref;
+        featseq_ref input_ref;
         string workspace_name;
         string report_format;
     } FeatSeqReportParams;
 
     typedef structure {
-        protcomp_ref protcomp_input_ref;
+        protcomp_ref input_ref;
         string workspace_name;
         string report_format;
     } ProtCompReportParams;

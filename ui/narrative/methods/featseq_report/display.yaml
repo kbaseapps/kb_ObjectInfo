@@ -27,7 +27,7 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    feature_sequence_input_ref :
+    input_ref :
         ui-name : |
             FeatureSet/SequenceSet
         short-hint : |
