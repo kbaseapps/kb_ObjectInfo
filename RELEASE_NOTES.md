@@ -1,5 +1,15 @@
 # kb_ObjectInfo release notes
 =========================================
+1.0.1
+-----
+Needed for metrics
+Change the params to have "input_ref" instead of "genome_input_ref" (or "[type]_input_ref"). 
+
+Assembly Object Info - the "Include a FASTA of the Contigs", the FASTA should be a separate 
+file with a .fna extension instead of making it all one file.
+
+Comment out the print statement in the assembly section that prints all the output to the log.
+Review all the other print statements in the other apps.
 
 1.0.0
 -----
