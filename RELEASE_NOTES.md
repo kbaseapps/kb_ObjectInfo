@@ -1,5 +1,6 @@
 # kb_ObjectInfo release notes
 =========================================
+
 1.0.1
 -----
 Needed for metrics
