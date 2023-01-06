@@ -151,7 +151,7 @@ class kb_ObjectInfo:
                     dna_size = assembly_metadata['dna_size']
 
         if 'fasta_handle_info' in assembly_metadata and 'node_file_name' in assembly_metadata['fasta_handle_info']:
-            string += "\tfilename             = " + assembly_metadata['fasta_handle_info']['node_file_name'] + "\n"
+            string += "Original filename             = " + assembly_metadata['fasta_handle_info']['node_file_name'] + "\n"
         string += "\nDNA BASES\tCOUNTS\tPERCENT\n"
         pct = 1.00
         for base in assembly_metadata['base_counts']:
@@ -172,13 +172,21 @@ class kb_ObjectInfo:
                         string += "\t"
                 string += "\n"
 
+        dna = ''
         if showContigs:
-            string += "\nFASTA of the DNA Sequences\n"
-            string += self.get_assembly_sequence(input_ref)
+            dna += self.get_assembly_sequence(input_ref)
+            report_path = os.path.join(self.scratch, 'assembly_metadata_file.fna')
+            report_txt = open(report_path, "w")
+            report_txt.write(dna)
+            report_txt.close()
 
         report_path = os.path.join(self.scratch, 'assembly_metadata_file.tsv')
         report_txt = open(report_path, "w")
         report_txt.write(string)
+
+        if dna:
+            string += "\nFASTA of the DNA Sequences\n"
+            string += dna
 
         report_txt.close()
         report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
@@ -186,7 +194,8 @@ class kb_ObjectInfo:
         report_txt.write("<pre>" + string + "</pre>")
         report_txt.close()
 
-        print (string)
+#        Only use when doing debug. This shows up in the log. Bad idea in general use.
+#        print (string)
 
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -287,7 +296,8 @@ class kb_ObjectInfo:
         report_txt.write("<pre>" + string + "</pre>")
         report_txt.close()
 
-#        print string
+#        Only use when doing debug. This shows up in the log. Bad idea in general use.
+#        print (string)
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
                                     string, self.scratch)
@@ -387,7 +397,8 @@ class kb_ObjectInfo:
         report_txt.write("<pre>" + string + "</pre>")
         report_txt.close()
 
-#        print string
+#        Only use when doing debug. This shows up in the log. Bad idea in general use.
+#        print (string)
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
                                            string, self.scratch)
@@ -476,7 +487,8 @@ class kb_ObjectInfo:
         report_txt.write("<pre>" + string1 + "</pre>")
         report_txt.close()
 
-        #        print string
+#        Only use when doing debug. This shows up in the log. Bad idea in general use.
+#        print (string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -581,7 +593,8 @@ class kb_ObjectInfo:
         report_txt.write("<pre>" + string1 + "</pre>")
         report_txt.close()
 
-        #        print string
+#        Only use when doing debug. This shows up in the log. Bad idea in general use.
+#        print (string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -661,7 +674,8 @@ class kb_ObjectInfo:
         report_txt.write("<pre>" + string1 + "</pre>")
         report_txt.close()
 
-        #        print string
+#        Only use when doing debug. This shows up in the log. Bad idea in general use.
+#        print (string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],

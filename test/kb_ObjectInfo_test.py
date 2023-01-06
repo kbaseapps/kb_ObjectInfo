@@ -239,7 +239,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
 #
         return str(new_obj_info[6]) + "/" + str(new_obj_info[0]) + "/" + str(new_obj_info[4])
 
-    def mytest_assembly_metadata(self):
+    def test_assembly_metadata(self):
 
         assembly_ref = self.get_fasta_file(self.test_path,
                                            'TestAssembly3')
@@ -254,7 +254,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
 
-    def test_genome_tab(self):
+    def mytest_genome_tab(self):
         genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
