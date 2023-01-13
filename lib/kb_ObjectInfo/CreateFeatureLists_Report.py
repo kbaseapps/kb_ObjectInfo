@@ -1,12 +1,14 @@
 import time
 import os
 import re
+import logging
+
 from .CreateFasta_Report import CreateFasta
 from pprint import pprint, pformat
 
 def log(message, prefix_newline=False):
     """Logging function, provides a hook to suppress or redirect log messages."""
-    print(('\n' if prefix_newline else '') + '{0:.2f}'.format(time.time()) + ': ' + str(message))
+    logging.info(('\n' if prefix_newline else '') + '{0:.2f}'.format(time.time()) + ': ' + str(message))
 
 
 class CreateFeatureLists:
@@ -126,9 +128,6 @@ class CreateFeatureLists:
                         dom_name = domfam
                         dom_name = cat_subgroup
                         cat2group[namespace][cat] = cat_group
-                        
-                        #if 'DNA-directed RNA polymerase' in domfam:
-                        #    print ("DOMFAM ", domfam + " SUBGROUP ", cat_subgroup, " CAT ", cat)
 
                     domfam2ns[domfam] = namespace
                     domfam2cat[domfam] = cat
@@ -184,8 +183,6 @@ class CreateFeatureLists:
                 if feat['function'] in seed_cat:
                     domfam = feat['function']
                     cat = seed_cat[domfam]
-                #if 'DNA-directed RNA polymerase' in feat['function']:
-                #                    print ("DOMFAM ", domfam, " CAT", cat)                    
 
             if 'functions' in feat:
                 feat['function'] = ', '.join(feat['functions'])
@@ -193,8 +190,6 @@ class CreateFeatureLists:
                     if func in seed_cat:
                         domfam = func
                         cat = seed_cat[domfam]
-                    #if 'DNA-directed RNA polymerase' in feat['function']:
-                    #    print ("DOMFAM ", domfam, " CAT", cat)
                     break # Taking just the first
 
 
@@ -336,41 +331,41 @@ class CreateFeatureLists:
             if list[0][2] < cutoff:
                 if '.' in domain and len(domain) < 15:
                     domain = domain.split('.')[0]
-                #print ("DOMAIN", domain)
+
                 if domain in self.domfam2ns:
                     namespace = self.domfam2ns[domain]
                 else:
                     namespace = ''
-                #print ("NAMESpaCE", namespace)
+
                 if domain in self.domfam2name:
                     dom_name = self.domfam2name[domain]
                 else:
                     dom_name = ''
-                #print ("DOMNAME", dom_name)
+
                 if domain in self.domfam2cat:
                     cat = self.domfam2cat[domain]
                 else:
                     cat = ''
-                #print ("CAT", cat)
+
                 
                 if cat > ' ' and cat in self.cat2name[namespace]:
                     cat_name = self.cat2name[namespace][cat]
                 else:
                     cat_name = ''
-                #print ("CATNAME", cat_name)
+
                 
                 if cat > ' ' and cat in self.cat2group[namespace]:
                     cat_group = self.cat2group[namespace][cat]
                 else:
                     cat_group = ''
-                #print ("CATGROUP", cat_group)
+
                 
                 lineList = [contig, geneName, domain, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, cat, cat_name, str(cat_group)]
                 if format == 'tab':
                     line += "\t".join(lineList)
                 elif format == 'csv':
                     line += ",".join(lineList)
-                #            print line
+
                 line += "\n"
         return line
 
@@ -384,7 +379,7 @@ class CreateFeatureLists:
     def readDomainAnnList(self, pyStr, format, cutoff):
         #   Make sure the cutoff is a number
         if not isinstance(cutoff, (int, float, complex)):
-            print ("Cutoff Value must be numeric.")
+            log("Cutoff Value must be numeric.")
             return
 
         # Header
@@ -393,7 +388,7 @@ class CreateFeatureLists:
 
         #   Check for valid formats
         if format not in ['tab', 'csv']:
-            print ("Invalid format. Valid formats are tab and csv")
+            log("Invalid format. Valid formats are tab and csv")
             return
         elif format == 'tab':
             line = "\t".join(lineList)
@@ -439,7 +434,7 @@ class CreateFeatureLists:
     def readDomainAnnCount(self, pyStr, format, cutoff):
         #   Make sure the cutoff is a number
         if not isinstance(cutoff, (int, float, complex)):
-            print ("Cutoff Value must be numeric.")
+            log("Cutoff Value must be numeric.")
             return
 
         # Header
@@ -448,7 +443,7 @@ class CreateFeatureLists:
 
         #   Check for valid formats
         if format not in ['tab', 'csv']:
-            print ("Invalid format. Valid formats are tab and csv")
+            log("Invalid format. Valid formats are tab and csv")
             return
         elif format == 'tab':
             line = "\t".join(lineList)
@@ -539,11 +534,11 @@ class CreateFeatureLists:
 #   Type Unknown
 #
         else:
-            print ("This type of FeatureSet has not been described yet")
+            log("This type of FeatureSet has not been described yet")
 
         #   Check for valid formats
         if format not in ['tab', 'csv']:
-            print ("Invalid format. Valid formats are tab and csv")
+            log("Invalid format. Valid formats are tab and csv")
             return
         elif format == 'tab':
             for row in lineList:
@@ -556,8 +551,6 @@ class CreateFeatureLists:
         # Add line-end to the header
         line += "\n"
 
-        #print ("LINE: ", line)
-            
         return line
 
     def readProtComp(self, pyStr,format):
@@ -570,7 +563,7 @@ class CreateFeatureLists:
     
     #   Check for valid formats
         if format not in ['tab','csv']:
-            print ("Invalid format. Valid formats are tab and csv")
+            log("Invalid format. Valid formats are tab and csv")
             return
         elif format == 'tab':
             line += "\t".join(lineList)
@@ -578,7 +571,6 @@ class CreateFeatureLists:
             line += "'" + ",".join(lineList)
         # Add line-end to the header
         line += "\n"
-        #print (pyStr)
         
         names1 = pyStr["proteome1names"]
         names2 = pyStr["proteome2names"]
@@ -632,5 +624,5 @@ class CreateFeatureLists:
                 elif format == 'csv':
                     line += ",".join(lineList) + "\n"
                 count += 1             
-        #print ("DEBUG LINE: ", line)
+
         return line

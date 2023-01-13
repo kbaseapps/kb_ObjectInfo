@@ -41,7 +41,7 @@ class kb_ObjectInfo:
         # Download the input data as a Fasta
         # We can use the AssemblyUtils module to download a FASTA file from our Assembly data object.
         # The return object gives us the path to the file that was created.
-        print('Downloading Assembly data as a Fasta file.')
+        logging.info('Downloading Assembly data as a Fasta file.')
         assemblyUtil = AssemblyUtil(self.callback_url)
         fasta_file = assemblyUtil.get_assembly_as_fasta({'ref': input_ref})
         cf = CreateFasta(self.config)
@@ -62,8 +62,9 @@ class kb_ObjectInfo:
         #BEGIN_CONSTRUCTOR
         self.callback_url = os.environ['SDK_CALLBACK_URL']
         self.shared_folder = config['scratch']
-        logging.basicConfig(format='%(created)s %(levelname)s: %(message)s',
-                            level=logging.INFO)
+        logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',
+                        level=logging.INFO,
+                        datefmt='%Y-%m-%d %H:%M:%S')
         self.workspaceURL = config['workspace-url']
         self.callback_url = os.environ['SDK_CALLBACK_URL']
         self.dfu = DataFileUtil(self.callback_url)
@@ -99,14 +100,15 @@ class kb_ObjectInfo:
         #BEGIN assembly_metadata_report
         token = ctx['token']
 
-        # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting Assembly MetaData Object Info. Params=')
-        pprint(params)
-
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting Assembly MetaData Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params:\n{mystr}")
+        
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-#        print('Validating parameters.')
+
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -195,7 +197,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        print (string)
+#         logging.info(string)
 
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -203,8 +205,8 @@ class kb_ObjectInfo:
 
         output = {'report_name': reported_output['name'],
                            'report_ref': reported_output['ref']}
-
-        print('returning: ' + pformat(output))
+        mystr = pformat(output)
+        logging.info(f"Returning: {mystr}")
         #END assembly_metadata_report
 
         # At some point might do deeper type checking...
@@ -232,14 +234,15 @@ class kb_ObjectInfo:
         #BEGIN genome_report
         token = ctx['token']
 
-        # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting Genome Object Info. Params=')
-        pprint(params)
-
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting Genome Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params=:\n{mystr}")
+        
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-#        print('Validating parameters.')
+
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -250,8 +253,6 @@ class kb_ObjectInfo:
         data_file_cli = DataFileUtil(self.callback_url)
         genome = data_file_cli.get_objects({'object_refs': [input_ref]})
         genome_data = genome['data'][0]['data']
-
-        #print (list(genome_data.keys()))
 
         report_format = params['report_format']
         string = ''
@@ -297,7 +298,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        print (string)
+#        logging.info(string)
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
                                     string, self.scratch)
@@ -305,7 +306,8 @@ class kb_ObjectInfo:
         output = {'report_name': reported_output['name'],
                   'report_ref': reported_output['ref']}
 
-        print('returning: ' + pformat(output))
+        mystr = pformat(output)
+        logging.info(f"Returning: {mystr}")
         #END genome_report
 
         # At some point might do deeper type checking...
@@ -333,14 +335,15 @@ class kb_ObjectInfo:
         #BEGIN genomeset_report
         token = ctx['token']
 
-        # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting Genome Set Object Info. Params=')
-        pprint(params)
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting Genome Set Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params:\n{mystr}")
 
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-#        print('Validating parameters.')
+
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -352,8 +355,6 @@ class kb_ObjectInfo:
         genomeset = data_file_cli.get_objects({'object_refs': [input_ref]})
         genome_name = genomeset['data'][0]['info'][1]
         genomeset_data = genomeset['data'][0]['data']
-
-#        print genomeset_data.keys()
 
         report_format = params['report_format']
         string = ''
@@ -398,7 +399,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        print (string)
+#        logging.info(string)
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
                                            string, self.scratch)
@@ -406,7 +407,8 @@ class kb_ObjectInfo:
         output = {'report_name': reported_output['name'],
                   'report_ref': reported_output['ref']}
 
-#        print('returning: ' + pformat(output))
+        mystr = pformat(output)
+        logging.info(f"Returning: {mystr}")
         #END genomeset_report
 
         # At some point might do deeper type checking...
@@ -435,14 +437,15 @@ class kb_ObjectInfo:
         #BEGIN domain_report
         token = ctx['token']
 
-        # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting Domain Annotation Object Info. Params=')
-        pprint(params)
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting Domain Annotation Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params:\n{mystr}")
 
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-#        print('Validating parameters.')
+
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -453,7 +456,6 @@ class kb_ObjectInfo:
         data_file_cli = DataFileUtil(self.callback_url)
         domain_anno = data_file_cli.get_objects({'object_refs': [input_ref]})
         domain_data = domain_anno['data'][0]['data']
-#        print (list(domain_data.keys()))
 
         evalue_cutoff = float(params['evalue_cutoff'])
         report_format = params['report_format']
@@ -488,7 +490,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        print (string)
+#        logging.info(string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -497,7 +499,8 @@ class kb_ObjectInfo:
         output = {'report_name': reported_output['name'],
                   'report_ref': reported_output['ref']}
 
-        print('returning: ' + pformat(output))
+        mystr = pformat(output)
+        logging.info(f"Returning: {mystr}")
         #END domain_report
 
         # At some point might do deeper type checking...
@@ -550,14 +553,15 @@ class kb_ObjectInfo:
         #BEGIN featseq_report
         token = ctx['token']
 
-        # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting FeatureSeq/SequenceSet Object Info. Params=')
-        pprint(params)
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting FeatureSeq/SequenceSet Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params:\n{mystr}")
 
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-#        print('Validating parameters.')
+        
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -568,8 +572,6 @@ class kb_ObjectInfo:
         data_file_cli = DataFileUtil(self.callback_url)
         setseq = data_file_cli.get_objects({'object_refs': [input_ref]})
         setseq_data = setseq['data'][0]['data']
-
-        #print (list(setseq_data.keys()))
 
         report_format = params['report_format']
         string1 = ''
@@ -594,7 +596,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        print (string)
+#        logging.info(string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -603,7 +605,8 @@ class kb_ObjectInfo:
         output = {'report_name': reported_output['name'],
                   'report_ref': reported_output['ref']}
 
-        print('returning: ' + pformat(output))
+        mystr = pformat(output)
+        logging.info(f"Returning: {mystr}")
         #END featseq_report
 
         # At some point might do deeper type checking...
@@ -631,14 +634,15 @@ class kb_ObjectInfo:
         #BEGIN protcomp_report
         token = ctx['token']
 
-        # Print statements to stdout/stderr are captured and available as the App log
-        print('Starting ProteomeComparison Object Info. Params=')
-        pprint(params)
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting ProteomeComparison Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params:\n{mystr}")
 
         # Step 1 - Parse/examine the parameters and catch any errors
         # It is important to check that parameters exist and are defined, and that nice error
         # messages are returned to users.
-#        print('Validating parameters.')
+
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -649,8 +653,6 @@ class kb_ObjectInfo:
         data_file_cli = DataFileUtil(self.callback_url)
         protcomp = data_file_cli.get_objects({'object_refs': [input_ref]})
         protcomp_data = protcomp['data'][0]['data']
-
-        #print ("DEBUG KEYS: ", list(protcomp_data.keys()))
 
         report_format = params['report_format']
         string1 = ''
@@ -675,7 +677,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        print (string)
+#        logging.info(string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
