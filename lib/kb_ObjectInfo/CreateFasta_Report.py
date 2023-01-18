@@ -1,8 +1,9 @@
 import time
+import logging
 
 def log(message, prefix_newline=False):
     """Logging function, provides a hook to suppress or redirect log messages."""
-    print(('\n' if prefix_newline else '') + '{0:.2f}'.format(time.time()) + ': ' + str(message))
+    logging.info(('\n' if prefix_newline else '') + '{0:.2f}'.format(time.time()) + ': ' + str(message))
 
 
 class CreateFasta:
@@ -22,7 +23,6 @@ class CreateFasta:
             end = start + colsz
             if end > lenseq:
                 end = lenseq
-            # print seq[start:end]
             line += seq[start:end] + "\n"
             start += colsz
             if start > lenseq:
@@ -51,7 +51,6 @@ class CreateFasta:
                 line += ">" + feat['id'] + " " + feat['function']
                 line += " (len=" + str(feat['protein_translation_length']) + ")" + "\n"
 
-                # print line
                 line += self.splitSequence(feat['protein_translation']) + "\n"
         return line
 
@@ -74,7 +73,6 @@ class CreateFasta:
                 line += ">" + feat['id'] + " " + feat['function']
                 line += " (len=" + str(feat['dna_sequence_length']) + ")" + "\n"
 
-                # print line
                 line += self.splitSequence(feat['dna_sequence']) + "\n"
         return line
 
@@ -98,6 +96,5 @@ class CreateFasta:
                 line += ">" + feat['id'] + " " + feat['function']
                 line += " (len=" + str(feat['protein_translation_length']) + ")" + "\n"
 
-                # print line
                 line += self.splitSequence(feat['protein_translation']) + "\n"
         return line

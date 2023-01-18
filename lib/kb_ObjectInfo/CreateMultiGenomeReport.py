@@ -1,10 +1,12 @@
 import time
 import os
+import logging
+
 from installed_clients.DataFileUtilClient import DataFileUtil
 
 def log(message, prefix_newline=False):
     """Logging function, provides a hook to suppress or redirect log messages."""
-    print(('\n' if prefix_newline else '') + '{0:.2f}'.format(time.time()) + ': ' + str(message))
+    logging.info(('\n' if prefix_newline else '') + '{0:.2f}'.format(time.time()) + ': ' + str(message))
 
 
 class CreateMultiGenomeReport:
@@ -111,7 +113,6 @@ class CreateMultiGenomeReport:
             genome = self.dfu.get_objects({'object_refs': [myGS[ele]['ref']]})
             line += self.getGenomeSet(myGS[ele]['ref'], genome['data'][0], format)
 
-#        print "LINE:", line
         return line
 
     # Return the assembly_refs
