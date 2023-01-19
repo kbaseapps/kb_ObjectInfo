@@ -298,7 +298,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        logging.info(string)
+#        logging.debug(string)
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
                                     string, self.scratch)
@@ -399,7 +399,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        logging.info(string)
+#        logging.debug(string)
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
                                            string, self.scratch)
@@ -490,7 +490,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        logging.info(string)
+#        logging.debug(string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -596,7 +596,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        logging.info(string)
+#        logging.debug(string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -677,7 +677,7 @@ class kb_ObjectInfo:
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        logging.info(string)
+#        logging.debug(string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],

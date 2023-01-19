@@ -6,16 +6,14 @@ import logging
 from .CreateFasta_Report import CreateFasta
 from pprint import pprint, pformat
 
-def log(message, prefix_newline=False):
-    """Logging function, provides a hook to suppress or redirect log messages."""
-    logging.info(('\n' if prefix_newline else '') + '{0:.2f}'.format(time.time()) + ': ' + str(message))
-
-
 class CreateFeatureLists:
     def __init__(self, config):
         self.config = config
         self.callback_url = os.environ['SDK_CALLBACK_URL']
         (self.cats, self.cat2name, self.cat2group, self.domfam2cat, self.domfam2name, self.domfam2ns) = self._configure_categories()
+        logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',
+                        level=logging.INFO,
+                        datefmt='%Y-%m-%d %H:%M:%S')
 
     def _configure_categories(self):
 
@@ -377,20 +375,11 @@ class CreateFeatureLists:
     #   Uses printGeneDomain to print out individual lines
     #
     def readDomainAnnList(self, pyStr, format, cutoff):
-        #   Make sure the cutoff is a number
-        if not isinstance(cutoff, (int, float, complex)):
-            log("Cutoff Value must be numeric.")
-            return
-
         # Header
         line = ""
         lineList = ["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name", "Category", "Category Name", "Category Group"]
 
-        #   Check for valid formats
-        if format not in ['tab', 'csv']:
-            log("Invalid format. Valid formats are tab and csv")
-            return
-        elif format == 'tab':
+        if format == 'tab':
             line = "\t".join(lineList)
         elif format == 'csv':
             line = "'" + ",".join(lineList)
@@ -432,20 +421,12 @@ class CreateFeatureLists:
     #   Uses countGeneDomain to get the statistics for an individual gene
     #
     def readDomainAnnCount(self, pyStr, format, cutoff):
-        #   Make sure the cutoff is a number
-        if not isinstance(cutoff, (int, float, complex)):
-            log("Cutoff Value must be numeric.")
-            return
 
         # Header
         line = ""
         lineList = ["Domain", "Count"]
 
-        #   Check for valid formats
-        if format not in ['tab', 'csv']:
-            log("Invalid format. Valid formats are tab and csv")
-            return
-        elif format == 'tab':
+        if format == 'tab':
             line = "\t".join(lineList)
         elif format == 'csv':
             line = "'" + ",".join(lineList)
@@ -534,13 +515,10 @@ class CreateFeatureLists:
 #   Type Unknown
 #
         else:
-            log("This type of FeatureSet has not been described yet")
+            logging.error("This type of FeatureSet has not been described yet")
+            line = "This type of FeatureSet has not been described yet"
 
-        #   Check for valid formats
-        if format not in ['tab', 'csv']:
-            log("Invalid format. Valid formats are tab and csv")
-            return
-        elif format == 'tab':
+        if format == 'tab':
             for row in lineList:
                 line += "\t".join(row) + "\n"
         elif format == 'csv':
@@ -561,11 +539,7 @@ class CreateFeatureLists:
         line = "Genome1 ID="+id1+" and Genome2 ID="+id2+"\n\n"
         lineList = ["Genome-name1", "Genome-name2", "bit-score", "bbh-percent"]
     
-    #   Check for valid formats
-        if format not in ['tab','csv']:
-            log("Invalid format. Valid formats are tab and csv")
-            return
-        elif format == 'tab':
+        if format == 'tab':
             line += "\t".join(lineList)
         elif format == 'csv':
             line += "'" + ",".join(lineList)

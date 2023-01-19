@@ -1,13 +1,7 @@
 import time
 import os
-import logging
 
 from installed_clients.DataFileUtilClient import DataFileUtil
-
-def log(message, prefix_newline=False):
-    """Logging function, provides a hook to suppress or redirect log messages."""
-    logging.info(('\n' if prefix_newline else '') + '{0:.2f}'.format(time.time()) + ': ' + str(message))
-
 
 class CreateMultiGenomeReport:
     def __init__(self, config):
