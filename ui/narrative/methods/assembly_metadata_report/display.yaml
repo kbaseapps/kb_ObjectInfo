@@ -32,6 +32,11 @@ parameters :
             Assembly
         short-hint : |
             The Assembly object to analyze.
+    report_format:
+        ui-name : |
+            File Format
+        short-hint : |
+            Specify the format for the file.
     showContigs:
         ui-name : |
             Include a FASTA of the Contigs

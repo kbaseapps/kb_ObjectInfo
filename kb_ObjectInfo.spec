@@ -37,6 +37,7 @@ module kb_ObjectInfo {
         assembly_ref input_ref;
         string workspace_name;
         boolean showContigs;
+        string report_format;
     } AssemblyMetadataReportParams;
 
     typedef structure {

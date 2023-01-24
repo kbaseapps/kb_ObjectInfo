@@ -12,6 +12,8 @@ file with a .fna extension instead of making it all one file.
 Comment out the print statement in the assembly section that prints all the output to the log.
 Review all the other print statements in the other apps.
 
+Remove the print statements. Use import logging and log statements instead to add comments to the log.
+
 1.0.0
 -----
 Initial version of the module copied from the third-party version Report_util_landml

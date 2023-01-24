@@ -2,6 +2,7 @@
 #BEGIN_HEADER
 import logging
 import os
+import csv
 
 from Bio import SeqIO
 from pprint import pprint, pformat
@@ -31,9 +32,9 @@ class kb_ObjectInfo:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "1.0.0"
+    VERSION = "1.0.1"
     GIT_URL = "https://github.com/kbaseapps/kb_ObjectInfo"
-    GIT_COMMIT_HASH = "d2ea281e2eb74d3d6e4f3761eddc5ae1a3d23f2f"
+    GIT_COMMIT_HASH = "25e0fc5060a406e7477beea677ec631031b2bdef"
 
     #BEGIN_CLASS_HEADER
 
@@ -86,7 +87,7 @@ class kb_ObjectInfo:
            length threshold for filtering.) -> structure: parameter
            "input_ref" of type "assembly_ref", parameter "workspace_name" of
            String, parameter "showContigs" of type "boolean" (A boolean. 0 =
-           false, other = true.)
+           false, other = true.), parameter "report_format" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -127,11 +128,17 @@ class kb_ObjectInfo:
             raise ValueError('showContigs parameter cannot be negative (' + str(showContigs) + ')')
         if showContigs > 1:
             raise ValueError('showContigs parameter cannot be greater than one (' + str(showContigs) + ')')
-
+        rpt_delimiter = "\t"
+        if 'report_format' in params:
+            report_format = params['report_format']
+            print ("DEBUG: report_format is of type ", type(report_format), "\n")
+            print ("DEBUG: Report",report_format,"\n")
+            if report_format == 'csv':
+                rpt_delimiter = ','
+        
 
         # Step 3 - Get the data and save the output to a file.
         data_file_cli = DataFileUtil(self.callback_url)
-#        assembly_metadata = data_file_cli.get_objects({'object_refs': ['input_ref']})['data'][0]['data']
         assembly = data_file_cli.get_objects({'object_refs': [input_ref]})
         name = "Assembly Data Object"
         object_type = ''
@@ -140,39 +147,59 @@ class kb_ObjectInfo:
             object_type = assembly['data'][0]['info'][2]
         assembly_metadata = assembly['data'][0]['data']
 
+        rpt_list = []
+
         string = name + " Type=" + object_type  + "\n"
+        rpt_list.append([name," Type=",object_type])
         string += "Data Columns are tab-delimited\n"
+        rpt_list.append(["Data Columns are tab-delimited"])
+        
         dna_size = 1.0
         string += "METADATA\n"
+        rpt_list.append(["METADATA"])
+        
         list = ['assembly_id', 'dna_size', 'gc_content', 'num_contigs',
                 'fasta_handle_ref', 'md5', 'type', 'taxon_ref']
         for item in list:
             if item in assembly_metadata:
                 string += item + "\t" + str(assembly_metadata[item]) + "\n"
+                rpt_list.append([item,str(assembly_metadata[item])])
                 if item == 'dna_size':
                     dna_size = assembly_metadata['dna_size']
 
         if 'fasta_handle_info' in assembly_metadata and 'node_file_name' in assembly_metadata['fasta_handle_info']:
             string += "Original filename             = " + assembly_metadata['fasta_handle_info']['node_file_name'] + "\n"
+            rpt_list.append(["Original filename",assembly_metadata['fasta_handle_info']['node_file_name']])
         string += "\nDNA BASES\tCOUNTS\tPERCENT\n"
+        rpt_list.append(["\nDNA BASES","COUNTS","PERCENT"])
         pct = 1.00
         for base in assembly_metadata['base_counts']:
             pct = 100 * assembly_metadata['base_counts'][base] / dna_size
             string += base + "\t" +  str(assembly_metadata['base_counts'][base]) + "\t" + str(pct) + "\n"
-
+            rpt_list.append([base,str(assembly_metadata['base_counts'][base]),str(pct)])
         string += "\nCONTIGS in the Assembly"
         string += "\nName\tLength\tGC content\tNumber of Ns\tContig ID\tDescription\n"
+        rpt_list.append(["\nCONTIGS in the Assembly"])
+        rpt_list.append(["\nName","Length","GC content","Number of Ns","Contig ID","Description"])
+
         if 'contigs' in assembly_metadata:
             myContig = assembly_metadata['contigs']
             for ctg in myContig:
                 list = ['length', 'gc_content', 'Ncount', 'contig_id', 'description']
+
                 string += ctg
+                ctg_list = [ctg]
+                
                 for item in list:
                     if item in myContig[ctg]:
                         string += "\t{}".format(myContig[ctg][item])
+                        ctg_list.append(format(myContig[ctg][item]))
                     else:
                         string += "\t"
+                        ctg_list.append("")
+                        
                 string += "\n"
+            rpt_list.append(ctg_list)
 
         dna = ''
         if showContigs:
@@ -183,8 +210,16 @@ class kb_ObjectInfo:
             report_txt.close()
 
         report_path = os.path.join(self.scratch, 'assembly_metadata_file.tsv')
-        report_txt = open(report_path, "w")
-        report_txt.write(string)
+        if report_format == 'csv':
+            report_path = os.path.join(self.scratch, 'assembly_metadata_file.csv')
+        
+        with open(report_path, mode='w') as rpt_file:
+            rpt_writer = csv.writer(rpt_file, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+            for rpt in rpt_list:
+                rpt_writer.writerow(rpt)
+            
+        #report_txt = open(report_path, "w")
+        #report_txt.write(string)
 
         if dna:
             string += "\nFASTA of the DNA Sequences\n"

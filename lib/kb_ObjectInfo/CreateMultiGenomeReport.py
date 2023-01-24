@@ -84,7 +84,13 @@ class CreateMultiGenomeReport:
         line += "Description  {}\n".format(obj_data['data']['description'])
         line += "Number of Elements {}\n".format(str(len(obj_data['data']['elements'])))
         for ele in obj_data['data']['elements']:
-            line += "  Element:   {}\n".format(ele)
+            gref = obj_data['data']['elements'][ele]['ref']
+            genome = self.dfu.get_objects({'object_refs': [gref]})
+            name = genome['data'][0]['info'][1]
+            sci_name = genome['data'][0]['data']['scientific_name']
+            
+            line += "  Element:   {0:s}\t{1:s}\t{2:s}\n".format(ele, name, sci_name)
+
         return line
 
     # Describe a GenomeSet

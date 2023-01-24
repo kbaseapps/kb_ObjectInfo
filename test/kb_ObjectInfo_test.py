@@ -246,6 +246,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().assembly_metadata_report(self.getContext(),
                                                       {'workspace_name': self.ws_info[1],
                                                        'input_ref': assembly_ref,
+                                                       'report_format' : 'csv',
                                                        'showContigs': 1
                                                        })
         # Validate the returned data
