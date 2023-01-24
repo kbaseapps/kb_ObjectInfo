@@ -216,7 +216,7 @@ class kb_ObjectInfo:
         report_path = os.path.join(self.scratch, 'assembly_metadata_file.tsv')
         if report_format == 'csv':
             report_path = os.path.join(self.scratch, 'assembly_metadata_file.csv')
-            string = "'Data Columns are comma-delimited\n"
+            string = "Data Columns are comma-delimited\n"
         
         with open(report_path, mode='w') as rpt_file:
             rpt_writer = csv.writer(rpt_file, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
@@ -227,12 +227,12 @@ class kb_ObjectInfo:
         print ("DEBUG: STRING=",string)
         #report_txt = open(report_path, "w")
         #report_txt.write(string)
-
+        #report_txt.close()
+        
         if dna:
             string += "\nFASTA of the DNA Sequences\n"
             string += dna
 
-        report_txt.close()
         report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + string + "</pre>")
