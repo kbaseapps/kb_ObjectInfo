@@ -182,7 +182,7 @@ class kb_ObjectInfo:
         string += "\nCONTIGS in the Assembly"
         string += "\nName\tLength\tGC content\tNumber of Ns\tContig ID\tDescription\n"
         rpt_list.append([""])
-        rpt_list.append(["CONTIGS in the Assembly"])
+        rpt_list.append(["CONTIGS IN THE ASSEMBLY"])
         rpt_list.append(["Name","Length","GC content","Number of Ns","Contig ID","Description"])
 
         if 'contigs' in assembly_metadata:
@@ -202,15 +202,7 @@ class kb_ObjectInfo:
                         ctg_list.append("")
                         
                 string += "\n"
-            rpt_list.append(ctg_list)
-
-        dna = ''
-        if showContigs:
-            dna += self.get_assembly_sequence(input_ref)
-            report_path = os.path.join(self.scratch, 'assembly_metadata_file.fna')
-            report_txt = open(report_path, "w")
-            report_txt.write(dna)
-            report_txt.close()
+                rpt_list.append(ctg_list)
 
         string = "Data Columns are tab-delimited\n"
         report_path = os.path.join(self.scratch, 'assembly_metadata_file.tsv')
@@ -229,6 +221,14 @@ class kb_ObjectInfo:
         #report_txt.write(string)
         #report_txt.close()
         
+        dna = ''
+        if showContigs:
+            dna += self.get_assembly_sequence(input_ref)
+            report_path = os.path.join(self.scratch, 'assembly_metadata_file.fna')
+            report_txt = open(report_path, "w")
+            report_txt.write(dna)
+            report_txt.close()
+
         if dna:
             string += "\nFASTA of the DNA Sequences\n"
             string += dna
