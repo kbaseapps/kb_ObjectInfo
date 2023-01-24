@@ -150,9 +150,10 @@ class kb_ObjectInfo:
         rpt_list = []
 
         string = name + " Type=" + object_type  + "\n"
-        rpt_list.append([name," Type=",object_type])
+        rpt_list.append(["Name="+name," Type="+object_type])
+        rpt_list.append([""])
         string += "Data Columns are tab-delimited\n"
-        rpt_list.append(["Data Columns are tab-delimited"])
+
         
         dna_size = 1.0
         string += "METADATA\n"
@@ -171,7 +172,8 @@ class kb_ObjectInfo:
             string += "Original filename             = " + assembly_metadata['fasta_handle_info']['node_file_name'] + "\n"
             rpt_list.append(["Original filename",assembly_metadata['fasta_handle_info']['node_file_name']])
         string += "\nDNA BASES\tCOUNTS\tPERCENT\n"
-        rpt_list.append(["\nDNA BASES","COUNTS","PERCENT"])
+        rpt_list.append([""])
+        rpt_list.append(["DNA BASES","COUNTS","PERCENT"])
         pct = 1.00
         for base in assembly_metadata['base_counts']:
             pct = 100 * assembly_metadata['base_counts'][base] / dna_size
@@ -179,8 +181,9 @@ class kb_ObjectInfo:
             rpt_list.append([base,str(assembly_metadata['base_counts'][base]),str(pct)])
         string += "\nCONTIGS in the Assembly"
         string += "\nName\tLength\tGC content\tNumber of Ns\tContig ID\tDescription\n"
-        rpt_list.append(["\nCONTIGS in the Assembly"])
-        rpt_list.append(["\nName","Length","GC content","Number of Ns","Contig ID","Description"])
+        rpt_list.append([""])
+        rpt_list.append(["CONTIGS in the Assembly"])
+        rpt_list.append(["Name","Length","GC content","Number of Ns","Contig ID","Description"])
 
         if 'contigs' in assembly_metadata:
             myContig = assembly_metadata['contigs']
@@ -209,15 +212,19 @@ class kb_ObjectInfo:
             report_txt.write(dna)
             report_txt.close()
 
+        string = "Data Columns are tab-delimited\n"
         report_path = os.path.join(self.scratch, 'assembly_metadata_file.tsv')
         if report_format == 'csv':
             report_path = os.path.join(self.scratch, 'assembly_metadata_file.csv')
+            string = "'Data Columns are comma-delimited\n"
         
         with open(report_path, mode='w') as rpt_file:
             rpt_writer = csv.writer(rpt_file, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
             for rpt in rpt_list:
                 rpt_writer.writerow(rpt)
-            
+                string += rpt_delimiter.join(rpt) + "\n"
+
+        print ("DEBUG: STRING=",string)
         #report_txt = open(report_path, "w")
         #report_txt.write(string)
 
