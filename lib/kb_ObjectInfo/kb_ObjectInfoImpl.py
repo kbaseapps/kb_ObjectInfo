@@ -131,11 +131,8 @@ class kb_ObjectInfo:
         rpt_delimiter = "\t"
         if 'report_format' in params:
             report_format = params['report_format']
-            print ("DEBUG: report_format is of type ", type(report_format), "\n")
-            print ("DEBUG: Report",report_format,"\n")
             if report_format == 'csv':
                 rpt_delimiter = ','
-        
 
         # Step 3 - Get the data and save the output to a file.
         data_file_cli = DataFileUtil(self.callback_url)
@@ -148,39 +145,29 @@ class kb_ObjectInfo:
         assembly_metadata = assembly['data'][0]['data']
 
         rpt_list = []
-
-        string = name + " Type=" + object_type  + "\n"
         rpt_list.append(["Name="+name," Type="+object_type])
         rpt_list.append([""])
-        string += "Data Columns are tab-delimited\n"
-
-        
-        dna_size = 1.0
-        string += "METADATA\n"
         rpt_list.append(["METADATA"])
-        
+
+        dna_size = 1.0
         list = ['assembly_id', 'dna_size', 'gc_content', 'num_contigs',
                 'fasta_handle_ref', 'md5', 'type', 'taxon_ref']
         for item in list:
             if item in assembly_metadata:
-                string += item + "\t" + str(assembly_metadata[item]) + "\n"
                 rpt_list.append([item,str(assembly_metadata[item])])
                 if item == 'dna_size':
                     dna_size = assembly_metadata['dna_size']
 
         if 'fasta_handle_info' in assembly_metadata and 'node_file_name' in assembly_metadata['fasta_handle_info']:
-            string += "Original filename             = " + assembly_metadata['fasta_handle_info']['node_file_name'] + "\n"
             rpt_list.append(["Original filename",assembly_metadata['fasta_handle_info']['node_file_name']])
-        string += "\nDNA BASES\tCOUNTS\tPERCENT\n"
+            
         rpt_list.append([""])
         rpt_list.append(["DNA BASES","COUNTS","PERCENT"])
         pct = 1.00
         for base in assembly_metadata['base_counts']:
             pct = 100 * assembly_metadata['base_counts'][base] / dna_size
-            string += base + "\t" +  str(assembly_metadata['base_counts'][base]) + "\t" + str(pct) + "\n"
             rpt_list.append([base,str(assembly_metadata['base_counts'][base]),str(pct)])
-        string += "\nCONTIGS in the Assembly"
-        string += "\nName\tLength\tGC content\tNumber of Ns\tContig ID\tDescription\n"
+
         rpt_list.append([""])
         rpt_list.append(["CONTIGS IN THE ASSEMBLY"])
         rpt_list.append(["Name","Length","GC content","Number of Ns","Contig ID","Description"])
@@ -189,19 +176,14 @@ class kb_ObjectInfo:
             myContig = assembly_metadata['contigs']
             for ctg in myContig:
                 list = ['length', 'gc_content', 'Ncount', 'contig_id', 'description']
-
-                string += ctg
                 ctg_list = [ctg]
                 
                 for item in list:
                     if item in myContig[ctg]:
-                        string += "\t{}".format(myContig[ctg][item])
                         ctg_list.append(format(myContig[ctg][item]))
                     else:
-                        string += "\t"
                         ctg_list.append("")
-                        
-                string += "\n"
+
                 rpt_list.append(ctg_list)
 
         string = "Data Columns are tab-delimited\n"
@@ -210,16 +192,13 @@ class kb_ObjectInfo:
             report_path = os.path.join(self.scratch, 'assembly_metadata_file.csv')
             string = "Data Columns are comma-delimited\n"
         
-        with open(report_path, mode='w') as rpt_file:
-            rpt_writer = csv.writer(rpt_file, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+        with open(report_path, mode='w') as report_txt:
+            rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
             for rpt in rpt_list:
                 rpt_writer.writerow(rpt)
                 string += rpt_delimiter.join(rpt) + "\n"
 
-        print ("DEBUG: STRING=",string)
-        #report_txt = open(report_path, "w")
-        #report_txt.write(string)
-        #report_txt.close()
+        print ("DEBUG: STRING=",string,string[0:500],'==============')
         
         dna = ''
         if showContigs:
@@ -257,6 +236,15 @@ class kb_ObjectInfo:
                              'output is not type dict as required.')
         # return the results
         return [output]
+
+#   rpt_list is a list of the rows that will form the output file
+#   string is used for the PREVIEW for the user and for the html version of the file
+#   report_path is the physical location of the output files
+#   report_txt is an internal name used for referencing the report_path
+#   rpt_writer is a writer object responsible for converting user data to delimited strings
+#   report_format is tsv, csv, or something else selected by the user
+#   rpt_delimiter is the delimiter used in the file. "\t" for tsv and ',' for csv, etc.
+
 
     def genome_report(self, ctx, params):
         """
@@ -298,17 +286,19 @@ class kb_ObjectInfo:
 
         report_format = params['report_format']
         string = ''
+        rpt_list = []
+        
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
-            string = cf.delimitedTable(genome_data, 'tab', 'features')
+            string, rpt_list = cf.delimitedTable(genome_data, 'tab', 'features')
             report_path = os.path.join(self.scratch, 'genome_file.tsv')
         elif report_format == 'csv':
             cf = CreateFeatureLists(self.config)
-            string = cf.delimitedTable(genome_data, 'csv', 'features')
+            string, rpt_list = cf.delimitedTable(genome_data, 'csv', 'features')
             report_path = os.path.join(self.scratch, 'genome_file.csv')
         elif report_format == 'gff':
             cf = CreateFeatureLists(self.config)
-            string = cf.gff3(genome_data, 'features')
+            string, rpt_list = cf.gff3(genome_data, 'features')
             report_path = os.path.join(self.scratch, 'genome_file.gff')
         elif report_format == 'fasta':
             cf = CreateFasta(self.config)
@@ -326,10 +316,29 @@ class kb_ObjectInfo:
                 string += self.get_assembly_sequence(input_ref)
             else:
                 string += 'Did not find the Assembly Reference\n'
-
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
+        print ("DEBUG: Writing GenomeReport with",report_format,"\n")
+        
+        rpt_delimiter = "\t"
+        if report_format == 'tsv':
+            string = "Data Columns are tab-delimited\n"
+        elif report_format == 'csv':
+            string = "Data Columns are comma-delimited\n"
+            rpt_delimiter = ','
+        
+        if rpt_list:
+
+            with open(report_path, mode='w') as report_txt:
+                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                if report_format == 'csv':
+                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+                for rpt in rpt_list:
+                    rpt_writer.writerow(rpt)
+                    string += rpt_delimiter.join(rpt) + "\n"
+
+        print ("DEBUG: STRING=",string[0:500],'==================')
 
         report_txt = open(report_path, "w")
         report_txt.write(string)
@@ -400,37 +409,64 @@ class kb_ObjectInfo:
 
         report_format = params['report_format']
         string = ''
+        rpt_list = []
+                
         if report_format == 'tab':
             gsr = CreateMultiGenomeReport(self.config)
-            string = gsr.readGenomeSet(genome_name, genomeset_data, 'tab')
+            string, rpt_list = gsr.readGenomeSet(genome_name, genomeset_data, 'tab')
             report_path = os.path.join(self.scratch, 'genomeset_file.tsv')
         elif report_format == 'csv':
             gsr = CreateMultiGenomeReport(self.config)
-            string = gsr.readGenomeSet(genome_name, genomeset_data, 'csv')
+            string, rpt_list = gsr.readGenomeSet(genome_name, genomeset_data, 'csv')
             report_path = os.path.join(self.scratch, 'genomeset_file.csv')
         elif report_format == 'list':
             gsr = CreateMultiGenomeReport(self.config)
-            string = gsr.readGenomeSet(genome_name, genomeset_data, 'list')
+            string, rpt_list = gsr.readGenomeSet(genome_name, genomeset_data, 'list')
             report_path = os.path.join(self.scratch, 'genomeset_file.tsv')
         elif report_format == 'meta':
             gsr = CreateMultiGenomeReport(self.config)
-            string = gsr.getGenomeSetMeta(genomeset['data'][0])
+            string, rpt_list = gsr.getGenomeSetMeta(genomeset['data'][0])
             report_path = os.path.join(self.scratch, 'genomeset_file.tsv')
         elif report_format == 'fasta':
             gsr = CreateMultiGenomeReport(self.config)
             assembly_list = gsr.getAssemblyRef(genomeset['data'][0])
             string = "Assembly Reference\tScientific Name\tFile Name\n"
+            rpt_list.append(["Assembly Reference","Scientific Name","File Name"])
             for assembly in assembly_list:
                  assembly_ref, sci_name = assembly.split(':')
                  dna = self.get_assembly_sequence(assembly_ref)
-                 report_path = os.path.join(self.scratch, 'G'+assembly_ref.replace('/', '_')+'.fna')
+                 file_name ='G'+assembly_ref.replace('/', '_')+'.fna'
+                 report_path = os.path.join(self.scratch, file_name)
                  report_txt = open(report_path, "w")
                  report_txt.write(dna)
                  report_txt.close()
-                 string += assembly_ref+"\t"+sci_name+"\t"+'G'+assembly_ref.replace('/', '_')+'.fna'+"\n"
+
+                 string += assembly_ref+"\t"+sci_name+"\t"+file_name+"\n"
+                 rpt_list.append([assembly_ref,sci_name,file_name])
+                 
             report_path = os.path.join(self.scratch, 'genomeset_file.txt')
         else:
             raise ValueError('Invalid report option.' + str(report_format))
+
+        rpt_delimiter = "\t"
+        if report_format == 'tsv':
+            string = "Data Columns are tab-delimited\n"
+        elif report_format == 'csv':
+            string = "Data Columns are comma-delimited\n"
+            rpt_delimiter = ','
+        else:
+            string = ''
+        
+        if rpt_list:
+            with open(report_path, mode='w') as report_txt:
+                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                if report_format == 'csv':
+                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+                for rpt in rpt_list:
+                    rpt_writer.writerow(rpt)
+                    string += rpt_delimiter.join(rpt) + "\n"
+
+        print ("DEBUG: STRING=",string[0:500],'==================')
 
         report_txt = open(report_path, "w")
         report_txt.write(string)
@@ -503,21 +539,63 @@ class kb_ObjectInfo:
         report_format = params['report_format']
         string1 = ''
         string2 = ''
+        rpt_list1 = []
+        rpt_list2 = []
+        
+        print ("DEBUG: format=",report_format)
+
+        rpt_delimiter = "\t"
+        if report_format == 'tsv':
+            string1 = "Data Columns are tab-delimited\n"
+            string2 = "Data Columns are tab-delimited\n"
+        elif report_format == 'csv':
+            string1 = "Data Columns are comma-delimited\n"
+            string2 = "Data Columns are comma-delimited\n"
+            rpt_delimiter = ','
+
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
-            string1 = cf.readDomainAnnList(domain_data, 'tab', evalue_cutoff)
-            string2 = cf.readDomainAnnCount(domain_data, 'tab', evalue_cutoff)
+            string1 = cf.readDomainAnnList(domain_data, 'tab', evalue_cutoff,'line')
+            string2 = cf.readDomainAnnCount(domain_data, 'tab', evalue_cutoff,'line')
             report_path1 = os.path.join(self.scratch, 'domain_annotation_list.tsv')
             report_path2 = os.path.join(self.scratch, 'domain_annotation_count.tsv')
         elif report_format == 'csv':
             cf = CreateFeatureLists(self.config)
-            string1 = cf.readDomainAnnList(domain_data, 'csv', evalue_cutoff)
-            string2 = cf.readDomainAnnCount(domain_data, 'csv', evalue_cutoff)
+            string1 = cf.readDomainAnnList(domain_data, 'csv', evalue_cutoff,'line')
+            string2 = cf.readDomainAnnCount(domain_data, 'csv', evalue_cutoff,'line')
             report_path1 = os.path.join(self.scratch, 'domain_annotation_list.csv')
             report_path2 = os.path.join(self.scratch, 'domain_annotation_count.csv')
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
+        rpt_list1 = cf.readDomainAnnList(domain_data, rpt_delimiter, evalue_cutoff,'rpt')
+        rpt_list2 = cf.readDomainAnnCount(domain_data,rpt_delimiter, evalue_cutoff,'rpt')
+        
+        #print("DEBUG1:",*rpt_list1)
+        #print("DEBUG2:",*rpt_list2)
+        
+        if rpt_list1:
+            with open(report_path1, mode='w') as report_txt:
+                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                if report_format == 'csv':
+                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+                for rpt in rpt_list1:
+                    rpt_writer.writerow(rpt)
+                    string1 += rpt_delimiter.join(rpt) + "\n"
+        
+        if rpt_list2:
+            with open(report_path2, mode='w') as report_txt:
+                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                if report_format == 'csv':
+                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+                for rpt in rpt_list2:
+                    rpt_writer.writerow(rpt)
+                    string2 += rpt_delimiter.join(rpt) + "\n"
+
+  
+        #print ("DEBUG: STRING1=",string1[0:500],"\n","DEBUG: STRING2=",string2[0:500],"\n")
+
+   
         report_txt = open(report_path1, "w")
         report_txt.write(string1)
         report_txt.close()
@@ -616,25 +694,43 @@ class kb_ObjectInfo:
         setseq_data = setseq['data'][0]['data']
 
         report_format = params['report_format']
-        string1 = ''
+        string = ''
+        rpt_list = []
+        rpt_delimiter = '\t'
+        print ("DEBUG: Writing FEATSEQ with format ", report_format)
+        
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
-            string1 = cf.readFeatSeq(setseq_data, 'tab')
-            report_path1 = os.path.join(self.scratch, 'sequence_set_list.tsv')
+            string, rpt_list = cf.readFeatSeq(setseq_data, 'tab')
+            report_path = os.path.join(self.scratch, 'sequence_set_list.tsv')
         elif report_format == 'csv':
             cf = CreateFeatureLists(self.config)
-            string1 = cf.readFeatSeq(setseq_data, 'csv')
-            report_path1 = os.path.join(self.scratch, 'sequence_set_list.csv')
+            string, rpt_list = cf.readFeatSeq(setseq_data, 'csv')
+            report_path = os.path.join(self.scratch, 'sequence_set_list.csv')
+            rpt_delimiter = ','
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
-        report_txt = open(report_path1, "w")
-        report_txt.write(string1)
+        print("DEBUG RPT_LIST:",*rpt_list[0:25],'+++++++++++++++++++')
+        
+        if rpt_list:
+            with open(report_path, mode='w') as report_txt:
+                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                if report_format == 'csv':
+                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+                for rpt in rpt_list:
+                    rpt_writer.writerow(rpt)
+                    string += rpt_delimiter.join(rpt) + "\n"
+
+        print ("DEBUG: STRING=",string[0:500],'=================')
+        
+        report_txt = open(report_path, "w")
+        report_txt.write(string)
         report_txt.close()
 
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
-        report_txt.write("<pre>" + string1 + "</pre>")
+        report_txt.write("<pre>" + string + "</pre>")
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
@@ -642,7 +738,7 @@ class kb_ObjectInfo:
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
-                                           string1, self.scratch)
+                                           string, self.scratch)
 
         output = {'report_name': reported_output['name'],
                   'report_ref': reported_output['ref']}
@@ -697,25 +793,43 @@ class kb_ObjectInfo:
         protcomp_data = protcomp['data'][0]['data']
 
         report_format = params['report_format']
-        string1 = ''
+        string = ''
+        rpt_list = []
+        rpt_delimiter = '\t'
+        print ("DEBUG: Writing ProtComp with",report_format,"\n")
+        
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
-            string1 = cf.readProtComp(protcomp_data, 'tab')
-            report_path1 = os.path.join(self.scratch, 'protcomp_list.tsv')
+            string, rpt_list = cf.readProtComp(protcomp_data, 'tab')
+            report_path = os.path.join(self.scratch, 'protcomp_list.tsv')
         elif report_format == 'csv':
             cf = CreateFeatureLists(self.config)
-            string1 = cf.readProtComp(protcomp_data, 'csv')
-            report_path1 = os.path.join(self.scratch, 'protcomp_list.csv')
+            string, rpt_list = cf.readProtComp(protcomp_data, 'csv')
+            report_path = os.path.join(self.scratch, 'protcomp_list.csv')
+            rpt_delimiter = ','
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
-        report_txt = open(report_path1, "w")
-        report_txt.write(string1)
+        print("DEBUG RPT_LIST:",*rpt_list[0:25],'++++++++++++++++')
+        
+        if rpt_list:
+            with open(report_path, mode='w') as report_txt:
+                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                if report_format == 'csv':
+                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+                for rpt in rpt_list:
+                    rpt_writer.writerow(rpt)
+                    string += rpt_delimiter.join(rpt) + "\n"
+
+        print ("DEBUG: STRING=",string[0:500],'==================')
+        
+        report_txt = open(report_path, "w")
+        report_txt.write(string)
         report_txt.close()
 
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
-        report_txt.write("<pre>" + string1 + "</pre>")
+        report_txt.write("<pre>" + string + "</pre>")
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
@@ -723,7 +837,7 @@ class kb_ObjectInfo:
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
-                                           string1, self.scratch)
+                                           string, self.scratch)
 
         output = {'report_name': reported_output['name'],
                   'report_ref': reported_output['ref']}

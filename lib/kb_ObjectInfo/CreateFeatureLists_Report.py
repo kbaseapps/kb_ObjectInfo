@@ -165,12 +165,16 @@ class CreateFeatureLists:
         seed_cat = self.domfam2cat
         
         line = ""
-        lineList = ["Feature ID", "Feature type", "Contig", "Start", "Stop", "Strand", "Feature Function", "Aliases",
-                    "RAST Functional Assignment", "RAST Functional Group 1", "RAST Functional Group 2"]
+        rpt_list = []
+        rpt_list.append(["Feature ID", "Feature type", "Contig", "Start", "Stop", "Strand", "Feature Function", "Aliases",
+                    "RAST Functional Assignment", "RAST Functional Group 1", "RAST Functional Group 2"])
+        lineList = ("Feature ID", "Feature type", "Contig", "Start", "Stop", "Strand", "Feature Function", "Aliases",
+                    "RAST Functional Assignment", "RAST Functional Group 1", "RAST Functional Group 2")
         if format == 'tab':
             line += "\t".join(lineList) + "\n"
         else:
             line += ",".join(lineList) + "\n"
+        
             
         cat = ''
         domfam = ''
@@ -236,6 +240,7 @@ class CreateFeatureLists:
                 if domfam in self.domfam2name:
                     subgroup = self.domfam2name[domfam]
  
+            rpt_list.append([feat['id'], feat['type'], contig, str(start), str(stop), strand, feat['function'], aliases, cat, subgroup, catgroup])
             if format == 'tab':
                 lineList = [feat['id'], feat['type'], contig, str(start), str(stop), strand, feat['function'], aliases, cat, subgroup, catgroup]
                 line += "\t".join(lineList) + "\n"
@@ -246,7 +251,7 @@ class CreateFeatureLists:
                 lineList = [feat['id'], feat['type'], contig, str(start), str(stop), strand, feat['function'], aliases, cat, subgroup, catgroup]
                 line += ",".join(lineList) + "\n"
 
-        return line
+        return line, rpt_list
 
 
         # -----------------------------------------------------------------
@@ -255,9 +260,10 @@ class CreateFeatureLists:
 
     def gff3(self, genome, features):
         line = ""
+        rpt_list = []
         if features not in genome:
-            return line
-        
+            return line, rpt_list
+
         for feat in genome[features]:
             if 'function' not in feat:
                 feat['function'] = 'unknown'
@@ -308,9 +314,10 @@ class CreateFeatureLists:
                 attrib += ";ALIASES=" + aliases
 
             lineList = [contig, ph, feat['type'], str(start), str(stop), ph, strand, ph, attrib]
-            line += "\t".join(lineList) + "\n"
+            line += "\t".join(lineList) + "\n"            
+            rpt_list.append([contig, ph, feat['type'], str(start), str(stop), ph, strand, ph, attrib])
 
-        return line
+        return line, rpt_list
 
 
 
@@ -374,11 +381,12 @@ class CreateFeatureLists:
     #   Loop through all of the contigs and get all of the genes
     #   Uses printGeneDomain to print out individual lines
     #
-    def readDomainAnnList(self, pyStr, format, cutoff):
+    def readDomainAnnList(self, pyStr, format, cutoff,rttype):
         # Header
         line = ""
         lineList = ["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name", "Category", "Category Name", "Category Group"]
-
+        rpt_list = [lineList]
+        
         if format == 'tab':
             line = "\t".join(lineList)
         elif format == 'csv':
@@ -395,9 +403,12 @@ class CreateFeatureLists:
                 if (gene[4]):
                     domain = gene[4]
                     line += self.printGeneDomain(contig, gene[0], domain, format, cutoff)
-
-        return line
-
+                    rpt_list += ([self.printGeneDomain(contig, gene[0], domain, format, cutoff)])
+        #print ("DEBUG: line=",line[0:500])
+        if rttype == 'line':
+            return line
+        else:
+            return rpt_list
 
     #
     #   OBJECT: DomainAnnotation
@@ -420,17 +431,13 @@ class CreateFeatureLists:
     #   FORMAT: List of the domains and number of occurrences in the genome
     #   Uses countGeneDomain to get the statistics for an individual gene
     #
-    def readDomainAnnCount(self, pyStr, format, cutoff):
+    def readDomainAnnCount(self, pyStr, format, cutoff,rttype):
 
         # Header
         line = ""
         lineList = ["Domain", "Count"]
-
-        if format == 'tab':
-            line = "\t".join(lineList)
-        elif format == 'csv':
-            line = "'" + ",".join(lineList)
-
+        rpt_list = [lineList]
+            
         # Add line-end to the header
         line += "\n"
 
@@ -448,14 +455,20 @@ class CreateFeatureLists:
         domainList.sort()
         for domain in domainList:
             lineList = [domain, str(myDict[domain])]
+            rpt_list.append(lineList)
+            
             if format == 'tab':
                 line += "\t".join(lineList)
             elif format == 'csv':
                 line += ",".join(lineList)
             line += "\n"
 
-        return line
-
+        #print ("DEBUG: line=",line[0:500])
+                    
+        if rttype == 'line':
+            return line
+        else:
+            return rpt_list
 
     #
     #   OBJECT: FeatureSet or SequenceSet
@@ -466,17 +479,22 @@ class CreateFeatureLists:
         # Header
         line = ""
         lineList = list()
+        rpt_list = []
 
         cf = CreateFasta(self.config)
 #
 #   Type 1 - Order matters
 #
         if 'description' in pyStr and 'elements' in pyStr and 'element_ordering' in pyStr:
-            lineList.append(['Description', str(pyStr['description']), "\n\nOrdered Elements:\nIndex\tFeature ID\tSource Genome Object ID"])
+            lineList.append(['Description', str(pyStr['description'])])
+            lineList.append(["\n\nOrdered Elements:\nIndex\tFeature ID\tSource Genome Object ID"])
+            rpt_list = [['Description', str(pyStr['description'])],[" "],[" "],["Ordered Elements:"],["Index","Feature ID","Source Genome Object ID"]]
+            
             eleOrder = pyStr['element_ordering']
             count = 1
             for index in eleOrder:
                 lineList.append([str(count), index, ",".join(pyStr['elements'][index]) ])
+                rpt_list += ([[str(count)] + [index] + pyStr['elements'][index] ])
                 count += 1
 
 #
@@ -485,14 +503,18 @@ class CreateFeatureLists:
         elif 'description' in pyStr and 'elements' in pyStr:
             lineList.append(['Description', pyStr['description']])
             lineList.append(["\n\nUnordered Elements:\nFeature ID\tSource Genome Object ID"])
+            rpt_list = [['Description', pyStr['description']],[" "],[" "],["Unordered Elements:"],["Feature ID","Source Genome Object ID"]]
+            
             myElements = pyStr['elements']
             count = 0
             for element in myElements:
                 if isinstance(myElements[element],list):
                     for i in myElements[element]:
                         lineList.append([element, i])
+                        rpt_list.append([element, i])
                 else:
                     lineList.append([element, myElements[element]])
+                    rpt_list.append([element, myElements[element]])
                 count += 1
 
 #
@@ -502,6 +524,7 @@ class CreateFeatureLists:
             lineList.append(['Set Description', pyStr['description']])
             lineList.append(["Sequence Set ID", pyStr['sequence_set_id']])
             lineList.append(["Sequences:"])
+            rpt_list = [['Set Description', pyStr['description']],["Sequence Set ID", pyStr['sequence_set_id']],["Sequences:"]]
 
             mySequences = pyStr['sequences']
             count = 0
@@ -509,6 +532,8 @@ class CreateFeatureLists:
                 seqline = cf.splitSequence(seq['sequence'])
                 lineList.append([">" + seq['sequence_id'], seq['description']])
                 lineList.append([seqline])
+                rpt_list += ([">" + seq['sequence_id'], seq['description']])
+                rpt_list += ([seqline])
                 count += 1
 
 #
@@ -529,7 +554,7 @@ class CreateFeatureLists:
         # Add line-end to the header
         line += "\n"
 
-        return line
+        return line,rpt_list
 
     def readProtComp(self, pyStr,format):
 # Header
@@ -538,6 +563,7 @@ class CreateFeatureLists:
         id2 = pyStr["genome2ref"]
         line = "Genome1 ID="+id1+" and Genome2 ID="+id2+"\n\n"
         lineList = ["Genome-name1", "Genome-name2", "bit-score", "bbh-percent"]
+        rpt_list = [lineList]
     
         if format == 'tab':
             line += "\t".join(lineList)
@@ -556,6 +582,7 @@ class CreateFeatureLists:
             if not pairs1[pos1]:
                 # The list is empty, no genome2 gene
                 lineList = [name1, 'NA']
+                rpt_list += ([lineList])
                 if format == 'tab':
                     line += "\t".join(lineList) + "\n"
                 elif format == 'csv':
@@ -569,6 +596,8 @@ class CreateFeatureLists:
                 bbh_percent = pair[2]
                 name2 = names2[pos2]
                 lineList = [name1, name2, str(bit_score), str(bbh_percent)]
+                rpt_list += ([lineList])
+                
                 if format == 'tab':
                     line += "\t".join(lineList) + "\n"
                 elif format == 'csv':
@@ -580,6 +609,8 @@ class CreateFeatureLists:
             if not pairs2[pos2]:
                 # The list is empty, no genome1 gene
                 lineList = ['NA', name2]
+                rpt_list += ([lineList])
+                
                 if format == 'tab':
                     line += "\t".join(lineList) + "\n"
                 elif format == 'csv':
@@ -593,10 +624,12 @@ class CreateFeatureLists:
                 bbh_percent = pair[2]
                 name1 = names1[pos1]
                 lineList = [name1, name2, str(bit_score), str(bbh_percent)]
+                rpt_list += ([lineList])
+                                
                 if format == 'tab':
                     line += "\t".join(lineList) + "\n"
                 elif format == 'csv':
                     line += ",".join(lineList) + "\n"
                 count += 1             
 
-        return line
+        return line, rpt_list
