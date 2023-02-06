@@ -38,6 +38,14 @@ class kb_ObjectInfo:
 
     #BEGIN_CLASS_HEADER
 
+#   rpt_list is a list of the rows that will form the output file
+#   string is used for the PREVIEW for the user and for the html version of the file
+#   report_path is the physical location of the output files
+#   report_txt is an internal name used for referencing the report_path
+#   rpt_writer is a writer object responsible for converting user data to delimited strings
+#   report_format is tsv, csv, or something else selected by the user
+#   rpt_delimiter is the delimiter used in the file. "\t" for tsv and ',' for csv, etc.
+
     def get_assembly_sequence(self,input_ref):
         # Download the input data as a Fasta
         # We can use the AssemblyUtils module to download a FASTA file from our Assembly data object.
@@ -128,11 +136,11 @@ class kb_ObjectInfo:
             raise ValueError('showContigs parameter cannot be negative (' + str(showContigs) + ')')
         if showContigs > 1:
             raise ValueError('showContigs parameter cannot be greater than one (' + str(showContigs) + ')')
+
+        report_format = params['report_format']
         rpt_delimiter = "\t"
-        if 'report_format' in params:
-            report_format = params['report_format']
-            if report_format == 'csv':
-                rpt_delimiter = ','
+        if report_format == 'csv':
+            rpt_delimiter = ','
 
         # Step 3 - Get the data and save the output to a file.
         data_file_cli = DataFileUtil(self.callback_url)
@@ -198,7 +206,7 @@ class kb_ObjectInfo:
                 rpt_writer.writerow(rpt)
                 string += rpt_delimiter.join(rpt) + "\n"
 
-        print ("DEBUG: STRING=",string,string[0:500],'==============')
+        #print ("DEBUG: STRING=",string,string[0:500],'==============')
         
         dna = ''
         if showContigs:
@@ -237,13 +245,6 @@ class kb_ObjectInfo:
         # return the results
         return [output]
 
-#   rpt_list is a list of the rows that will form the output file
-#   string is used for the PREVIEW for the user and for the html version of the file
-#   report_path is the physical location of the output files
-#   report_txt is an internal name used for referencing the report_path
-#   rpt_writer is a writer object responsible for converting user data to delimited strings
-#   report_format is tsv, csv, or something else selected by the user
-#   rpt_delimiter is the delimiter used in the file. "\t" for tsv and ',' for csv, etc.
 
 
     def genome_report(self, ctx, params):
@@ -285,8 +286,8 @@ class kb_ObjectInfo:
         genome_data = genome['data'][0]['data']
 
         report_format = params['report_format']
-        string = ''
         rpt_list = []
+        string = ''
         
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
@@ -319,17 +320,20 @@ class kb_ObjectInfo:
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
-        print ("DEBUG: Writing GenomeReport with",report_format,"\n")
-        
-        rpt_delimiter = "\t"
-        if report_format == 'tsv':
-            string = "Data Columns are tab-delimited\n"
-        elif report_format == 'csv':
-            string = "Data Columns are comma-delimited\n"
-            rpt_delimiter = ','
-        
-        if rpt_list:
+        #print ("DEBUG: Writing GenomeReport with",report_format,"\n")
 
+
+#       The rpt_list only exists if the output is tab or comma delimited
+#       If the output is DNA or mRNA/Fasta, don't reset the string or use csv.writer
+        if rpt_list:
+            string = ''
+            rpt_delimiter = "\t"
+            if report_format == 'tsv':
+                string = "Data Columns are tab-delimited\n"
+            elif report_format == 'csv':
+                string = "Data Columns are comma-delimited\n"
+                rpt_delimiter = ','
+                
             with open(report_path, mode='w') as report_txt:
                 rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 if report_format == 'csv':
@@ -337,12 +341,11 @@ class kb_ObjectInfo:
                 for rpt in rpt_list:
                     rpt_writer.writerow(rpt)
                     string += rpt_delimiter.join(rpt) + "\n"
-
-        print ("DEBUG: STRING=",string[0:500],'==================')
-
-        report_txt = open(report_path, "w")
-        report_txt.write(string)
-        report_txt.close()
+        else:
+            report_txt = open(report_path, "w")
+            report_txt.write(string)
+            report_txt.close()
+        
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + string + "</pre>")
@@ -408,7 +411,7 @@ class kb_ObjectInfo:
         genomeset_data = genomeset['data'][0]['data']
 
         report_format = params['report_format']
-        string = ''
+
         rpt_list = []
                 
         if report_format == 'tab':
@@ -448,15 +451,14 @@ class kb_ObjectInfo:
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
+        string = ''
         rpt_delimiter = "\t"
         if report_format == 'tsv':
             string = "Data Columns are tab-delimited\n"
         elif report_format == 'csv':
             string = "Data Columns are comma-delimited\n"
             rpt_delimiter = ','
-        else:
-            string = ''
-        
+    
         if rpt_list:
             with open(report_path, mode='w') as report_txt:
                 rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -466,11 +468,11 @@ class kb_ObjectInfo:
                     rpt_writer.writerow(rpt)
                     string += rpt_delimiter.join(rpt) + "\n"
 
-        print ("DEBUG: STRING=",string[0:500],'==================')
+        #print ("DEBUG: STRING=",string[0:500],'==================')
 
-        report_txt = open(report_path, "w")
-        report_txt.write(string)
-        report_txt.close()
+        #report_txt = open(report_path, "w")
+        #report_txt.write(string)
+        #report_txt.close()
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + string + "</pre>")
@@ -537,12 +539,11 @@ class kb_ObjectInfo:
 
         evalue_cutoff = float(params['evalue_cutoff'])
         report_format = params['report_format']
-        string1 = ''
-        string2 = ''
+
         rpt_list1 = []
         rpt_list2 = []
         
-        print ("DEBUG: format=",report_format)
+        #print ("DEBUG: format=",report_format)
 
         rpt_delimiter = "\t"
         if report_format == 'tsv':
@@ -573,6 +574,8 @@ class kb_ObjectInfo:
         
         #print("DEBUG1:",*rpt_list1)
         #print("DEBUG2:",*rpt_list2)
+        string1 = ''
+        string2 = ''
         
         if rpt_list1:
             with open(report_path1, mode='w') as report_txt:
@@ -596,12 +599,12 @@ class kb_ObjectInfo:
         #print ("DEBUG: STRING1=",string1[0:500],"\n","DEBUG: STRING2=",string2[0:500],"\n")
 
    
-        report_txt = open(report_path1, "w")
-        report_txt.write(string1)
-        report_txt.close()
-        report_txt = open(report_path2, "w")
-        report_txt.write(string2)
-        report_txt.close()
+        #report_txt = open(report_path1, "w")
+        #report_txt.write(string1)
+        #report_txt.close()
+        #report_txt = open(report_path2, "w")
+        #report_txt.write(string2)
+        #report_txt.close()
 
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
@@ -694,10 +697,10 @@ class kb_ObjectInfo:
         setseq_data = setseq['data'][0]['data']
 
         report_format = params['report_format']
-        string = ''
+
         rpt_list = []
         rpt_delimiter = '\t'
-        print ("DEBUG: Writing FEATSEQ with format ", report_format)
+        #print ("DEBUG: Writing FEATSEQ with format ", report_format)
         
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
@@ -711,8 +714,7 @@ class kb_ObjectInfo:
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
-        print("DEBUG RPT_LIST:",*rpt_list[0:25],'+++++++++++++++++++')
-        
+        string = ''
         if rpt_list:
             with open(report_path, mode='w') as report_txt:
                 rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -722,11 +724,11 @@ class kb_ObjectInfo:
                     rpt_writer.writerow(rpt)
                     string += rpt_delimiter.join(rpt) + "\n"
 
-        print ("DEBUG: STRING=",string[0:500],'=================')
+        #print ("DEBUG: STRING=",string[0:500],'=================')
         
-        report_txt = open(report_path, "w")
-        report_txt.write(string)
-        report_txt.close()
+        #report_txt = open(report_path, "w")
+        #report_txt.write(string)
+        #report_txt.close()
 
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
@@ -793,10 +795,10 @@ class kb_ObjectInfo:
         protcomp_data = protcomp['data'][0]['data']
 
         report_format = params['report_format']
-        string = ''
+
         rpt_list = []
         rpt_delimiter = '\t'
-        print ("DEBUG: Writing ProtComp with",report_format,"\n")
+        #print ("DEBUG: Writing ProtComp with",report_format,"\n")
         
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
@@ -810,8 +812,8 @@ class kb_ObjectInfo:
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
-        print("DEBUG RPT_LIST:",*rpt_list[0:25],'++++++++++++++++')
-        
+        #print("DEBUG RPT_LIST:",*rpt_list[0:25],'++++++++++++++++')
+        string = ''
         if rpt_list:
             with open(report_path, mode='w') as report_txt:
                 rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -821,11 +823,11 @@ class kb_ObjectInfo:
                     rpt_writer.writerow(rpt)
                     string += rpt_delimiter.join(rpt) + "\n"
 
-        print ("DEBUG: STRING=",string[0:500],'==================')
+        #print ("DEBUG: STRING=",string[0:500],'==================')
         
-        report_txt = open(report_path, "w")
-        report_txt.write(string)
-        report_txt.close()
+        #report_txt = open(report_path, "w")
+        #report_txt.write(string)
+        #report_txt.close()
 
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
@@ -850,6 +852,7 @@ class kb_ObjectInfo:
                              'output is not type dict as required.')
         # return the results
         return [output]
+        
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",

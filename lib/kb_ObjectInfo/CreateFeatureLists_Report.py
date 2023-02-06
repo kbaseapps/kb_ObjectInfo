@@ -4,12 +4,14 @@ import re
 import logging
 
 from .CreateFasta_Report import CreateFasta
+from installed_clients.DataFileUtilClient import DataFileUtil
 from pprint import pprint, pformat
 
 class CreateFeatureLists:
     def __init__(self, config):
         self.config = config
         self.callback_url = os.environ['SDK_CALLBACK_URL']
+        self.dfu = DataFileUtil(self.callback_url)
         (self.cats, self.cat2name, self.cat2group, self.domfam2cat, self.domfam2name, self.domfam2ns) = self._configure_categories()
         logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',
                         level=logging.INFO,
@@ -560,8 +562,12 @@ class CreateFeatureLists:
 # Header
  
         id1 = pyStr["genome1ref"]
+        genome1 = self.dfu.get_objects({'object_refs': [id1]})['data'][0]['info'][1]
         id2 = pyStr["genome2ref"]
-        line = "Genome1 ID="+id1+" and Genome2 ID="+id2+"\n\n"
+        genome2 = self.dfu.get_objects({'object_refs': [id2]})['data'][0]['info'][1]
+        
+        line = "Genome1 ID="+genome1+" and Genome2 ID="+genome2+"\n\n"
+        rpt_list = [["Genome1 ID=",genome1],["Genome2 ID=",genome2],["\n"],["\n"]]
         lineList = ["Genome-name1", "Genome-name2", "bit-score", "bbh-percent"]
         rpt_list = [lineList]
     
