@@ -406,7 +406,6 @@ class CreateFeatureLists:
                     domain = gene[4]
                     line += self.printGeneDomain(contig, gene[0], domain, format, cutoff)
                     rpt_list += ([self.printGeneDomain(contig, gene[0], domain, format, cutoff)])
-        #print ("DEBUG: line=",line[0:500])
         if rttype == 'line':
             return line
         else:
@@ -464,9 +463,7 @@ class CreateFeatureLists:
             elif format == 'csv':
                 line += ",".join(lineList)
             line += "\n"
-
-        #print ("DEBUG: line=",line[0:500])
-                    
+    
         if rttype == 'line':
             return line
         else:
@@ -482,17 +479,23 @@ class CreateFeatureLists:
         line = ""
         lineList = list()
         rpt_list = []
-
         cf = CreateFasta(self.config)
 #
 #   Type 1 - Order matters
 #
         if 'description' in pyStr and 'elements' in pyStr and 'element_ordering' in pyStr:
             lineList.append(['Description', str(pyStr['description'])])
-            lineList.append(["\n\nOrdered Elements:\nIndex\tFeature ID\tSource Genome Object ID"])
-            rpt_list = [['Description', str(pyStr['description'])],[" "],[" "],["Ordered Elements:"],["Index","Feature ID","Source Genome Object ID"]]
+            rpt_list = [['Description', str(pyStr['description'])],['Genomes']]
             
             eleOrder = pyStr['element_ordering']
+            for index in eleOrder:
+                genome_name = self.dfu.get_objects({'object_refs': [pyStr['elements'][index][0]]})['data'][0]['info'][1]
+                lineList.append([pyStr['elements'][index][0], genome_name ])
+                rpt_list.append([pyStr['elements'][index][0], genome_name ])
+
+            lineList.append(["\n\nOrdered Elements:\nIndex\tFeature ID\tSource Genome Object ID"])
+            rpt_list += ([" "],[" "],["Ordered Elements:"],["Index","Feature ID","Source Genome Object ID"])
+            
             count = 1
             for index in eleOrder:
                 lineList.append([str(count), index, ",".join(pyStr['elements'][index]) ])
@@ -504,19 +507,33 @@ class CreateFeatureLists:
 #
         elif 'description' in pyStr and 'elements' in pyStr:
             lineList.append(['Description', pyStr['description']])
-            lineList.append(["\n\nUnordered Elements:\nFeature ID\tSource Genome Object ID"])
-            rpt_list = [['Description', pyStr['description']],[" "],[" "],["Unordered Elements:"],["Feature ID","Source Genome Object ID"]]
-            
+            rpt_list = [['Description', pyStr['description']]]
             myElements = pyStr['elements']
+            genome_names = {}
+            
+            for element in myElements:
+                if isinstance(myElements[element],list):
+                    for gid in myElements[element]:
+                        if gid not in genome_names.keys():
+                            genome_name = self.dfu.get_objects({'object_refs': [gid]})['data'][0]['info'][1]
+                            genome_names[gid] = genome_name
+                else:
+                    gid = myElements[element]
+                    if gid not in genome_names.keys():
+                        genome_name = self.dfu.get_objects({'object_refs': [gid]})['data'][0]['info'][1]
+                        genome_names[gid] = genome_name
+
+            lineList.append(["\n\nUnordered Elements:\nFeature ID\tSource Genome Object ID"])
+            rpt_list += [[" "],[" "],["Unordered Elements:"],["Feature ID","Source Genome Object ID"]]
             count = 0
             for element in myElements:
                 if isinstance(myElements[element],list):
                     for i in myElements[element]:
                         lineList.append([element, i])
-                        rpt_list.append([element, i])
+                        rpt_list.append([element, i, genome_names[i]])
                 else:
                     lineList.append([element, myElements[element]])
-                    rpt_list.append([element, myElements[element]])
+                    rpt_list.append([element, myElements[element], genome_names[myElements[element]]])
                 count += 1
 
 #
@@ -527,15 +544,14 @@ class CreateFeatureLists:
             lineList.append(["Sequence Set ID", pyStr['sequence_set_id']])
             lineList.append(["Sequences:"])
             rpt_list = [['Set Description', pyStr['description']],["Sequence Set ID", pyStr['sequence_set_id']],["Sequences:"]]
-
             mySequences = pyStr['sequences']
             count = 0
             for seq in mySequences:
                 seqline = cf.splitSequence(seq['sequence'])
                 lineList.append([">" + seq['sequence_id'], seq['description']])
                 lineList.append([seqline])
-                rpt_list += ([">" + seq['sequence_id'], seq['description']])
-                rpt_list += ([seqline])
+                rpt_list.append([">" + seq['sequence_id'], seq['description']])
+                rpt_list.append([seqline])
                 count += 1
 
 #
@@ -566,10 +582,10 @@ class CreateFeatureLists:
         id2 = pyStr["genome2ref"]
         genome2 = self.dfu.get_objects({'object_refs': [id2]})['data'][0]['info'][1]
         
-        line = "Genome1 ID="+genome1+" and Genome2 ID="+genome2+"\n\n"
+        line = "Genome1 ID="+genome1+"\nGenome2 ID="+genome2+"\n\n"
         rpt_list = [["Genome1 ID=",genome1],["Genome2 ID=",genome2],["\n"],["\n"]]
-        lineList = ["Genome-name1", "Genome-name2", "bit-score", "bbh-percent"]
-        rpt_list = [lineList]
+        lineList = ["Genome1", "Genome2", "bit-score", "bbh-percent"]
+        rpt_list += [lineList]
     
         if format == 'tab':
             line += "\t".join(lineList)
