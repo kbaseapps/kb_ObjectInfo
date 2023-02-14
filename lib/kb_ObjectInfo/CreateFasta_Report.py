@@ -11,18 +11,18 @@ class CreateFasta:
         colsz = 50
         start = 0
         lenseq = len(seq)
-        line = ""
+        fasta = []
 
         while True:
             end = start + colsz
             if end > lenseq:
                 end = lenseq
-            line += seq[start:end] + "\n"
+            line += [seq[start:end]]
             start += colsz
             if start > lenseq:
 #                False
                 break
-        return line
+        return fasta
 
 
     # -----------------------------------------------------------------

@@ -62,6 +62,22 @@ class kb_ObjectInfo:
             string += "\n"
 
         return string
+        
+    def make_HTML(self,rpt_list):
+        table = "<table>\n"
+
+        # Create the table's row data
+        for row in rpt_list:
+            table += "  <tr>\n"
+            for col in row:
+                if col < '     ':
+                    table += "  </tr>\n<table>\n"
+                    
+                table += "    <td>{0}</td>\n".format(col)
+            table += "  </tr>\n"
+
+        table += "</table>\n"
+        return table
 
     #END_CLASS_HEADER
 
@@ -81,7 +97,6 @@ class kb_ObjectInfo:
         self.config = config
         #END_CONSTRUCTOR
         pass
-
 
     def assembly_metadata_report(self, ctx, params):
         """
@@ -205,8 +220,6 @@ class kb_ObjectInfo:
             for rpt in rpt_list:
                 rpt_writer.writerow(rpt)
                 string += rpt_delimiter.join(rpt) + "\n"
-
-        #print ("DEBUG: STRING=",string,string[0:500],'==============')
         
         dna = ''
         if showContigs:
@@ -220,6 +233,7 @@ class kb_ObjectInfo:
             string += "\nFASTA of the DNA Sequences\n"
             string += dna
 
+        
         report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + string + "</pre>")
@@ -320,9 +334,6 @@ class kb_ObjectInfo:
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
-        #print ("DEBUG: Writing GenomeReport with",report_format,"\n")
-
-
 #       The rpt_list only exists if the output is tab or comma delimited
 #       If the output is DNA or mRNA/Fasta, don't reset the string or use csv.writer
         if rpt_list:
@@ -345,10 +356,14 @@ class kb_ObjectInfo:
             report_txt = open(report_path, "w")
             report_txt.write(string)
             report_txt.close()
+            
+
         
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
-        report_txt.write("<pre>" + string + "</pre>")
+        htmltable = self.make_HTML(rpt_list)
+        #report_txt.write("<pre>" + string + "</pre>")
+        report_txt.write(htmltable)
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
@@ -464,18 +479,20 @@ class kb_ObjectInfo:
                 rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 if report_format == 'csv':
                     rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+
                 for rpt in rpt_list:
                     rpt_writer.writerow(rpt)
                     string += rpt_delimiter.join(rpt) + "\n"
 
-        #print ("DEBUG: STRING=",string[0:500],'==================')
-
         #report_txt = open(report_path, "w")
         #report_txt.write(string)
         #report_txt.close()
+        
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
-        report_txt.write("<pre>" + string + "</pre>")
+        htmltable = self.make_HTML(rpt_list)
+        #report_txt.write("<pre>" + string + "</pre>")
+        report_txt.write(htmltable)
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
@@ -542,62 +559,55 @@ class kb_ObjectInfo:
 
         rpt_list1 = []
         rpt_list2 = []
-        
-        #print ("DEBUG: format=",report_format)
 
         rpt_delimiter = "\t"
-        if report_format == 'tsv':
-            string1 = "Data Columns are tab-delimited\n"
-            string2 = "Data Columns are tab-delimited\n"
-        elif report_format == 'csv':
-            string1 = "Data Columns are comma-delimited\n"
-            string2 = "Data Columns are comma-delimited\n"
+#        if report_format == 'tsv':
+#            string1 = "Data Columns are tab-delimited\n"
+#            string2 = "Data Columns are tab-delimited\n"
+        if report_format == 'csv':
+#            string1 = "Data Columns are comma-delimited\n"
+#            string2 = "Data Columns are comma-delimited\n"
             rpt_delimiter = ','
 
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
-            string1 = cf.readDomainAnnList(domain_data, 'tab', evalue_cutoff,'line')
-            string2 = cf.readDomainAnnCount(domain_data, 'tab', evalue_cutoff,'line')
+            #string1 = cf.readDomainAnnList(domain_data, 'tab', evalue_cutoff,'line')
+            #string2 = cf.readDomainAnnCount(domain_data, 'tab', evalue_cutoff,'line')
             report_path1 = os.path.join(self.scratch, 'domain_annotation_list.tsv')
             report_path2 = os.path.join(self.scratch, 'domain_annotation_count.tsv')
         elif report_format == 'csv':
             cf = CreateFeatureLists(self.config)
-            string1 = cf.readDomainAnnList(domain_data, 'csv', evalue_cutoff,'line')
-            string2 = cf.readDomainAnnCount(domain_data, 'csv', evalue_cutoff,'line')
+            #string1 = cf.readDomainAnnList(domain_data, 'csv', evalue_cutoff,'line')
+            #string2 = cf.readDomainAnnCount(domain_data, 'csv', evalue_cutoff,'line')
             report_path1 = os.path.join(self.scratch, 'domain_annotation_list.csv')
             report_path2 = os.path.join(self.scratch, 'domain_annotation_count.csv')
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
-        rpt_list1 = cf.readDomainAnnList(domain_data, rpt_delimiter, evalue_cutoff,'rpt')
-        rpt_list2 = cf.readDomainAnnCount(domain_data,rpt_delimiter, evalue_cutoff,'rpt')
+        rpt_list1 = cf.readDomainAnnList(domain_data, rpt_delimiter, evalue_cutoff)
+        rpt_list2 = cf.readDomainAnnCount(domain_data,rpt_delimiter, evalue_cutoff)
         
-        #print("DEBUG1:",*rpt_list1)
-        #print("DEBUG2:",*rpt_list2)
         string1 = ''
         string2 = ''
         
-        if rpt_list1:
-            with open(report_path1, mode='w') as report_txt:
-                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                if report_format == 'csv':
-                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
-                for rpt in rpt_list1:
-                    rpt_writer.writerow(rpt)
-                    string1 += rpt_delimiter.join(rpt) + "\n"
+        if rpt_list1 or rpt_list2:
+            if rpt_list1:
+                with open(report_path1, mode='w') as report_txt:
+                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                    if report_format == 'csv':
+                        rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+                    for rpt in rpt_list1:
+                        rpt_writer.writerow(rpt)
+                        string1 += rpt_delimiter.join(rpt) + "\n"
         
-        if rpt_list2:
-            with open(report_path2, mode='w') as report_txt:
-                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                if report_format == 'csv':
-                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
-                for rpt in rpt_list2:
-                    rpt_writer.writerow(rpt)
-                    string2 += rpt_delimiter.join(rpt) + "\n"
-
-  
-        #print ("DEBUG: STRING1=",string1[0:500],"\n","DEBUG: STRING2=",string2[0:500],"\n")
-
+            if rpt_list2:
+                with open(report_path2, mode='w') as report_txt:
+                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                    if report_format == 'csv':
+                        rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+                    for rpt in rpt_list2:
+                        rpt_writer.writerow(rpt)
+                        string2 += rpt_delimiter.join(rpt) + "\n"
    
         #report_txt = open(report_path1, "w")
         #report_txt.write(string1)
@@ -605,11 +615,16 @@ class kb_ObjectInfo:
         #report_txt = open(report_path2, "w")
         #report_txt.write(string2)
         #report_txt.close()
-
+ 
+        
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
-        report_txt.write("<pre>" + string2 + "</pre>")
-        report_txt.write("<pre>" + string1 + "</pre>")
+        htmltable = self.make_HTML(rpt_list2)
+        #report_txt.write("<pre>" + string2 + "</pre>")
+        report_txt.write(htmltable)
+        htmltable = self.make_HTML(rpt_list1)
+        #report_txt.write("<pre>" + string1 + "</pre>")
+        report_txt.write(htmltable)
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
@@ -700,7 +715,6 @@ class kb_ObjectInfo:
 
         rpt_list = []
         rpt_delimiter = '\t'
-        #print ("DEBUG: Writing FEATSEQ with format ", report_format)
         
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
@@ -723,16 +737,17 @@ class kb_ObjectInfo:
                 for rpt in rpt_list:
                     rpt_writer.writerow(rpt)
                     string += rpt_delimiter.join(rpt) + "\n"
-
-        #print ("DEBUG: STRING=",string[0:500],'=================')
         
         #report_txt = open(report_path, "w")
         #report_txt.write(string)
         #report_txt.close()
 
+       
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
-        report_txt.write("<pre>" + string + "</pre>")
+        htmltable = self.make_HTML(rpt_list)
+        #report_txt.write("<pre>" + string + "</pre>")
+        report_txt.write(htmltable)
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.
@@ -798,7 +813,6 @@ class kb_ObjectInfo:
 
         rpt_list = []
         rpt_delimiter = '\t'
-        #print ("DEBUG: Writing ProtComp with",report_format,"\n")
         
         if report_format == 'tab':
             cf = CreateFeatureLists(self.config)
@@ -812,7 +826,7 @@ class kb_ObjectInfo:
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
-        #print("DEBUG RPT_LIST:",*rpt_list[0:25],'++++++++++++++++')
+        #Write to csv/tsv file. Create string for html output
         string = ''
         if rpt_list:
             with open(report_path, mode='w') as report_txt:
@@ -822,16 +836,16 @@ class kb_ObjectInfo:
                 for rpt in rpt_list:
                     rpt_writer.writerow(rpt)
                     string += rpt_delimiter.join(rpt) + "\n"
-
-        #print ("DEBUG: STRING=",string[0:500],'==================')
         
         #report_txt = open(report_path, "w")
         #report_txt.write(string)
         #report_txt.close()
-
+        
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
-        report_txt.write("<pre>" + string + "</pre>")
+        htmltable = self.make_HTML(rpt_list)
+        report_txt.write(htmltable)
+        #report_txt.write("<pre>" + string + "</pre>")
         report_txt.close()
 
 #        Only use when doing debug. This shows up in the log. Bad idea in general use.

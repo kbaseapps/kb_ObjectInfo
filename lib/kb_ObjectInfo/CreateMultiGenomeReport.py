@@ -51,29 +51,12 @@ class CreateMultiGenomeReport:
         rpt_list = []
 
         if format == 'list':
-            line = "Description for: " + obj_name + "\n"
-
-            line += name + "\n"
-            line += "\tObject ID:     {0:s}\n\tScientific Name:   {1:s}\n\tSize:         {2}\n\tSource:       {3:s}\n\tDomain:       {4:s}\n\tAssembly Reference: {5:s}\n".format(
-                obj_id, sci_name, size, source, domain, assembly)
-            line += "\tFeatures:     {0}\n\tContigs:      {1}\n\tPercent GC:      {2}\n\tGenetic Code: {3}\n".format(num_feat, num_ctg, gc_cont, gen_code)
-
-            rpt_list = [["Description for:",obj_name],["Object ID:",obj_id],["Scientific Name:",sci_name],
-                       ["Size:",size],["Source:",source],["Domain:",domain],["Assembly Reference:",assembly],
-                       ["Features:",num_feat],["Contigs:",num_ctg],["Percent GC:",gc_cont],["Genetic Code:",gen_code]]
-
             for feat in sorted(features):
                 line += "\t{:8s}      {}\n".format(feat, features[feat])
                 rpt_list.append([feat,str(features[feat])])
+            rpt_list.append([" "])
 
         elif format == 'tab':
-            lst = ["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features", "Contigs", "Percent GC",
-                   "Genetic Code", "Number of CDS", "Number of gene", "Number of other", "Number of rRNA", "Number of tRNA"]
-            line = "\t".join(lst) + "\n"
-            rpt_list = [["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features",
-                        "Contigs", "Percent GC", "Genetic Code", "Number of CDS", "Number of gene", "Number of other", "Number of rRNA",
-                        "Number of tRNA"]]
-                   
             lst = [name, obj_id, sci_name, size, source, domain, assembly, num_feat, num_ctg, gc_cont, gen_code]
             line = "\t".join(lst)
             
@@ -85,13 +68,6 @@ class CreateMultiGenomeReport:
             rpt_list.append(lst)
 
         elif format == 'csv':
-            lst = ["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features", "Contigs", "Percent GC",
-                   "Genetic Code", "Number of CDS", "Number of gene", "Number of other", "Number of rRNA", "Number of tRNA"]
-            line = ",".join(lst) + "\n"
-            rpt_list = [["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features",
-                        "Contigs", "Percent GC", "Genetic Code", "Number of CDS", "Number of gene", "Number of other", "Number of rRNA",
-                        "Number of tRNA"]]
-                        
             lst = [name, obj_id, sci_name, size, source, domain, assembly, num_feat, num_ctg, gc_cont, gen_code]
             line = ",".join(lst)
             for feat in sorted(features):
@@ -114,11 +90,15 @@ class CreateMultiGenomeReport:
         line += "Type         {}\n".format(obj_data['info'][2])
         line += "Created By   {}\n".format(obj_data['info'][5])
         line += "Narrative    {}\n".format(obj_data['info'][7])
-        line += "Description  {}\n".format(obj_data['data']['description'])
+        desc = 'None'
+        if obj_data['data']['description']:
+            desc = obj_data['data']['description']
+        line += "Description  {}\n".format(desc)
+            
         line += "Number of Elements {}\n".format(str(len(obj_data['data']['elements'])))
         rpt_list = []
         rpt_list = [["Name",obj_data['info'][1]],["Type",obj_data['info'][2]],["Created By",obj_data['info'][5]],
-                    ["Narrative",obj_data['info'][7]],["Description",obj_data['data']['description']],
+                    ["Narrative",obj_data['info'][7]],["Description",desc],
                     ["Number of Elements",str(len(obj_data['data']['elements']))]]
         
         for ele in obj_data['data']['elements']:
@@ -126,9 +106,9 @@ class CreateMultiGenomeReport:
             genome = self.dfu.get_objects({'object_refs': [gref]})
             name = genome['data'][0]['info'][1]
             sci_name = genome['data'][0]['data']['scientific_name']
+            line += "  Genome:   {0:s}\t{1:s}\t{2:s}\n".format(ele, name, sci_name)
+            rpt_list.append(["Genome:",ele, name, sci_name])
             
-            line += "  Element:   {0:s}\t{1:s}\t{2:s}\n".format(ele, name, sci_name)
-            rpt_list += [["Element:",ele, name, sci_name]]
         return line, rpt_list
 
     # Describe a GenomeSet
@@ -138,6 +118,31 @@ class CreateMultiGenomeReport:
         line = ''
         rpt_list = []
         
+        if format == 'list':
+            line = "Description for: " + obj_name + "\n"
+
+            line += name + "\n"
+            line += "\tObject ID:     {0:s}\n\tScientific Name:   {1:s}\n\tSize:         {2}\n\tSource:       {3:s}\n\tDomain:       {4:s}\n\tAssembly Reference: {5:s}\n".format(
+                obj_id, sci_name, size, source, domain, assembly)
+            line += "\tFeatures:     {0}\n\tContigs:      {1}\n\tPercent GC:      {2}\n\tGenetic Code: {3}\n".format(num_feat, num_ctg, gc_cont, gen_code)
+
+            rpt_list = [["Description for:",obj_name],["Object ID:",obj_id],["Scientific Name:",sci_name],
+                       ["Size:",size],["Source:",source],["Domain:",domain],["Assembly Reference:",assembly],
+                       ["Features:",num_feat],["Contigs:",num_ctg],["Percent GC:",gc_cont],["Genetic Code:",gen_code]]
+
+        elif format == 'tab' or format == 'csv':
+            lst = ["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features", "Contigs", "Percent GC",
+                   "Genetic Code", "Number of CDS", "Number of gene", "Number of other", "Number of rRNA", "Number of tRNA"]
+
+            rpt_list = [["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features",
+                        "Contigs", "Percent GC", "Genetic Code", "Number of CDS", "Number of gene", "Number of other", "Number of rRNA",
+                        "Number of tRNA"]]
+            if format == 'tab':
+                line = "\t".join(lst) + "\n"
+
+            elif format == 'csv':
+                line = ",".join(lst) + "\n"
+ 
         for ele in myGS:
             genome = self.dfu.get_objects({'object_refs': [myGS[ele]['ref']]})
             line += self.getGenomeSet(obj_name,myGS[ele]['ref'], genome['data'][0], format, 'line')

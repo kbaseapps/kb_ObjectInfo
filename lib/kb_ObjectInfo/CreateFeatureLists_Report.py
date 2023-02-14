@@ -332,7 +332,8 @@ class CreateFeatureLists:
     #
     def printGeneDomain(self, contig, geneName, geneDomain, format, cutoff):
         line = ""
-        lineList = ""
+        rpt_list = []
+        
         for domain in geneDomain:
             list = geneDomain[domain]
             if list[0][2] < cutoff:
@@ -342,40 +343,32 @@ class CreateFeatureLists:
                 if domain in self.domfam2ns:
                     namespace = self.domfam2ns[domain]
                 else:
-                    namespace = ''
+                    namespace = ' '
 
                 if domain in self.domfam2name:
                     dom_name = self.domfam2name[domain]
                 else:
-                    dom_name = ''
+                    dom_name = ' '
 
                 if domain in self.domfam2cat:
                     cat = self.domfam2cat[domain]
                 else:
-                    cat = ''
+                    cat = ' '
 
-                
                 if cat > ' ' and cat in self.cat2name[namespace]:
                     cat_name = self.cat2name[namespace][cat]
                 else:
-                    cat_name = ''
+                    cat_name = ' '
 
-                
                 if cat > ' ' and cat in self.cat2group[namespace]:
                     cat_group = self.cat2group[namespace][cat]
                 else:
-                    cat_group = ''
+                    cat_group = ' '
 
+                rpt_list.append([contig, geneName, domain, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, cat, cat_name, str(cat_group)])
                 
-                lineList = [contig, geneName, domain, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, cat, cat_name, str(cat_group)]
-                if format == 'tab':
-                    line += "\t".join(lineList)
-                elif format == 'csv':
-                    line += ",".join(lineList)
-
-                line += "\n"
-        return line
-
+        # Returning a list of lists
+        return rpt_list
 
     #
     #   OBJECT: DomainAnnotation
@@ -383,19 +376,17 @@ class CreateFeatureLists:
     #   Loop through all of the contigs and get all of the genes
     #   Uses printGeneDomain to print out individual lines
     #
-    def readDomainAnnList(self, pyStr, format, cutoff,rttype):
+    def readDomainAnnList(self, pyStr, rpt_format, cutoff):
         # Header
         line = ""
-        lineList = ["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name", "Category", "Category Name", "Category Group"]
-        rpt_list = [lineList]
+        rpt_list = [["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name", "Category", "Category Name", "Category Group"]]
         
-        if format == 'tab':
-            line = "\t".join(lineList)
-        elif format == 'csv':
-            line = "'" + ",".join(lineList)
-
+#        if rpt_format == 'tab':
+#            line = "\t".join(lineList)
+#        elif rpt_format == 'csv':
+#            line = "'" + ",".join(lineList)
         # Add line-end to the header
-        line += "\n"
+#        line += "\n"
 
         myData = pyStr['data']
 
@@ -404,12 +395,14 @@ class CreateFeatureLists:
             for gene in contigData:
                 if (gene[4]):
                     domain = gene[4]
-                    line += self.printGeneDomain(contig, gene[0], domain, format, cutoff)
-                    rpt_list += ([self.printGeneDomain(contig, gene[0], domain, format, cutoff)])
-        if rttype == 'line':
-            return line
-        else:
-            return rpt_list
+
+                    # The return list is a list of lists and this is done many times
+                    # Need to append them to our list one at a time, otherwise list of lists of lists
+                    rtn_list = (self.printGeneDomain(contig, gene[0], domain, rpt_format, cutoff))
+                    for rtn in rtn_list:
+                        rpt_list.append(rtn)
+  
+        return rpt_list
 
     #
     #   OBJECT: DomainAnnotation
@@ -432,7 +425,7 @@ class CreateFeatureLists:
     #   FORMAT: List of the domains and number of occurrences in the genome
     #   Uses countGeneDomain to get the statistics for an individual gene
     #
-    def readDomainAnnCount(self, pyStr, format, cutoff,rttype):
+    def readDomainAnnCount(self, pyStr, format, cutoff):
 
         # Header
         line = ""
@@ -458,16 +451,13 @@ class CreateFeatureLists:
             lineList = [domain, str(myDict[domain])]
             rpt_list.append(lineList)
             
-            if format == 'tab':
-                line += "\t".join(lineList)
-            elif format == 'csv':
-                line += ",".join(lineList)
-            line += "\n"
+#            if format == 'tab':
+#                line += "\t".join(lineList)
+#            elif format == 'csv':
+#                line += ",".join(lineList)
+#            line += "\n"
     
-        if rttype == 'line':
-            return line
-        else:
-            return rpt_list
+        return rpt_list
 
     #
     #   OBJECT: FeatureSet or SequenceSet
@@ -494,7 +484,7 @@ class CreateFeatureLists:
                 rpt_list.append([pyStr['elements'][index][0], genome_name ])
 
             lineList.append(["\n\nOrdered Elements:\nIndex\tFeature ID\tSource Genome Object ID"])
-            rpt_list += ([" "],[" "],["Ordered Elements:"],["Index","Feature ID","Source Genome Object ID"])
+            rpt_list += ([" "],["Ordered Elements:"],["Index","Feature ID","Source Genome Object ID"])
             
             count = 1
             for index in eleOrder:
@@ -507,7 +497,7 @@ class CreateFeatureLists:
 #
         elif 'description' in pyStr and 'elements' in pyStr:
             lineList.append(['Description', pyStr['description']])
-            rpt_list = [['Description', pyStr['description']]]
+            rpt_list = [['Description:', pyStr['description']]]
             myElements = pyStr['elements']
             genome_names = {}
             
@@ -524,7 +514,7 @@ class CreateFeatureLists:
                         genome_names[gid] = genome_name
 
             lineList.append(["\n\nUnordered Elements:\nFeature ID\tSource Genome Object ID"])
-            rpt_list += [[" "],[" "],["Unordered Elements:"],["Feature ID","Source Genome Object ID"]]
+            rpt_list += [[" "],["Unordered Elements:"],["Feature ID","Source Genome Object ID","Genome"]]
             count = 0
             for element in myElements:
                 if isinstance(myElements[element],list):
@@ -548,9 +538,9 @@ class CreateFeatureLists:
             count = 0
             for seq in mySequences:
                 seqline = cf.splitSequence(seq['sequence'])
-                lineList.append([">" + seq['sequence_id'], seq['description']])
+                lineList.append([">" + seq['sequence_id']+'   '+seq['description']])
                 lineList.append([seqline])
-                rpt_list.append([">" + seq['sequence_id'], seq['description']])
+                rpt_list.append([">" + seq['sequence_id']+'   '+seq['description']])
                 rpt_list.append([seqline])
                 count += 1
 
@@ -583,7 +573,7 @@ class CreateFeatureLists:
         genome2 = self.dfu.get_objects({'object_refs': [id2]})['data'][0]['info'][1]
         
         line = "Genome1 ID="+genome1+"\nGenome2 ID="+genome2+"\n\n"
-        rpt_list = [["Genome1 ID=",genome1],["Genome2 ID=",genome2],["\n"],["\n"]]
+        rpt_list = [["Genome1 = "+genome1],["Genome2 = "+genome2],[" "]]
         lineList = ["Genome1", "Genome2", "bit-score", "bbh-percent"]
         rpt_list += [lineList]
     
