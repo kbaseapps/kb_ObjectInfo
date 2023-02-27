@@ -524,7 +524,7 @@ class CreateFeatureLists:
                 bit_score = pair[1]
                 bbh_percent = pair[2]
                 name2 = names2[pos2]
-                rpt_list += ([name1, name2, str(bit_score), str(bbh_percent)])
+                rpt_list.append([name1, name2, str(bit_score), str(bbh_percent)])
                 
                 count += 1
                 
@@ -542,7 +542,7 @@ class CreateFeatureLists:
                 bit_score = pair[1]
                 bbh_percent = pair[2]
                 name1 = names1[pos1]
-                rpt_list += ([name1, name2, str(bit_score), str(bbh_percent)])
+                rpt_list.append([name1, name2, str(bit_score), str(bbh_percent)])
 
                 count += 1             
 

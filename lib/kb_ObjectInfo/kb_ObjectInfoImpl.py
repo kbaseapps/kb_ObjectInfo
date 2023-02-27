@@ -209,17 +209,17 @@ class kb_ObjectInfo:
             cf = CreateFasta(self.config)
             rpt_string += "\nFASTA of the DNA Sequences\n"
             fasta_list = cf.get_assembly_sequence(input_ref)
-            report_path = os.path.join(self.scratch, 'assembly_metadata_file.fna')
+            report_path = os.path.join(self.scratch, 'assembly_DNA_file.fna')
             
 #           Write the DNA string out to a Fasta file
             report_txt = open(report_path, "w")
             for dna_seq in fasta_list:
-                dna = "\n".join(dna_seq)
+                dna = "\n".join(dna_seq)+"\n"
                 report_txt.write(dna)
                 rpt_string += dna
             report_txt.close()
 
-        report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
+        report_path = os.path.join(self.scratch, 'assembly_metadatals -_file.html')
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + rpt_string + "</pre>")
         report_txt.close()
@@ -465,9 +465,7 @@ class kb_ObjectInfo:
             report_path = os.path.join(self.scratch, 'genomeset_fasta_file.txt')
         else:
             raise ValueError('Invalid report option.' + str(report_format))
-    
-        rpt_list.extend(multi_fasta)
-    
+
         rpt_string = ''
         rpt_delimiter = "\t"
         if report_format == 'tsv':
@@ -477,8 +475,6 @@ class kb_ObjectInfo:
             rpt_delimiter = ','
             
         if rpt_list:
-            print ("DEBUG: genomeSet ", report_format, rpt_list[0:3])
-            
             with open(report_path, mode='w') as report_txt:
                 rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 if report_format == 'csv':
@@ -487,7 +483,10 @@ class kb_ObjectInfo:
                 for rpt in rpt_list:
                     rpt_writer.writerow(rpt)
                     rpt_string += rpt_delimiter.join(rpt) + "\n"
-        
+
+#       The fasta can go with the HTML but not the metadata file above.
+        rpt_list.extend(multi_fasta)
+    
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         htmltable = self.make_HTML(rpt_list)
@@ -754,7 +753,8 @@ class kb_ObjectInfo:
         # return variables are: output
         #BEGIN protcomp_report
         token = ctx['token']
-
+        cf = CreateFeatureLists(self.config)
+        
         # Logging statements to stdout/stderr are captured and available as the App log
         logging.info('Starting ProteomeComparison Object Info. ')
         mystr = pformat(params)
@@ -781,11 +781,9 @@ class kb_ObjectInfo:
         rpt_delimiter = "\t"
         
         if report_format == 'tab':
-            cf = CreateFeatureLists(self.config)
             rpt_list = cf.readProtComp(protcomp_data, 'tab')
             report_path = os.path.join(self.scratch, 'protcomp_tab_list.tsv')
         elif report_format == 'csv':
-            cf = CreateFeatureLists(self.config)
             rpt_list = cf.readProtComp(protcomp_data, 'csv')
             report_path = os.path.join(self.scratch, 'protcomp_csv_list.csv')
             rpt_delimiter = ','
