@@ -65,9 +65,7 @@ class CreateMultiGenomeReport:
 
 #       For the list format, give the headers and values in two columns
         if format == 'list':
-            rpt_list = [["Description for:",obj_name],["Object ID:",obj_id],["Scientific Name:",sci_name],
-                       ["Size:",size],["Source:",source],["Domain:",domain],["Assembly Reference:",assembly],
-                       ["Features:",num_feat],["Contigs:",num_ctg],["Percent GC:",gc_cont],["Genetic Code:",gen_code]]
+            rpt_list = [["Description for:",obj_name],["Object ID:",obj_id],["Scientific Name:",sci_name], ["Size:",size],["Source:",source],["Domain:",domain],["Assembly Reference:",assembly], ["Features:",num_feat],["Contigs:",num_ctg],["Percent GC:",gc_cont],["Genetic Code:",gen_code]]
             for feat in sorted(features):
                 rpt_list.append([feat, str(features[feat])])
                 
@@ -79,6 +77,23 @@ class CreateMultiGenomeReport:
                 rpt_list.append(str(features[feat]))
 
 #       Return a list
+        return rpt_list
+
+    # Describe a GenomeSet
+    #
+    def readGenomeSet(self, obj_name, pyStr, format):
+        myGS = pyStr['elements']
+        rpt_list = []
+
+        if format == 'tab' or format == 'csv':
+            rpt_list = [["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features",
+                        "Contigs", "Percent GC", "Genetic Code", "Number of CDS", "Number of gene", "Number of Non-coding",
+                        "Number of other", "Number of rRNA", "Number of tRNA"]]
+ 
+        for ele in myGS:
+            genome = self.dfu.get_objects({'object_refs': [myGS[ele]['ref']]})
+            rpt_list.extend(self.getGenomeSet(obj_name,myGS[ele]['ref'], genome['data'][0], format))
+
         return rpt_list
 
     # Metadata for a GenomeSet
@@ -100,23 +115,6 @@ class CreateMultiGenomeReport:
             sci_name = genome['data'][0]['data']['scientific_name']
             rpt_list.append(["Genome:",ele, name, sci_name])
             
-        return rpt_list
-
-    # Describe a GenomeSet
-    #
-    def readGenomeSet(self, obj_name, pyStr, format):
-        myGS = pyStr['elements']
-        rpt_list = []
-
-        if format == 'tab' or format == 'csv':
-            rpt_list = [["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features",
-                        "Contigs", "Percent GC", "Genetic Code", "Number of CDS", "Number of gene", "Number of Non-coding",
-                        "Number of other", "Number of rRNA", "Number of tRNA"]]
- 
-        for ele in myGS:
-            genome = self.dfu.get_objects({'object_refs': [myGS[ele]['ref']]})
-            rpt_list.append(self.getGenomeSet(obj_name,myGS[ele]['ref'], genome['data'][0], format))
-
         return rpt_list
 
     # Return the assembly_refs

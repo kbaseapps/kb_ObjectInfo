@@ -398,9 +398,6 @@ class CreateFeatureLists:
 
         # Header
         rpt_list = [["Domain", "Count"]]
-            
-        # Add line-end to the header
-        line += "\n"
 
         myData = pyStr['data']
         count = 0
@@ -487,7 +484,7 @@ class CreateFeatureLists:
             for seq in mySequences:
                 seqline = cf.splitSequence(seq['sequence'])
                 rpt_list.append([">" + seq['sequence_id']+'   '+seq['description']])
-                rpt_list.append([seqline])
+                rpt_list.extend(seqline)
                 count += 1
 
 #
