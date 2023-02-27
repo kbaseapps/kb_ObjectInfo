@@ -189,7 +189,7 @@ class kb_ObjectInfo:
 
                 rpt_list.append(ctg_list)
 
-        rpt_delimiter = "/t"
+        rpt_delimiter = "\t"
         rpt_string = "Data Columns are tab-delimited\n"
         report_path = os.path.join(self.scratch, 'assembly_meta_tab_file.tsv')
         if report_format == 'csv':
@@ -202,7 +202,8 @@ class kb_ObjectInfo:
             for rpt in rpt_list:
                 rpt_writer.writerow(rpt)
                 rpt_string += rpt_delimiter.join(rpt) + "\n"
-        
+        report_txt.close()
+
         fasta_list = []
         if showContigs:
             cf = CreateFasta(self.config)
@@ -212,7 +213,8 @@ class kb_ObjectInfo:
             
 #           Write the DNA string out to a Fasta file
             report_txt = open(report_path, "w")
-            for dna in fasta_list:
+            for dna_seq in fasta_list:
+                dna = "\n".join(dna_seq)
                 report_txt.write(dna)
                 rpt_string += dna
             report_txt.close()
@@ -221,9 +223,6 @@ class kb_ObjectInfo:
         report_txt = open(report_path, "w")
         report_txt.write("<pre>" + rpt_string + "</pre>")
         report_txt.close()
-
-#        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#         logging.info(string)
 
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -302,9 +301,9 @@ class kb_ObjectInfo:
             cf = CreateFasta(self.config)
 #           Before version 9 genomes, the cdss didn't exist
             if genome_data['cdss']:
-                rpt_list = cf.create_Fasta_from_mRNA(genome_data['cdss'])
+                rpt_list = cf.create_Fasta_from_features(genome_data['cdss'])
             else:
-                rpt_list = cf.create_Fasta_from_mRNA(genome_data['features'])
+                rpt_list = cf.create_Fasta_from_features(genome_data['features'])
             report_path = os.path.join(self.scratch, 'genome_file.faa')
         elif report_format == 'mRNA':
             cf = CreateFasta(self.config)
@@ -335,10 +334,8 @@ class kb_ObjectInfo:
 #       If the output is DNA or mRNA/Fasta, don't reset the string or use csv.writer
         if rpt_list:
             rpt_string = ''
-            rpt_delimiter = "\n"
-            if report_format == 'tsv':
-                rpt_delimiter = "\t"
-            elif report_format == 'csv':
+            rpt_delimiter = "\t"
+            if report_format == 'csv':
                 rpt_delimiter = ','
                 
             with open(report_path, mode='w') as report_txt:
@@ -360,8 +357,6 @@ class kb_ObjectInfo:
         report_txt.write(htmltable)
         report_txt.close()
 
-#        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        logging.debug(string)
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
                                     rpt_string, self.scratch)
@@ -422,7 +417,8 @@ class kb_ObjectInfo:
         report_format = params['report_format']
 
         rpt_list = []
-                
+        multi_fasta = []
+        
         if report_format == 'tab':
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = gsr.readGenomeSet(genome_name, genomeset_data, 'tab')
@@ -442,12 +438,12 @@ class kb_ObjectInfo:
         elif report_format == 'fasta':
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = [["Assembly Reference","Scientific Name","File Name"]]
-            report_path = os.path.join(self.scratch, 'genomeset_fasta_file.txt')
             
 #           Get the list of assembly IDs for the genomeSet
             assembly_list = gsr.getAssemblyRef(genomeset['data'][0])
             
 #           For each assembly, get it's info and sequence
+
             for assembly in assembly_list:
                 cf = CreateFasta(self.config)
                 assembly_ref, sci_name = assembly.split(':')
@@ -456,13 +452,21 @@ class kb_ObjectInfo:
                 
 #               Save the Fasta sequences to an individual genome file
                 fasta_list = cf.get_assembly_sequence(assembly_ref)
+                multi_fasta.extend(fasta_list)
                 report_path = os.path.join(self.scratch, file_name)
+                
                 with open(report_path, mode='w') as report_txt:
                     rpt_writer = csv.writer(report_txt, delimiter="\n", quotechar='"', quoting=csv.QUOTE_MINIMAL)
                     for dna in fasta_list:
                         rpt_writer.writerow(dna)
+                report_txt.close()
+                
+#           Set the report path for the summary table (Don't overwrite the last dna file)
+            report_path = os.path.join(self.scratch, 'genomeset_fasta_file.txt')
         else:
             raise ValueError('Invalid report option.' + str(report_format))
+    
+        rpt_list.extend(multi_fasta)
     
         rpt_string = ''
         rpt_delimiter = "\t"
@@ -473,23 +477,23 @@ class kb_ObjectInfo:
             rpt_delimiter = ','
             
         if rpt_list:
+            print ("DEBUG: genomeSet ", report_format, rpt_list[0:3])
+            
             with open(report_path, mode='w') as report_txt:
                 rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 if report_format == 'csv':
                     rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
-                print ("DEBUG genomeset rpt_list", rpt_list[0],rpt_list[1])
+                
                 for rpt in rpt_list:
                     rpt_writer.writerow(rpt)
                     rpt_string += rpt_delimiter.join(rpt) + "\n"
-                    
+        
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         htmltable = self.make_HTML(rpt_list)
         report_txt.write(htmltable)
         report_txt.close()
 
-#        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        logging.debug(string)
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
                                            rpt_string, self.scratch)
@@ -599,8 +603,6 @@ class kb_ObjectInfo:
         report_txt.write(htmltable)
         report_txt.close()
 
-#        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        logging.debug(string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -705,6 +707,7 @@ class kb_ObjectInfo:
                 rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 if report_format == 'csv':
                     rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+                
                 for rpt in rpt_list:
                     rpt_writer.writerow(rpt)
                     rpt_string += rpt_delimiter.join(rpt) + "\n"
@@ -715,8 +718,6 @@ class kb_ObjectInfo:
         report_txt.write(htmltable)
         report_txt.close()
 
-#        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        logging.debug(string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -808,8 +809,6 @@ class kb_ObjectInfo:
         report_txt.write(htmltable)
         report_txt.close()
 
-#        Only use when doing debug. This shows up in the log. Bad idea in general use.
-#        logging.debug(string)
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
