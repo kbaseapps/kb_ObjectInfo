@@ -462,7 +462,7 @@ class kb_ObjectInfo:
                 report_txt.close()
                 
 #           Set the report path for the summary table (Don't overwrite the last dna file)
-            report_path = os.path.join(self.scratch, 'genomeset_fasta_file.txt')
+            report_path = os.path.join(self.scratch, 'genomeset_DNA_meta_file.txt')
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 

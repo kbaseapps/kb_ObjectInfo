@@ -515,7 +515,7 @@ class CreateFeatureLists:
         for pos1, name1 in enumerate(names1):
             if not pairs1[pos1]:
                 # The list is empty, no genome2 gene
-                rpt_list += ([name1, 'NA'])
+                rpt_list.append([name1, 'NA'])
                 continue
             for pair in pairs1[pos1]:
                 pos2 = pair[0]
@@ -532,7 +532,7 @@ class CreateFeatureLists:
         for pos2, name2 in enumerate(names2):
             if not pairs2[pos2]:
                 # The list is empty, no genome1 gene
-                rpt_list += (['NA', name2])
+                rpt_list.append(['NA', name2])
                 
             for pair in pairs2[pos2]:
                 pos1 = pair[0]

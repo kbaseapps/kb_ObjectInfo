@@ -92,7 +92,10 @@ class CreateMultiGenomeReport:
  
         for ele in myGS:
             genome = self.dfu.get_objects({'object_refs': [myGS[ele]['ref']]})
-            rpt_list.extend(self.getGenomeSet(obj_name,myGS[ele]['ref'], genome['data'][0], format))
+            if format == 'tab' or format == 'csv':
+                rpt_list.extend([self.getGenomeSet(obj_name,myGS[ele]['ref'], genome['data'][0], format)])
+            else:
+                rpt_list.extend(self.getGenomeSet(obj_name,myGS[ele]['ref'], genome['data'][0], format))
             
         return rpt_list
 
