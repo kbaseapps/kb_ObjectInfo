@@ -1,9 +1,9 @@
 {
-    "ver": "0.0.1",
+    "ver": "1.0.1",
     "authors": [
         "landml"
     ],
-    "contact": "https://kbase.us/contact-us/",
+    "contact": "https://www.kbase.us/support/",
     "categories": ["active","util"],
     "widgets": {
         "input": null,
@@ -33,20 +33,8 @@
             "dropdown_options": {
                 "options": [
 					{
-						"value": "meta",
-						"display": "Metadata only"
-					},
-					{
-						"value": "list",
-						"display": "Vertical List"
-					},
-					{
 						"value": "tab",
-						"display": "Tab-delimited"
-					},
-					{
-						"value": "csv",
-						"display": "Comma-delimited"
+						"display": "Genome List"
 					},
 					{
 						"value": "fasta",

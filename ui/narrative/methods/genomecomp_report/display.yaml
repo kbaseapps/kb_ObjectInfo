@@ -1,0 +1,68 @@
+#
+# define display information
+#
+name: Genome Comparison Object Info
+tooltip: |
+    Create a text info file for an GenomeComparison Object.
+screenshots: []
+
+icon: ObjectInfo_icon.png
+
+#
+# define a set of similar methods that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            []
+        next:
+            []
+    methods:
+        related:
+            []
+        next:
+            []
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    input_ref :
+        ui-name : |
+            Genome Comparison
+        short-hint : |
+            The Genome Comparison object to analyze.
+description : |
+    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> file about an object.</p>
+
+    <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. This App creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
+
+    <p>This App creates files on the contents of a GenomeComparison object. A Summary section has a preview of the full output. It is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script. The HTML link opens a new tab with the full output. The link for downloading the files is in the Files section of the output. </p>
+
+    <p>The inputs are:
+    <ul>
+      <li>The KBase Genome Comparison object (uploaded or output from an app)</li>
+    </ul>
+    </p>
+
+    <p>The outputs are:
+    <ol>
+      <li>A <b>Link</b> section with a link to the requested file that can be opened in another browser tab.</li>
+      <li>Two downloadable files in the <b>Files</b> section. One for tab-delimited and one for comma-delimited. The files have the following sections:
+        <ol>
+          <li>An Overview Section</li>
+          <li>A List of the Genomes in the Comparison</li>
+          <li>A list of the Families in the Comparison</li>
+          <li>A list of the Genes and Genomes in each Family</li>
+          <li>A list of the Functions in the Comparison</li>
+          <li>A list of the Genes and Genomes in each Function</li>
+        </ol>
+        </li>
+      </ol>
+    </p>
+
+publications :
+    -
+        display-text: |
+            Arkin AP, Cottingham RW, Henry CS, Harris NL, Stevens RL, Maslov S, et al. KBase: The United States Department of Energy Systems Biology Knowledgebase. Nature Biotechnology. 2018;36: 566. doi: 10.1038/nbt.4163
+        link: https://www.nature.com/articles/nbt.4163

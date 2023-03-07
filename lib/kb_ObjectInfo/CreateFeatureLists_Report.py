@@ -308,7 +308,7 @@ class CreateFeatureLists:
     #   OBJECT: DomainAnnotation
     #   FUNCTION: User-defined function to format all the domains for a gene
     #
-    def printGeneDomain(self, contig, geneName, geneDomain, format, cutoff):
+    def printGeneDomain(self, contig, geneName, geneDomain, cutoff):
         rpt_list = []
         
         for domain in geneDomain:
@@ -353,7 +353,7 @@ class CreateFeatureLists:
     #   Loop through all of the contigs and get all of the genes
     #   Uses printGeneDomain to print out individual lines
     #
-    def readDomainAnnList(self, pyStr, rpt_format, cutoff):
+    def readDomainAnnList(self, pyStr, cutoff):
         # Header
         rpt_list = [["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name", "Category", "Category Name", "Category Group"]]
 
@@ -367,7 +367,7 @@ class CreateFeatureLists:
 
                     # The return list is a list of lists and this is done many times
                     # Need to append them to our list one at a time, otherwise list of lists of lists
-                    rtn_list = (self.printGeneDomain(contig, gene[0], domain, rpt_format, cutoff))
+                    rtn_list = (self.printGeneDomain(contig, gene[0], domain, cutoff))
                     for rtn in rtn_list:
                         rpt_list.append(rtn)
   
@@ -394,7 +394,7 @@ class CreateFeatureLists:
     #   FORMAT: List of the domains and number of occurrences in the genome
     #   Uses countGeneDomain to get the statistics for an individual gene
     #
-    def readDomainAnnCount(self, pyStr, format, cutoff):
+    def readDomainAnnCount(self, pyStr, cutoff):
 
         # Header
         rpt_list = [["Domain", "Count"]]
@@ -420,7 +420,7 @@ class CreateFeatureLists:
     #   OBJECT: FeatureSet or SequenceSet
     #   FORMAT: List of the contents of the object
     #
-    def readFeatSeq(self, pyStr, format):
+    def readFeatSeq(self, pyStr):
         
         # Header
         rpt_list = []
@@ -495,7 +495,7 @@ class CreateFeatureLists:
 
         return rpt_list
 
-    def readProtComp(self, pyStr,format):
+    def readProtComp(self, pyStr):
 # Header
  
         id1 = pyStr["genome1ref"]

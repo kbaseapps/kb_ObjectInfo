@@ -38,21 +38,18 @@ parameters :
         short-hint : |
             Specify the format for the file.
 description : |
-    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> file about an object.</p>
+    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> file about a GenomeSet object.</p>
 
     <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. It creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
 
-    <p>This App creates files on the Genomes in a GenomeSet. Short output will display as TEXT in the “Summary” section of the output. Longer output will instead have a link to open the TEXT in a new html browser tab. There is a link for downloading the files in the “Files” section of the outout. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the output is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
+    <p>This App creates files on the Genomes in a GenomeSet. A Summary section has a preview of the full output. It is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script. The HTML link opens a new tab with the full output. The link for downloading the files is in the Files section of the output. </p>
 
     <p><b>Inputs:</b>
     <ul>
       <li>The KBase GenomeSet object.</li>
       <li>A download option:
         <ul>
-          <li>Metadata: Minimal information. A output on the metadata for the GenomeSet, including, name, object type, author/creator, narrative ID, GenomeSet description, and a list of the KBase-relevant Genome IDs in the set.</li>
-          <li>Vertical. List information on each of the Genomes in a vertical file instead of columns. Easy-to-read format but more difficult to visually compare one Genome to the others.</li>
-          <li>Tab-delimited. A file with tab-delimited columns.</li>
-          <li>Comma-delimited. A file with comma-delimited columns.</li>
+          <li>A list of genomes. Both tab-delimited and comma-delimited will be created.</li>
           <li>DNA Fasta. A file with the DNA FASTA of each of the Genomes. NOTE: this is really long.</li>
         </ul></li>
     </ul>
@@ -61,9 +58,9 @@ description : |
     <p><b>Output:</b>
     <ol>
       <li>The <b>Summary</b> or <b>Link</b> section has a text version of the requested file.</li>
-      <li>One downloadable file in the <b>Files</b> section. The name and content of the file will depend on the requested file format.
+      <li>One or more downloadable files in the <b>Files</b> section. The name and content of the file will depend on the requested file format.
         <ol>
-          <li>The metadata contains minimum information about the set and the genome references that are part of the set.</li>
+          <li>The list of genomes in tab-delimited (.tsv) and comma-delimited (.csv) format.</li>
           <li>FASTA files will be in FASTA format. The file name will end in .fna for nucleotide files and .faa for amino acid files.</li>
           <li>The other files contain summary statistics about the genomes in the set. The differences are just in the format of the information.</li>
         </ol></li>

@@ -1,5 +1,10 @@
 # kb_ObjectInfo release notes
 =========================================
+1.1.0
+-----
+Add selection boxes so users can select  multiple formats in one run.
+
+Remove the Meta and Vertical options from GenomeSet. They don’t add anything unique.
 
 1.0.1
 -----

@@ -1,9 +1,9 @@
 {
-    "ver": "0.0.1",
+    "ver": "1.0.1",
     "authors": [
         "landml"
     ],
-    "contact": "https://kbase.us/contact-us/",
+    "contact": "https://www.kbase.us/support/",
     "categories": ["active", "util"],
     "widgets": {
         "input": null,
@@ -19,28 +19,6 @@
             "field_type": "text",
             "text_options": {
                 "valid_ws_types": [ "KBaseGenomeAnnotations.Assembly" ]
-            }
-        },
-        {
-            "id": "report_format",
-            "optional": false,
-            "advanced": false,
-            "allow_multiple": false,
-            "default_values": [
-                "tab"
-            ],
-            "field_type": "dropdown",
-            "dropdown_options": {
-                "options": [
-                    {
-                        "value": "tab",
-                        "display": "Features, tab-delimited"
-                    },
-                    {
-                        "value": "csv",
-                        "display": "Features, comma-delimited"
-                    }
-                ]
             }
         },
         {
@@ -76,10 +54,6 @@
                 {
                     "input_parameter": "showContigs",
                     "target_property": "showContigs"
-                },
-                {
-                    "input_parameter": "report_format",
-                    "target_property": "report_format"
                 }
             ],
             "output_mapping": [

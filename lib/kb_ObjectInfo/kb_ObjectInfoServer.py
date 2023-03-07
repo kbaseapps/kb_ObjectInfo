@@ -354,10 +354,10 @@ class Application(object):
                              name='kb_ObjectInfo.domain_report',
                              types=[dict])
         self.method_authentication['kb_ObjectInfo.domain_report'] = 'required'  # noqa
-        self.rpc_service.add(impl_kb_ObjectInfo.tree_report,
-                             name='kb_ObjectInfo.tree_report',
+        self.rpc_service.add(impl_kb_ObjectInfo.genomecomp_report,
+                             name='kb_ObjectInfo.genomecomp_report',
                              types=[dict])
-        self.method_authentication['kb_ObjectInfo.tree_report'] = 'required'  # noqa
+        self.method_authentication['kb_ObjectInfo.genomecomp_report'] = 'required'  # noqa
         self.rpc_service.add(impl_kb_ObjectInfo.featseq_report,
                              name='kb_ObjectInfo.featseq_report',
                              types=[dict])

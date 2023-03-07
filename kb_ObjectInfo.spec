@@ -21,7 +21,7 @@ module kb_ObjectInfo {
     typedef string genome_ref;
     typedef string genomeset_ref;
     typedef string domain_ref;
-    typedef string tree_ref;
+    typedef string genomecomp_ref;
     typedef string featseq_ref;
     typedef string protcomp_ref;
      /*
@@ -37,7 +37,6 @@ module kb_ObjectInfo {
         assembly_ref input_ref;
         string workspace_name;
         boolean showContigs;
-        string report_format;
     } AssemblyMetadataReportParams;
 
     typedef structure {
@@ -56,25 +55,21 @@ module kb_ObjectInfo {
         domain_ref input_ref;
         float evalue_cutoff;
         string workspace_name;
-        string report_format;
     } DomainReportParams;
 
     typedef structure {
-        tree_ref input_ref;
+        genomecomp_ref input_ref;
         string workspace_name;
-        string report_format;
-    } TreeReportParams;
+    } GenomeCompReportParams;
 
     typedef structure {
         featseq_ref input_ref;
         string workspace_name;
-        string report_format;
     } FeatSeqReportParams;
 
     typedef structure {
         protcomp_ref input_ref;
         string workspace_name;
-        string report_format;
     } ProtCompReportParams;
 
     /*
@@ -93,7 +88,6 @@ module kb_ObjectInfo {
     /*
         This example function accepts any number of parameters and returns results in a KBaseReport
     */
-
     
     funcdef assembly_metadata_report(AssemblyMetadataReportParams params)
         returns (ReportResults output) authentication required;
@@ -103,7 +97,7 @@ module kb_ObjectInfo {
         returns (ReportResults output) authentication required;
     funcdef domain_report(DomainReportParams params)
         returns (ReportResults output) authentication required;
-    funcdef tree_report(TreeReportParams params)
+    funcdef genomecomp_report(GenomeCompReportParams params)
         returns (ReportResults output) authentication required;
     funcdef featseq_report(FeatSeqReportParams params)
         returns (ReportResults output) authentication required;

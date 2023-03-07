@@ -37,28 +37,17 @@ parameters :
             Cutoff
         short-hint : |
             The cutoff e-value for filtering the results.
-    report_format:
-        ui-name : |
-            File Format
-        short-hint : |
-            The format for the file.
 description : |
-    <p>The intended purpose of this App is to produce a downloadable <b>TEXT</b> file about an object.</p>
+    <p>The intended purpose of this App is to produce a downloadable <b>TEXT</b> file about a Domain Annotation object.</p>
 
     <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. This App creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
 
-    <p>This App creates files on the annotated domains associated with a Genome. Short output will display as TEXT in the “Summary” section of the output. Longer output will instead have a link to open the TEXT in a new HTML browser tab. There will be a link for downloading files in the “Files” section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
+    <p>This App creates files on the annotated domains associated with a Genome. A Summary section has a preview of the full output. It is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script. The HTML link opens a new tab with the full output. The link for downloading the files is in the Files section of the output. </p>
 
     <p>The inputs are:
     <ul>
       <li>The KBase Domain annotation object (output from Domain Annotation app)</li>
       <li>An evalue used to filter out the more distant hits.</li>
-      <li>A download option:
-        <ul>
-          <li>Tab-delimited. A file with tab-delimited columns.</li>
-          <li>Comma-delimited. A file with comma-delimited columns.</li>
-        </ul>
-      </li>
     </ul>
     </p>
 

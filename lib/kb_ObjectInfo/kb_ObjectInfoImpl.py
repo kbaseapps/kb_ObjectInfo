@@ -31,9 +31,9 @@ class kb_ObjectInfo:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "1.0.1"
+    VERSION = "1.1.0"
     GIT_URL = "https://github.com/kbaseapps/kb_ObjectInfo"
-    GIT_COMMIT_HASH = "25e0fc5060a406e7477beea677ec631031b2bdef"
+    GIT_COMMIT_HASH = "6b2d73a02d01f379948bb2097b2d6ee23b8aca8d"
 
     #BEGIN_CLASS_HEADER
 
@@ -62,6 +62,20 @@ class kb_ObjectInfo:
         table += "</table>\n"
         return table
 
+    def write_to_file(self,rpt_list,rpt_path,rpt_delimiter):
+        rpt_string = ''
+        report_path = os.path.join(self.scratch, rpt_path)
+        with open(report_path, mode='w') as report_txt:
+            rpt_writer = csv.writer(report_txt, delimiter="\t", quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            if rpt_delimiter == ',':
+                    rpt_writer = csv.writer(report_txt, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
+            for rpt in rpt_list:
+                rpt_writer.writerow(rpt)
+                rpt_string += rpt_delimiter.join(rpt) + "\n"
+            report_txt.close()
+            
+        return rpt_string
+        
     #END_CLASS_HEADER
 
     # config contains contents of config file in a hash or None if it couldn't
@@ -80,6 +94,7 @@ class kb_ObjectInfo:
         #END_CONSTRUCTOR
         pass
 
+
     def assembly_metadata_report(self, ctx, params):
         """
         This example function accepts any number of parameters and returns results in a KBaseReport
@@ -92,7 +107,7 @@ class kb_ObjectInfo:
            length threshold for filtering.) -> structure: parameter
            "input_ref" of type "assembly_ref", parameter "workspace_name" of
            String, parameter "showContigs" of type "boolean" (A boolean. 0 =
-           false, other = true.), parameter "report_format" of String
+           false, other = true.)
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -140,8 +155,7 @@ class kb_ObjectInfo:
             rpt_delimiter = ','
 
         # Step 3 - Get the data and save the output to a file.
-        data_file_cli = DataFileUtil(self.callback_url)
-        assembly = data_file_cli.get_objects({'object_refs': [input_ref]})
+        assembly = self.dfu.get_objects({'object_refs': [input_ref]})
         name = "Assembly Data Object"
         object_type = ''
         if 'info' in assembly['data'][0]:
@@ -189,25 +203,14 @@ class kb_ObjectInfo:
 
                 rpt_list.append(ctg_list)
 
-        rpt_delimiter = "\t"
-        rpt_string = "Data Columns are tab-delimited\n"
-        report_path = os.path.join(self.scratch, 'assembly_meta_tab_file.tsv')
-        if report_format == 'csv':
-            rpt_delimiter = ','
-            rpt_string = "Data Columns are comma-delimited\n"
-            report_path = os.path.join(self.scratch, 'assembly_meta_csv_file.csv')
+        rpt_string += self.write_to_file(genome_list,'assembly_meta_tab_file.tsv',"\t")
+        self.write_to_file(genome_list,'assembly_meta_csv_file.csv',",")
         
-        with open(report_path, mode='w') as report_txt:
-            rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
-            for rpt in rpt_list:
-                rpt_writer.writerow(rpt)
-                rpt_string += rpt_delimiter.join(rpt) + "\n"
-        report_txt.close()
-
         fasta_list = []
+        dna_string = ""
         if showContigs:
             cf = CreateFasta(self.config)
-            rpt_string += "\nFASTA of the DNA Sequences\n"
+            dna_string += "\nFASTA of the DNA Sequences\n"
             fasta_list = cf.get_assembly_sequence(input_ref)
             report_path = os.path.join(self.scratch, 'assembly_DNA_file.fna')
             
@@ -216,12 +219,14 @@ class kb_ObjectInfo:
             for dna_seq in fasta_list:
                 dna = "\n".join(dna_seq)+"\n"
                 report_txt.write(dna)
-                rpt_string += dna
+                dna_string += dna
             report_txt.close()
 
         report_path = os.path.join(self.scratch, 'assembly_metadatals -_file.html')
         report_txt = open(report_path, "w")
-        report_txt.write("<pre>" + rpt_string + "</pre>")
+        htmltable = self.make_HTML(rpt_list)
+        report_txt.write(htmltable)
+        report_txt.write("<pre>" + dna_string + "</pre>")
         report_txt.close()
 
         cr = Report_creator(self.config)
@@ -240,8 +245,6 @@ class kb_ObjectInfo:
                              'output is not type dict as required.')
         # return the results
         return [output]
-
-
 
     def genome_report(self, ctx, params):
         """
@@ -277,22 +280,20 @@ class kb_ObjectInfo:
             raise ValueError('Parameter input_ref is not set in input arguments')
         input_ref = params['input_ref']
 
-        data_file_cli = DataFileUtil(self.callback_url)
-        genome = data_file_cli.get_objects({'object_refs': [input_ref]})
+        genome = self.dfu.get_objects({'object_refs': [input_ref]})
         genome_data = genome['data'][0]['data']
 
         report_format = params['report_format']
         rpt_list = []
         rpt_string = ''
+        report_path = ''
         
-        if report_format == 'tab':
+        if report_format == 'tab' or report_format == 'csv':
             cf = CreateFeatureLists(self.config)
-            rpt_list = cf.delimitedTable(genome_data, 'tab', 'features')
-            report_path = os.path.join(self.scratch, 'genome_tab_file.tsv')
-        elif report_format == 'csv':
-            cf = CreateFeatureLists(self.config)
-            rpt_list = cf.delimitedTable(genome_data, 'csv', 'features')
-            report_path = os.path.join(self.scratch, 'genome_csv_file.csv')
+            rpt_list = cf.delimitedTable(genome_data, report_format, 'features')
+            if rpt_list:
+                rpt_string += self.write_to_file(genome_list,'genome_tab_file.tsv',"\t")
+                self.write_to_file(genome_list,'genome_csv_file.csv',",")
         elif report_format == 'gff':
             cf = CreateFeatureLists(self.config)
             rpt_list = cf.gff3(genome_data, 'features')
@@ -332,28 +333,14 @@ class kb_ObjectInfo:
 
 #       The rpt_list only exists if the output is tab or comma delimited
 #       If the output is DNA or mRNA/Fasta, don't reset the string or use csv.writer
-        if rpt_list:
-            rpt_string = ''
-            rpt_delimiter = "\t"
-            if report_format == 'csv':
-                rpt_delimiter = ','
-                
-            with open(report_path, mode='w') as report_txt:
-                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                if report_format == 'csv':
-                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
-                for rpt in rpt_list:
-                    rpt_writer.writerow(rpt)
-                    rpt_string += rpt_delimiter.join(rpt) + "\n"
-        else:
+        if not rpt_list:
             report_txt = open(report_path, "w")
             report_txt.write(rpt_string)
             report_txt.close()
         
-        report_path = os.path.join(self.scratch, 'text_file.html')
-        report_txt = open(report_path, "w")
+        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_txt = open(html_report_path, "w")
         htmltable = self.make_HTML(rpt_list)
-        #report_txt.write("<pre>" + string + "</pre>")
         report_txt.write(htmltable)
         report_txt.close()
 
@@ -398,10 +385,6 @@ class kb_ObjectInfo:
         mystr = pformat(params)
         logging.info(f"Params:\n{mystr}")
 
-        # Step 1 - Parse/examine the parameters and catch any errors
-        # It is important to check that parameters exist and are defined, and that nice error
-        # messages are returned to users.
-
         if 'workspace_name' not in params:
             raise ValueError('Parameter workspace_name is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -409,32 +392,20 @@ class kb_ObjectInfo:
             raise ValueError('Parameter input_ref is not set in input arguments')
         input_ref = params['input_ref']
 
-        data_file_cli = DataFileUtil(self.callback_url)
-        genomeset = data_file_cli.get_objects({'object_refs': [input_ref]})
+        genomeset = self.dfu.get_objects({'object_refs': [input_ref]})
         genome_name = genomeset['data'][0]['info'][1]
         genomeset_data = genomeset['data'][0]['data']
-
         report_format = params['report_format']
 
         rpt_list = []
         multi_fasta = []
+        report_format = ''
         
-        if report_format == 'tab':
+        if report_format == 'tab' or report_format == 'csv':
             gsr = CreateMultiGenomeReport(self.config)
-            rpt_list = gsr.readGenomeSet(genome_name, genomeset_data, 'tab')
-            report_path = os.path.join(self.scratch, 'genomeset_tab_file.tsv')
-        elif report_format == 'csv':
-            gsr = CreateMultiGenomeReport(self.config)
-            rpt_list = gsr.readGenomeSet(genome_name, genomeset_data, 'csv')
-            report_path = os.path.join(self.scratch, 'genomeset_cvs_file.csv')
-        elif report_format == 'list':
-            gsr = CreateMultiGenomeReport(self.config)
-            rpt_list = gsr.readGenomeSet(genome_name, genomeset_data, 'list')
-            report_path = os.path.join(self.scratch, 'genomeset_list_file.tsv')
-        elif report_format == 'meta':
-            gsr = CreateMultiGenomeReport(self.config)
-            rpt_list = gsr.getGenomeSetMeta(genomeset['data'][0])
-            report_path = os.path.join(self.scratch, 'genomeset_meta_file.tsv')
+            rpt_list = gsr.readGenomeSet(genome_name, genomeset_data, report_format)
+            rpt_string += self.write_to_file(genome_list,'genomeset_tab_file.tsv',"\t")
+            self.write_to_file(genome_list,'genomeset_cvs_file.csv',",")
         elif report_format == 'fasta':
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = [["Assembly Reference","Scientific Name","File Name"]]
@@ -460,35 +431,19 @@ class kb_ObjectInfo:
                     for dna in fasta_list:
                         rpt_writer.writerow(dna)
                 report_txt.close()
-                
+
 #           Set the report path for the summary table (Don't overwrite the last dna file)
             report_path = os.path.join(self.scratch, 'genomeset_DNA_meta_file.txt')
+            rpt_string += self.write_to_file(genome_list,'genomeset_DNA_meta_file.tsv',"\t")
+            self.write_to_file(genome_list,'genomeset_DNA_meta_file.csv',",")
         else:
             raise ValueError('Invalid report option.' + str(report_format))
-
-        rpt_string = ''
-        rpt_delimiter = "\t"
-        if report_format == 'tsv':
-            rpt_string = "Data Columns are tab-delimited\n"
-        elif report_format == 'csv':
-            rpt_string = "Data Columns are comma-delimited\n"
-            rpt_delimiter = ','
-            
-        if rpt_list:
-            with open(report_path, mode='w') as report_txt:
-                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                if report_format == 'csv':
-                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
-                
-                for rpt in rpt_list:
-                    rpt_writer.writerow(rpt)
-                    rpt_string += rpt_delimiter.join(rpt) + "\n"
-
+ 
 #       The fasta can go with the HTML but not the metadata file above.
         rpt_list.extend(multi_fasta)
     
-        report_path = os.path.join(self.scratch, 'text_file.html')
-        report_txt = open(report_path, "w")
+        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_txt = open(html_report_path, "w")
         htmltable = self.make_HTML(rpt_list)
         report_txt.write(htmltable)
         report_txt.close()
@@ -515,8 +470,7 @@ class kb_ObjectInfo:
         """
         :param params: instance of type "DomainReportParams" -> structure:
            parameter "input_ref" of type "domain_ref", parameter
-           "evalue_cutoff" of Double, parameter "workspace_name" of String,
-           parameter "report_format" of String
+           "evalue_cutoff" of Double, parameter "workspace_name" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -546,8 +500,7 @@ class kb_ObjectInfo:
             raise ValueError('Parameter input_ref is not set in input arguments')
         input_ref = params['input_ref']
 
-        data_file_cli = DataFileUtil(self.callback_url)
-        domain_anno = data_file_cli.get_objects({'object_refs': [input_ref]})
+        domain_anno = self.dfu.get_objects({'object_refs': [input_ref]})
         domain_data = domain_anno['data'][0]['data']
 
         evalue_cutoff = float(params['evalue_cutoff'])
@@ -555,52 +508,29 @@ class kb_ObjectInfo:
 
         rpt_list1 = []
         rpt_list2 = []
-
-        rpt_delimiter = "\t"
-        if report_format == 'csv':
-            rpt_delimiter = ','
-
-        if report_format == 'tab':
-            cf = CreateFeatureLists(self.config)
-            report_path1 = os.path.join(self.scratch, 'domain_annotation_tab_list.tsv')
-            report_path2 = os.path.join(self.scratch, 'domain_annotation_tab_count.tsv')
-        elif report_format == 'csv':
-            cf = CreateFeatureLists(self.config)
-            report_path1 = os.path.join(self.scratch, 'domain_annotation_csv_list.csv')
-            report_path2 = os.path.join(self.scratch, 'domain_annotation_csv_count.csv')
-        else:
-            raise ValueError('Invalid report option.' + str(report_format))
-
-        rpt_list1 = cf.readDomainAnnList(domain_data, rpt_delimiter, evalue_cutoff)
-        rpt_list2 = cf.readDomainAnnCount(domain_data,rpt_delimiter, evalue_cutoff)
+        
+        cf = CreateFeatureLists(self.config)
+        rpt_list1 = cf.readDomainAnnList(domain_data, evalue_cutoff)
+        rpt_list2 = cf.readDomainAnnCount(domain_data, evalue_cutoff)
     
         rpt_string = ''
+        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_txt = open(html_report_path, "w")
         
         if rpt_list1 or rpt_list2:
-            if rpt_list1:
-                with open(report_path1, mode='w') as report_txt:
-                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                    if report_format == 'csv':
-                        rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
-                    for rpt in rpt_list1:
-                        rpt_writer.writerow(rpt)
-        
             if rpt_list2:
-                with open(report_path2, mode='w') as report_txt:
-                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                    if report_format == 'csv':
-                        rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
-                    for rpt in rpt_list2:
-                        rpt_writer.writerow(rpt)
-                        rpt_string += rpt_delimiter.join(rpt) + "\n"
+                rpt_string += self.write_to_file(rpt_list1,'domain_annotation_tab_count.tsv',"\t")
+                self.write_to_file(rpt_list2,'domain_annotation_csv_count.csv',",")
+                
+                htmltable = self.make_HTML(rpt_list2)
+                html_report_txt.write(htmltable)
 
-        report_path = os.path.join(self.scratch, 'text_file.html')
-        report_txt = open(report_path, "w")
-        htmltable = self.make_HTML(rpt_list2)
-        report_txt.write(htmltable)
-        htmltable = self.make_HTML(rpt_list1)
-        report_txt.write(htmltable)
-        report_txt.close()
+            if rpt_list1:
+                rpt_string += self.write_to_file(rpt_list1,'domain_annotation_tab_list.tsv',"\t")
+                self.write_to_file(rpt_list2,'domain_annotation_csv_list.csv',",")
+                
+                htmltable = self.make_HTML(rpt_list1)
+                html_report_txt.write(htmltable)
 
         cr = Report_creator(self.config)
 
@@ -621,11 +551,11 @@ class kb_ObjectInfo:
         # return the results
         return [output]
 
-    def tree_report(self, ctx, params):
+    def genomecomp_report(self, ctx, params):
         """
-        :param params: instance of type "TreeReportParams" -> structure:
-           parameter "input_ref" of type "tree_ref", parameter
-           "workspace_name" of String, parameter "report_format" of String
+        :param params: instance of type "GenomeCompReportParams" ->
+           structure: parameter "input_ref" of type "genomecomp_ref",
+           parameter "workspace_name" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -636,12 +566,162 @@ class kb_ObjectInfo:
         """
         # ctx is the context object
         # return variables are: output
-        #BEGIN tree_report
-        #END tree_report
+        #BEGIN genomecomp_report
+        token = ctx['token']
+
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting GenomeComparison Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params:\n{mystr}")
+        
+        if 'workspace_name' not in params:
+            raise ValueError('Parameter workspace_name is not set in input arguments')
+        workspace_name = params['workspace_name']
+        if 'input_ref' not in params:
+            raise ValueError('Parameter input_ref is not set in input arguments')
+        input_ref = params['input_ref']
+        
+        cf = CreateFeatureLists(self.config)
+        data_file_cli = DataFileUtil(self.callback_url)
+        gencomp = self.dfu.get_objects({'object_refs': [input_ref]})
+        gencomp_data = gencomp['data'][0]['data']
+        
+        rpt_list1 = []
+        rpt_list2 = []
+        cf = CreateFeatureLists(self.config)
+        rpt_string = ''
+        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_txt = open(html_report_path, "w")
+#
+#       OVERVIEW
+#
+        name = gencomp['data'][0]['info'][1]
+        num_genomes = 'unk'
+        if "Number genomes" in gencomp['data'][0]['info'][10]:
+            num_genomes = gencomp['data'][0]['info'][10]["Number genomes"]
+
+        overview_list = [["Name",name],
+                        ["Number of Genomes",num_genomes],
+                        ["Pangenome Reference", gencomp_data["pangenome_ref"]],
+                        ["Comparison Name", gencomp_data["name"]],
+                        ["Number of Core Families", str(gencomp_data["core_families"])],
+                        ["Number of Core Functions", str(gencomp_data["core_functions"])] ]
+        if overview_list:
+            rpt_string += self.write_to_file(overview_list,'gencomp_overview_tab.tsv',"\t")
+            self.write_to_file(overview_list,'gencomp_overview_csv.csv',",")
+                
+            htmltable = self.make_HTML(overview_list)
+            html_report_txt.write(htmltable)
+#
+#       GENOMES
+#
+        genome_data = gencomp_data["genomes"]
+        genome_dict = {}
+        genome_list = []
+        rpt_list = [['Name','ID','Taxonomy','Number of Families','Number of Features','Number of Functions']]
+        sim_list = [["Genome1","Genome2","Families in Common","Functions in Common"]]
+        for gen in genome_data:
+            genome_dict[gen["id"]] = gen["name"]
+            genome_list.append([gen["name"],gen["id"],gen["taxonomy"],
+                            str(gen["families"]),str(gen["features"]),str(gen["functions"])])
+            for g2 in gen["genome_similarity"]:
+                sim_list.append([gen["id"],g2,
+                str(gen["genome_similarity"][g2][0]),
+                str(gen["genome_similarity"][g2][1])])
+                
+        if genome_list:
+            rpt_string += self.write_to_file(genome_list,'gencomp_genomes_tab.tsv',"\t")
+            self.write_to_file(genome_list,'gencomp_genomes_csv.csv',",")
+   
+            htmltable = self.make_HTML(genome_list)
+            html_report_txt.write(htmltable)
+                
+        if sim_list:
+            rpt_string += self.write_to_file(sim_list,'gencomp_genomes_sim_tab.tsv',"\t")
+            self.write_to_file(sim_list,'gencomp_genomes_sim_csv.csv',",")
+   
+            htmltable = self.make_HTML(sim_list)
+            html_report_txt.write(htmltable)
+ #
+ #      FAMILIES
+ #
+        family_data = gencomp_data["families"]
+        family_list = []
+        rpt_list = [["Family","Number of Genomes","Core","Fraction consistent","Fraction Genomes","Type","Protein Translation"]]
+        fam_list = [["Family","Genome Name","Genome ID","Gene","Score"]]
+        for fam in family_data[0:3]:
+            family_list.append([fam["id"],
+                str(fam["number_genomes"]),
+                str(fam["core"]),
+                str(fam["fraction_consistent_annotations"]),
+                str(fam["fraction_genomes"]),
+                fam["type"],fam["protein_translation"]])
+            for f2 in fam["genome_features"]:
+                for i in fam["genome_features"][f2]:
+                    # Leave out i[1] because it is an unknown list
+                    fam_list.append([fam["id"],genome_dict[f2],f2,i[0],str(i[2])])
+
+        if family_list:
+            rpt_string += self.write_to_file(family_list,'gencomp_familes_tab.tsv',"\t")
+            self.write_to_file(family_list,'gencomp_families_csv.csv',",")
+                
+            htmltable = self.make_HTML(family_list)
+            html_report_txt.write(htmltable)
+                
+        if fam_list:
+            rpt_string += self.write_to_file(fam_list,'gencomp_familes2_tab.tsv',"\t")
+            self.write_to_file(fam_list,'gencomp_families2_csv.csv',",")
+                
+            htmltable = self.make_HTML(fam_list)
+            html_report_txt.write(htmltable)
+#
+#       FUNCTIONS
+#
+        function_data = gencomp_data["functions"]
+        function_list = []
+        rpt_list = [["ID","Number of Genomes","Core","Fraction Consistent Families","Fraction Genomes",
+                    "Primary Class","Subclass","Subsystem"]]
+        fun_list = [["Function","Genome Name","Genome ID","Gene","Unk","Score"]]
+        for fun in function_data[0:3]:
+            function_list.append([fun["id"],
+                str(fun["number_genomes"]),
+                str(fun["core"]),
+                str(fun["fraction_consistent_families"]),
+                str(fun["fraction_genomes"]),
+                fun["primclass"],fun["subclass"],fun["subsystem"]])
+            for f2 in fun["genome_features"]:
+                for i in fun["genome_features"][f2]:
+                    fun_list.append([fun["id"],genome_dict[f2],f2,i[0],str(i[1]),str(i[2])])
+
+        if function_list:
+            rpt_string += self.write_to_file(function_list,'gencomp_functions_tab.tsv',"\t")
+            self.write_to_file(function_list,'gencomp_functions_csv.csv',",")
+ 
+            htmltable = self.make_HTML(function_list)
+            html_report_txt.write(htmltable)
+
+        if fun_list:
+            rpt_string += self.write_to_file(fun_list,'gencomp_functions2_tab.tsv',"\t")
+            self.write_to_file(fun_list,'gencomp_functions2_csv.csv',",")
+
+            htmltable = self.make_HTML(fun_list)
+            html_report_txt.write(htmltable)
+            
+        html_report_txt.close()
+
+        cr = Report_creator(self.config)
+
+        reported_output = cr.create_report(token, params['workspace_name'],
+                                           rpt_string, self.scratch)
+
+        output = {'report_name': reported_output['name'],
+                  'report_ref': reported_output['ref']}
+                  
+        #END genomecomp_report
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method tree_report return value ' +
+            raise ValueError('Method genomecomp_report return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -650,7 +730,7 @@ class kb_ObjectInfo:
         """
         :param params: instance of type "FeatSeqReportParams" -> structure:
            parameter "input_ref" of type "featseq_ref", parameter
-           "workspace_name" of String, parameter "report_format" of String
+           "workspace_name" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -681,38 +761,20 @@ class kb_ObjectInfo:
         input_ref = params['input_ref']
         
         cf = CreateFeatureLists(self.config)
-        data_file_cli = DataFileUtil(self.callback_url)
-        setseq = data_file_cli.get_objects({'object_refs': [input_ref]})
+        setseq = self.dfu.get_objects({'object_refs': [input_ref]})
         setseq_data = setseq['data'][0]['data']
 
-        report_format = params['report_format']
-
         rpt_list = []
-        rpt_delimiter = "\t"
         
-        if report_format == 'tab':
-            rpt_list = cf.readFeatSeq(setseq_data, 'tab')
-            report_path = os.path.join(self.scratch, 'sequence_set_tab_list.tsv')
-        elif report_format == 'csv':
-            rpt_list = cf.readFeatSeq(setseq_data, 'csv')
-            report_path = os.path.join(self.scratch, 'sequence_set_csv_list.csv')
-            rpt_delimiter = ','
-        else:
-            raise ValueError('Invalid report option.' + str(report_format))
+        rpt_list = cf.readFeatSeq(setseq_data)
 
         rpt_string = ''
         if rpt_list:
-            with open(report_path, mode='w') as report_txt:
-                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                if report_format == 'csv':
-                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
-                
-                for rpt in rpt_list:
-                    rpt_writer.writerow(rpt)
-                    rpt_string += rpt_delimiter.join(rpt) + "\n"
+            rpt_string += self.write_to_file(rpt_list,'sequence_set_tab_list.tsv',"\t")
+            self.write_to_file(rpt_list,'sequence_set_csv_list.csv',",")
 
-        report_path = os.path.join(self.scratch, 'text_file.html')
-        report_txt = open(report_path, "w")
+        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_txt = open(html_report_path, "w")
         htmltable = self.make_HTML(rpt_list)
         report_txt.write(htmltable)
         report_txt.close()
@@ -740,7 +802,7 @@ class kb_ObjectInfo:
         """
         :param params: instance of type "ProtCompReportParams" -> structure:
            parameter "input_ref" of type "protcomp_ref", parameter
-           "workspace_name" of String, parameter "report_format" of String
+           "workspace_name" of String
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -771,35 +833,17 @@ class kb_ObjectInfo:
             raise ValueError('Parameter input_ref is not set in input arguments')
         input_ref = params['input_ref']
 
-        data_file_cli = DataFileUtil(self.callback_url)
-        protcomp = data_file_cli.get_objects({'object_refs': [input_ref]})
+        protcomp = self.dfu.get_objects({'object_refs': [input_ref]})
         protcomp_data = protcomp['data'][0]['data']
-
-        report_format = params['report_format']
-
         rpt_list = []
-        rpt_delimiter = "\t"
         
-        if report_format == 'tab':
-            rpt_list = cf.readProtComp(protcomp_data, 'tab')
-            report_path = os.path.join(self.scratch, 'protcomp_tab_list.tsv')
-        elif report_format == 'csv':
-            rpt_list = cf.readProtComp(protcomp_data, 'csv')
-            report_path = os.path.join(self.scratch, 'protcomp_csv_list.csv')
-            rpt_delimiter = ','
-        else:
-            raise ValueError('Invalid report option.' + str(report_format))
+        rpt_list = cf.readProtComp(protcomp_data)
 
         #Write to csv/tsv file. Create string for html and report output
         rpt_string = ''
         if rpt_list:
-            with open(report_path, mode='w') as report_txt:
-                rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                if report_format == 'csv':
-                    rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
-                for rpt in rpt_list:
-                    rpt_writer.writerow(rpt)
-                    rpt_string += rpt_delimiter.join(rpt) + "\n"
+            rpt_string += self.write_to_file(rpt_list,'protcomp_tab_list.tsv',"\t")
+            self.write_to_file(rpt_list,'protcomp_csv_list.csv',",")
         
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
@@ -823,7 +867,6 @@ class kb_ObjectInfo:
                              'output is not type dict as required.')
         # return the results
         return [output]
-        
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",
