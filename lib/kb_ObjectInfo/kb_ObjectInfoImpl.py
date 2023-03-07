@@ -327,12 +327,16 @@ class kb_ObjectInfo:
         else:
             raise ValueError('Invalid report option.' + str(report_format))
 
-#       The rpt_list only exists if the output is tab or comma delimited
-#       If the output is DNA or mRNA/Fasta, don't reset the string or use csv.writer
-        if not rpt_list:
-            report_txt = open(report_path, "w")
-            report_txt.write(rpt_string)
-            report_txt.close()
+        if report_format == 'tab' or report_format == 'csv':
+            if rpt_list:
+                rpt_string += self.write_to_file(rpt_list,'genome_tab_file.tsv',"\t")
+                self.write_to_file(rpt_list,'genome_csv_file.csv',",")
+        elif rpt_list:
+            with open(report_path, mode='w') as report_txt:
+                rpt_writer = csv.writer(report_txt, delimiter="\n", quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                for rpt in rpt_list:
+                    rpt_writer.writerow(rpt)
+                    rpt_string += rpt_delimiter.join(rpt) + "\n"
         
         html_report_path = os.path.join(self.scratch, 'text_file.html')
         html_report_txt = open(html_report_path, "w")
