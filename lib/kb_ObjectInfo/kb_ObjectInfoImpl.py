@@ -199,7 +199,7 @@ class kb_ObjectInfo:
 
                 rpt_list.append(ctg_list)
 
-        rpt_string += self.write_to_file(genome_list,'assembly_meta_tab_file.tsv',"\t")
+        rpt_string = self.write_to_file(genome_list,'assembly_meta_tab_file.tsv',"\t")
         self.write_to_file(genome_list,'assembly_meta_csv_file.csv',",")
         
         fasta_list = []
@@ -396,6 +396,7 @@ class kb_ObjectInfo:
         rpt_list = []
         multi_fasta = []
         report_format = ''
+        rpt_string = ''
         
         if report_format == 'tab' or report_format == 'csv':
             gsr = CreateMultiGenomeReport(self.config)
