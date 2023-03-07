@@ -614,7 +614,7 @@ class kb_ObjectInfo:
 #
         genome_data = gencomp_data["genomes"]
         genome_dict = {}
-        genome_list = [[""],["GENOMES"]['Name','ID','Taxonomy','Number of Families','Number of Features','Number of Functions']]
+        genome_list = [[""],["GENOMES"],['Name','ID','Taxonomy','Number of Families','Number of Features','Number of Functions']]
         sim_list = [["Genome1","Genome2","Number Families in Common","Number Functions in Common"]]
         for gen in genome_data:
             genome_dict[gen["id"]] = gen["name"]
