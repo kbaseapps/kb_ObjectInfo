@@ -602,8 +602,7 @@ class kb_ObjectInfo:
                         ["Pangenome Reference", gencomp_data["pangenome_ref"]],
                         ["Comparison Name", gencomp_data["name"]],
                         ["Number of Core Families", str(gencomp_data["core_families"])],
-                        ["Number of Core Functions", str(gencomp_data["core_functions"])] ],
-                        [""
+                        ["Number of Core Functions", str(gencomp_data["core_functions"])] ]
         if overview_list:
             rpt_string += self.write_to_file(overview_list,'gencomp_overview_tab.tsv',"\t")
             self.write_to_file(overview_list,'gencomp_overview_csv.csv',",")
