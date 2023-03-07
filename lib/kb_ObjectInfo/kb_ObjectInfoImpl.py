@@ -341,8 +341,8 @@ class kb_ObjectInfo:
         html_report_path = os.path.join(self.scratch, 'text_file.html')
         html_report_txt = open(html_report_path, "w")
         htmltable = self.make_HTML(rpt_list)
-        report_txt.write(htmltable)
-        report_txt.close()
+        html_report_txt.write(htmltable)
+        html_report_txt.close()
 
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -445,8 +445,8 @@ class kb_ObjectInfo:
         html_report_path = os.path.join(self.scratch, 'text_file.html')
         html_report_txt = open(html_report_path, "w")
         htmltable = self.make_HTML(rpt_list)
-        report_txt.write(htmltable)
-        report_txt.close()
+        html_report_txt.write(htmltable)
+        html_report_txt.close()
 
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -531,7 +531,8 @@ class kb_ObjectInfo:
                 
                 htmltable = self.make_HTML(rpt_list1)
                 html_report_txt.write(htmltable)
-
+                
+        html_report_txt.close()
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -776,8 +777,8 @@ class kb_ObjectInfo:
         html_report_path = os.path.join(self.scratch, 'text_file.html')
         html_report_txt = open(html_report_path, "w")
         htmltable = self.make_HTML(rpt_list)
-        report_txt.write(htmltable)
-        report_txt.close()
+        html_report_txt.write(htmltable)
+        html_report_txt.close()
 
         cr = Report_creator(self.config)
 
