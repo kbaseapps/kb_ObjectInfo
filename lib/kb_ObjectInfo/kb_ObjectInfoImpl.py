@@ -199,8 +199,8 @@ class kb_ObjectInfo:
 
                 rpt_list.append(ctg_list)
 
-        rpt_string = self.write_to_file(genome_list,'assembly_meta_tab_file.tsv',"\t")
-        self.write_to_file(genome_list,'assembly_meta_csv_file.csv',",")
+        rpt_string = self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
+        self.write_to_file(rpt_list,'assembly_meta_csv_file.csv',",")
         
         fasta_list = []
         dna_string = ""
@@ -288,8 +288,8 @@ class kb_ObjectInfo:
             cf = CreateFeatureLists(self.config)
             rpt_list = cf.delimitedTable(genome_data, report_format, 'features')
             if rpt_list:
-                rpt_string += self.write_to_file(genome_list,'genome_tab_file.tsv',"\t")
-                self.write_to_file(genome_list,'genome_csv_file.csv',",")
+                rpt_string += self.write_to_file(rpt_list,'genome_tab_file.tsv',"\t")
+                self.write_to_file(rpt_list,'genome_csv_file.csv',",")
         elif report_format == 'gff':
             cf = CreateFeatureLists(self.config)
             rpt_list = cf.gff3(genome_data, 'features')
@@ -395,14 +395,13 @@ class kb_ObjectInfo:
 
         rpt_list = []
         multi_fasta = []
-        report_format = ''
         rpt_string = ''
         
         if report_format == 'tab' or report_format == 'csv':
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = gsr.readGenomeSet(genome_name, genomeset_data, report_format)
-            rpt_string += self.write_to_file(genome_list,'genomeset_tab_file.tsv',"\t")
-            self.write_to_file(genome_list,'genomeset_cvs_file.csv',",")
+            rpt_string += self.write_to_file(rpt_list,'genomeset_tab_file.tsv',"\t")
+            self.write_to_file(rpt_list,'genomeset_cvs_file.csv',",")
         elif report_format == 'fasta':
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = [["Assembly Reference","Scientific Name","File Name"]]
@@ -431,8 +430,8 @@ class kb_ObjectInfo:
 
 #           Set the report path for the summary table (Don't overwrite the last dna file)
             report_path = os.path.join(self.scratch, 'genomeset_DNA_meta_file.txt')
-            rpt_string += self.write_to_file(genome_list,'genomeset_DNA_meta_file.tsv',"\t")
-            self.write_to_file(genome_list,'genomeset_DNA_meta_file.csv',",")
+            rpt_string += self.write_to_file(rpt_list,'genomeset_DNA_meta_file.tsv',"\t")
+            self.write_to_file(rpt_list,'genomeset_DNA_meta_file.csv',",")
         else:
             raise ValueError('Invalid report option.' + str(report_format))
  
@@ -597,12 +596,14 @@ class kb_ObjectInfo:
         if "Number genomes" in gencomp['data'][0]['info'][10]:
             num_genomes = gencomp['data'][0]['info'][10]["Number genomes"]
 
-        overview_list = [["Name",name],
+        overview_list = [["OVERVIEW"],
+                        ["Name",name],
                         ["Number of Genomes",num_genomes],
                         ["Pangenome Reference", gencomp_data["pangenome_ref"]],
                         ["Comparison Name", gencomp_data["name"]],
                         ["Number of Core Families", str(gencomp_data["core_families"])],
-                        ["Number of Core Functions", str(gencomp_data["core_functions"])] ]
+                        ["Number of Core Functions", str(gencomp_data["core_functions"])] ],
+                        [""
         if overview_list:
             rpt_string += self.write_to_file(overview_list,'gencomp_overview_tab.tsv',"\t")
             self.write_to_file(overview_list,'gencomp_overview_csv.csv',",")
@@ -614,9 +615,8 @@ class kb_ObjectInfo:
 #
         genome_data = gencomp_data["genomes"]
         genome_dict = {}
-        genome_list = []
-        rpt_list = [['Name','ID','Taxonomy','Number of Families','Number of Features','Number of Functions']]
-        sim_list = [["Genome1","Genome2","Families in Common","Functions in Common"]]
+        genome_list = [[""],["GENOMES"]['Name','ID','Taxonomy','Number of Families','Number of Features','Number of Functions']]
+        sim_list = [["Genome1","Genome2","Number Families in Common","Number Functions in Common"]]
         for gen in genome_data:
             genome_dict[gen["id"]] = gen["name"]
             genome_list.append([gen["name"],gen["id"],gen["taxonomy"],
@@ -643,10 +643,10 @@ class kb_ObjectInfo:
  #      FAMILIES
  #
         family_data = gencomp_data["families"]
-        family_list = []
-        rpt_list = [["Family","Number of Genomes","Core","Fraction consistent","Fraction Genomes","Type","Protein Translation"]]
+        family_list = [[""],["FAMILIES"],
+                    ["Family","Number of Genomes","Core","Fraction consistent","Fraction Genomes","Type","Protein Translation"]]
         fam_list = [["Family","Genome Name","Genome ID","Gene","Score"]]
-        for fam in family_data[0:3]:
+        for fam in family_data:
             family_list.append([fam["id"],
                 str(fam["number_genomes"]),
                 str(fam["core"]),
@@ -675,11 +675,11 @@ class kb_ObjectInfo:
 #       FUNCTIONS
 #
         function_data = gencomp_data["functions"]
-        function_list = []
-        rpt_list = [["ID","Number of Genomes","Core","Fraction Consistent Families","Fraction Genomes",
+        function_list = [[""],["FUNCTIONS"],
+                    ["ID","Number of Genomes","Core","Fraction Consistent Families","Fraction Genomes",
                     "Primary Class","Subclass","Subsystem"]]
         fun_list = [["Function","Genome Name","Genome ID","Gene","Unk","Score"]]
-        for fun in function_data[0:3]:
+        for fun in function_data:
             function_list.append([fun["id"],
                 str(fun["number_genomes"]),
                 str(fun["core"]),
