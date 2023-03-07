@@ -149,10 +149,6 @@ class kb_ObjectInfo:
         if showContigs > 1:
             raise ValueError('showContigs parameter cannot be greater than one (' + str(showContigs) + ')')
 
-        report_format = params['report_format']
-        rpt_delimiter = "\t"
-        if report_format == 'csv':
-            rpt_delimiter = ','
 
         # Step 3 - Get the data and save the output to a file.
         assembly = self.dfu.get_objects({'object_refs': [input_ref]})
@@ -504,7 +500,6 @@ class kb_ObjectInfo:
         domain_data = domain_anno['data'][0]['data']
 
         evalue_cutoff = float(params['evalue_cutoff'])
-        report_format = params['report_format']
 
         rpt_list1 = []
         rpt_list2 = []
