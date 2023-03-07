@@ -333,10 +333,10 @@ class kb_ObjectInfo:
                 self.write_to_file(rpt_list,'genome_csv_file.csv',",")
         elif rpt_list:
             with open(report_path, mode='w') as report_txt:
-                rpt_writer = csv.writer(report_txt, delimiter="\n", quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                rpt_writer = csv.writer(report_txt, delimiter="\t", quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 for rpt in rpt_list:
                     rpt_writer.writerow(rpt)
-                    rpt_string += rpt_delimiter.join(rpt) + "\n"
+                    rpt_string += "\t".join(rpt) + "\n"
         
         html_report_path = os.path.join(self.scratch, 'text_file.html')
         html_report_txt = open(html_report_path, "w")
