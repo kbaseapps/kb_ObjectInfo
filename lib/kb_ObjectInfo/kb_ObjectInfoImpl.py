@@ -407,7 +407,7 @@ class kb_ObjectInfo:
             rpt_list = gsr.readGenomeSet(genome_name, genomeset_data)
             rpt_string += self.write_to_file(rpt_list,'genomeset_tab_file.tsv',"\t")
             self.write_to_file(rpt_list,'genomeset_cvs_file.csv',",")
-        elif params['showDNA']:
+        if params['showDNA']:
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = [["Assembly Reference","Scientific Name","File Name"]]
             
