@@ -288,19 +288,19 @@ class kb_ObjectInfo:
         rpt_string = ''
         report_path = ''
         
-        if params['listContigs']:
+        if params['listCoding']:
             cf = CreateFeatureLists(self.config)
             rpt_list = cf.delimitedTable(genome_data, 'features')
             if rpt_list:
                 rpt_string += self.write_to_file(rpt_list,'genome_tab_file.tsv',"\t")
                 self.write_to_file(rpt_list,'genome_csv_file.csv',",")
                 
-        elif params['listGFF']:
+        if params['listGFF']:
             cf = CreateFeatureLists(self.config)
             rpt_list = cf.gff3(genome_data, 'features')
             rpt_string += self.write_to_file(rpt_list,'genome_file.gff',"\t")
             
-        elif params['FastaAA']:
+        if params['FastaAA']:
             cf = CreateFasta(self.config)
 #           Before version 9 genomes, the cdss didn't exist
             if genome_data['cdss']:
@@ -310,7 +310,7 @@ class kb_ObjectInfo:
             
             rpt_string += self.write_to_file(rpt_list,'genome_file.faa',"\n")
             
-        elif params['FastamRNA']:
+        if params['FastamRNA']:
             cf = CreateFasta(self.config)
 #           Before version 9 genomes, the cdss didn't exist
             if genome_data['cdss']:
@@ -320,7 +320,7 @@ class kb_ObjectInfo:
                 
             rpt_string += self.write_to_file(rpt_list,'genome_mRNA_file.fna',"\n")
             
-        elif params['showDNA']:
+        if params['showDNA']:
             cf = CreateFasta(self.config)
             report_path = os.path.join(self.scratch, 'genome_dna_file.fna')
             if 'assembly_ref' in genome_data:
@@ -336,9 +336,6 @@ class kb_ObjectInfo:
                 rpt_string += 'Did not find the Assembly Reference\n'
                 
             rpt_string += self.write_to_file(rpt_list,'genome_dna_file.fna',"\n")
-            
-        else:
-            raise ValueError('No valid report option given.' )
         
         html_report_path = os.path.join(self.scratch, 'text_file.html')
         html_report_txt = open(html_report_path, "w")
