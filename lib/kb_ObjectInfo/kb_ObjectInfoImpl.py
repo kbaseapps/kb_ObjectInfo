@@ -286,6 +286,8 @@ class kb_ObjectInfo:
         rpt_list = []
         rpt_string = ''
         report_path = ''
+        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_txt = open(html_report_path, "w")
         
         if params['listCoding']:
             cf = CreateFeatureLists(self.config)
@@ -293,11 +295,15 @@ class kb_ObjectInfo:
             if rpt_list:
                 rpt_string += self.write_to_file(rpt_list,'genome_tab_file.tsv',"\t")
                 self.write_to_file(rpt_list,'genome_csv_file.csv',",")
+            htmltable = self.make_HTML(rpt_list)
+            html_report_txt.write(htmltable)
                 
         if params['listGFF']:
             cf = CreateFeatureLists(self.config)
             rpt_list = cf.gff3(genome_data, 'features')
             rpt_string += self.write_to_file(rpt_list,'genome_file.gff',"\t")
+            htmltable = self.make_HTML(rpt_list)
+            html_report_txt.write(htmltable)
             
         if params['FastaAA']:
             cf = CreateFasta(self.config)
@@ -308,6 +314,8 @@ class kb_ObjectInfo:
                 rpt_list = cf.create_Fasta_from_features(genome_data['features'])
             
             rpt_string += self.write_to_file(rpt_list,'genome_file.faa',"\n")
+            htmltable = self.make_HTML(rpt_list)
+            html_report_txt.write(htmltable)
             
         if params['FastamRNA']:
             cf = CreateFasta(self.config)
@@ -318,7 +326,9 @@ class kb_ObjectInfo:
                 rpt_list = cf.create_Fasta_from_mRNA(genome_data['features'])
                 
             rpt_string += self.write_to_file(rpt_list,'genome_mRNA_file.fna',"\n")
-            
+            htmltable = self.make_HTML(rpt_list)
+            html_report_txt.write(htmltable)
+        
         if params['showDNA']:
             cf = CreateFasta(self.config)
             report_path = os.path.join(self.scratch, 'genome_dna_file.fna')
@@ -335,11 +345,10 @@ class kb_ObjectInfo:
                 rpt_string += 'Did not find the Assembly Reference\n'
                 
             rpt_string += self.write_to_file(rpt_list,'genome_dna_file.fna',"\n")
-        
-        html_report_path = os.path.join(self.scratch, 'text_file.html')
-        html_report_txt = open(html_report_path, "w")
-        htmltable = self.make_HTML(rpt_list)
-        html_report_txt.write(htmltable)
+            htmltable = self.make_HTML(rpt_list)
+            html_report_txt.write(htmltable)
+
+
         html_report_txt.close()
 
         cr = Report_creator(self.config)
