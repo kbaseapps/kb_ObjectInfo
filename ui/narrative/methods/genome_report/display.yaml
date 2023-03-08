@@ -32,11 +32,31 @@ parameters :
             Genome
         short-hint : |
             The Genome to be used by the app.
-    report_format:
+    listCoding:
         ui-name : |
-            File Format
+            List protein coding features
         short-hint : |
-            Specify the format for the file.
+            Include a tab or comma delimited list of the protein coding features.
+    listGFF:
+        ui-name : |
+            GFF format of features
+        short-hint : |
+            Include a GFF-formatted list of the protein coding features.
+    FastaAA:
+        ui-name : |
+            FastA of protein coding features
+        short-hint : |
+            Include a FastA file of the protein coding features
+    FastamRNA:
+        ui-name : |
+            FastA of mRNAs
+        short-hint : |
+            Include a FastA file of mRNAs of the protein coding features
+    showDNA:
+        ui-name : |
+            Genome DNA
+        short-hint : |
+            Include a FastA file of the genomic DNA
 description : |
     <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> file about an object.</p>
 
@@ -49,11 +69,11 @@ description : |
       <li>The KBase Genome object.</li>
       <li>A download option:
         <ul>
-          <li>DNA FASTA format. Create a FASTA file of the genomic DNA.</li>
           <li>Protein coding Features, Tab-delimited and comma-delimited. A file where the rows are the genes in the Genome and the columns are information about the genes. Columns are separated with tabs or commas.</li>
-          <li>Features, GFF3 format. A GFF3 (General Feature Format) file of the genes in the Genome.</li>
-          <li>FASTA, translated CDSs. A FASTA-formatted file of the amino acid sequences of the genes.</li>
-          <li>FASTA, of mRNAs. A FASTA-formatted file of the mRNA sequences of the genes.</li>
+          <li>Features in GFF3 format. A GFF3 (General Feature Format) file of the protein coding features in the Genome.</li>
+          <li>FASTA, translated CDSs. A FASTA-formatted file of the amino acid sequences of the protein coding features.</li>
+          <li>FASTA, of mRNAs. A FASTA-formatted file of the mRNA sequences of the protein coding features.</li>
+          <li>DNA FASTA format. Create a FASTA file of the genomic DNA.</li>
         </ul></li>
     </ul>
     </p>
@@ -61,7 +81,7 @@ description : |
     <p><b>Output:</b>
     <ol>
       <li>The <b>Summary</b> or <b>Link</b> section has text version of the requested file.</li>
-      <li>One downloadable file in the <b>Files</b> section. The name and content of the file will depend on the requested file format.
+      <li>One downloadable file in the <b>Files</b> section for each output selection. The name and content of the file will depend on the requested file format.
         <ol>
           <li>FASTA files will be in FASTA format. The file name will end in .fna for nucleotide files and .faa for amino acid files.</li>
           <li>Feature lists will include the FeatureID, Feature Type, Contig, Location (Feature Coordinates), Strand, Feature Function, and, if applicable, Aliases. Tab-delimited, comma-delimited, and GFF files will end in .tab, .csv and .gff, respectively.</li>

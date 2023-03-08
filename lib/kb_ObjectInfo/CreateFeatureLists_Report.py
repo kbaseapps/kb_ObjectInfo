@@ -148,7 +148,7 @@ class CreateFeatureLists:
     #    Create a Delimited Table version of the genes in a genome
     #
 
-    def delimitedTable(self, genome, format, features):
+    def delimitedTable(self, genome, features):
 
 #        seed_basepath = os.path.abspath('/kb/module/data')
 #        seed_subsys   = os.path.join(seed_basepath, 'subsys.txt')

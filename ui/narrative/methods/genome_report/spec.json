@@ -22,37 +22,73 @@
             }
         },
         {
-            "id": "report_format",
+            "id": "listCoding",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
             "default_values": [
-                "tab"
+                "1"
             ],
-            "field_type": "dropdown",
-            "dropdown_options": {
-                "options": [ 
-					{
-						"value": "DNA",
-						"display": "DNA fasta format"
-					},
-					{
-						"value": "tab",
-						"display": "Protein coding Features"
-					},
-					{
-						"value": "gff",
-						"display": "Features, GFF3 format"
-					},
-					{
-						"value": "fasta",
-						"display": "FASTA, translated CDSs"
-					},
-					{
-						"value": "mRNA",
-						"display": "FASTA, of mRNAs"
-					}
-				]
+            "field_type": "checkbox",
+            "checkbox_options": {
+                "checked_value": 1,
+                "unchecked_value": 0
+            }
+        },
+        {
+            "id": "listGFF",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [
+                "0"
+            ],
+            "field_type": "checkbox",
+            "checkbox_options": {
+                "checked_value": 1,
+                "unchecked_value": 0
+            }
+        },
+        {
+            "id": "FastaAA",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [
+                "0"
+            ],
+            "field_type": "checkbox",
+            "checkbox_options": {
+                "checked_value": 1,
+                "unchecked_value": 0
+            }
+        },
+        {
+            "id": "FastamRNA",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [
+                "0"
+            ],
+            "field_type": "checkbox",
+            "checkbox_options": {
+                "checked_value": 1,
+                "unchecked_value": 0
+            }
+        },
+        {
+            "id": "showDNA",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [
+                "0"
+            ],
+            "field_type": "checkbox",
+            "checkbox_options": {
+                "checked_value": 1,
+                "unchecked_value": 0
             }
         }
     ],
@@ -72,8 +108,24 @@
                     "target_type_transform": "resolved-ref"
                 },
                 {
-                    "input_parameter": "report_format",
-                    "target_property": "report_format"
+                    "input_parameter": "listCoding",
+                    "target_property": "listCoding"
+                },
+                {
+                    "input_parameter": "listGFF",
+                    "target_property": "listGFF"
+                },
+                {
+                    "input_parameter": "FastaAA",
+                    "target_property": "FastaAA"
+                },
+                {
+                    "input_parameter": "FastamRNA",
+                    "target_property": "FastamRNA"
+                },
+                {
+                    "input_parameter": "showDNA",
+                    "target_property": "showDNA"
                 }
             ],
             "output_mapping": [

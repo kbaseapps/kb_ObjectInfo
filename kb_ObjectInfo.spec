@@ -42,13 +42,18 @@ module kb_ObjectInfo {
     typedef structure {
         genome_ref input_ref;
         string workspace_name;
-        string report_format;
+        boolean listCoding;
+        boolean listGFF;
+        boolean FastaAA;
+        boolean FastamRNA;
+        boolean showDNA;
     } GenomeReportParams;
 
     typedef structure {
         genomeset_ref input_ref;
         string workspace_name;
-        string report_format;
+        boolean showGenomes;
+        boolean showDNA;
     } GenomeSetReportParams;
 
     typedef structure {

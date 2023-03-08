@@ -32,11 +32,16 @@ parameters :
             GenomeSet
         short-hint : |
             The GenomeSet to be used by the app.
-    report_format:
+    showGenomes:
         ui-name : |
-            File Format
+            Include a list of the genomes
         short-hint : |
-            Specify the format for the file.
+            Include a tab and comma delimited list of the genomes in the set.
+    showDNA:
+        ui-name : |
+            Include a DNA FastA
+        short-hint : |
+            Include FastA files of the DNA of each of the genomes.
 description : |
     <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> file about a GenomeSet object.</p>
 

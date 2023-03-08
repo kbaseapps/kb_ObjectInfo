@@ -11,7 +11,7 @@ class CreateMultiGenomeReport:
 
     # Listing of the Elements of a GenomeSet
     #
-    def getGenomeSet(self, obj_name, obj_id, obj_data, format):
+    def getGenomeSet(self, obj_name, obj_id, obj_data):
         lst = ['unk', 'unk', 'unk', 'unk', 'unk', 'unk', 'unk', 'unk', 'unk']
         domain, size, num_feat, gc_cont, num_ctg, source, gen_code, assembly, sci_name = lst
         features = { 'CDS' : 0, 'gene' : 0, 'non_coding_features': 0, 'other' : 0, 'rRNA' : 0, 'tRNA' : 0 }
@@ -61,41 +61,27 @@ class CreateMultiGenomeReport:
                     else:
                         features['other'] += 1
 
-        rpt_list = []
-
-#       For the list format, give the headers and values in two columns
-        if format == 'list':
-            rpt_list = [["Description for:",obj_name],["Object ID:",obj_id],["Scientific Name:",sci_name], ["Size:",size],["Source:",source],["Domain:",domain],["Assembly Reference:",assembly], ["Features:",num_feat],["Contigs:",num_ctg],["Percent GC:",gc_cont],["Genetic Code:",gen_code]]
-            for feat in sorted(features):
-                rpt_list.append([feat, str(features[feat])])
-                
-#       For tab and csv, give all the values as columns
-        elif format == 'tab' or format == 'csv':
-            rpt_list = [name, obj_id, sci_name, size, source, domain, assembly, num_feat, num_ctg, gc_cont, gen_code]
+        rpt_list = [name, obj_id, sci_name, size, source, domain, assembly, num_feat, num_ctg, gc_cont, gen_code]
 #           There are extra features that need to be displayed
-            for feat in sorted(features):
-                rpt_list.append(str(features[feat]))
+        for feat in sorted(features):
+            rpt_list.append(str(features[feat]))
 
 #       Return a list
         return rpt_list
 
     # Describe a GenomeSet
     #
-    def readGenomeSet(self, obj_name, pyStr, format):
+    def readGenomeSet(self, obj_name, pyStr):
         myGS = pyStr['elements']
         rpt_list = []
 
-        if format == 'tab' or format == 'csv':
-            rpt_list = [["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features",
+        rpt_list = [["Name", "Genome Object ID", "Scientific Name", "Size", "Source", "Domain", "Assembly Object ID", "Features",
                         "Contigs", "Percent GC", "Genetic Code", "Number of CDS", "Number of gene", "Number of Non-coding",
                         "Number of other", "Number of rRNA", "Number of tRNA"]]
  
         for ele in myGS:
             genome = self.dfu.get_objects({'object_refs': [myGS[ele]['ref']]})
-            if format == 'tab' or format == 'csv':
-                rpt_list.extend([self.getGenomeSet(obj_name,myGS[ele]['ref'], genome['data'][0], format)])
-            else:
-                rpt_list.extend(self.getGenomeSet(obj_name,myGS[ele]['ref'], genome['data'][0], format))
+            rpt_list.extend([self.getGenomeSet(obj_name,myGS[ele]['ref'], genome['data'][0])])
             
         return rpt_list
 

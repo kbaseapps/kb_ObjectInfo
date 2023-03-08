@@ -33,7 +33,7 @@ class kb_ObjectInfo:
     ######################################### noqa
     VERSION = "1.1.0"
     GIT_URL = "https://github.com/kbaseapps/kb_ObjectInfo"
-    GIT_COMMIT_HASH = "6b2d73a02d01f379948bb2097b2d6ee23b8aca8d"
+    GIT_COMMIT_HASH = "8bd0e2cb6021e152255036fa9842d782360a48d2"
 
     #BEGIN_CLASS_HEADER
 
@@ -66,7 +66,7 @@ class kb_ObjectInfo:
         rpt_string = ''
         report_path = os.path.join(self.scratch, rpt_path)
         with open(report_path, mode='w') as report_txt:
-            rpt_writer = csv.writer(report_txt, delimiter="\t", quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            rpt_writer = csv.writer(report_txt, delimiter=rpt_delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
             if rpt_delimiter == ',':
                     rpt_writer = csv.writer(report_txt, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect='excel')
             for rpt in rpt_list:
@@ -149,8 +149,6 @@ class kb_ObjectInfo:
         if showContigs > 1:
             raise ValueError('showContigs parameter cannot be greater than one (' + str(showContigs) + ')')
 
-
-        # Step 3 - Get the data and save the output to a file.
         assembly = self.dfu.get_objects({'object_refs': [input_ref]})
         name = "Assembly Data Object"
         object_type = ''
@@ -246,7 +244,13 @@ class kb_ObjectInfo:
         """
         :param params: instance of type "GenomeReportParams" -> structure:
            parameter "input_ref" of type "genome_ref", parameter
-           "workspace_name" of String, parameter "report_format" of String
+           "workspace_name" of String, parameter "showDNA" of type "boolean"
+           (A boolean. 0 = false, other = true.), parameter "listCoding" of
+           type "boolean" (A boolean. 0 = false, other = true.), parameter
+           "listGFF" of type "boolean" (A boolean. 0 = false, other = true.),
+           parameter "FastaAA" of type "boolean" (A boolean. 0 = false, other
+           = true.), parameter "FastamRNA" of type "boolean" (A boolean. 0 =
+           false, other = true.)
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -279,38 +283,44 @@ class kb_ObjectInfo:
         genome = self.dfu.get_objects({'object_refs': [input_ref]})
         genome_data = genome['data'][0]['data']
 
-        report_format = params['report_format']
+        #report_format = params['report_format']
         rpt_list = []
         rpt_string = ''
         report_path = ''
         
-        if report_format == 'tab' or report_format == 'csv':
+        if params['listContigs']:
             cf = CreateFeatureLists(self.config)
-            rpt_list = cf.delimitedTable(genome_data, report_format, 'features')
+            rpt_list = cf.delimitedTable(genome_data, 'features')
             if rpt_list:
                 rpt_string += self.write_to_file(rpt_list,'genome_tab_file.tsv',"\t")
                 self.write_to_file(rpt_list,'genome_csv_file.csv',",")
-        elif report_format == 'gff':
+                
+        elif params['listGFF']:
             cf = CreateFeatureLists(self.config)
             rpt_list = cf.gff3(genome_data, 'features')
-            report_path = os.path.join(self.scratch, 'genome_file.gff')
-        elif report_format == 'fasta':
+            rpt_string += self.write_to_file(rpt_list,'genome_file.gff',"\t")
+            
+        elif params['FastaAA']:
             cf = CreateFasta(self.config)
 #           Before version 9 genomes, the cdss didn't exist
             if genome_data['cdss']:
                 rpt_list = cf.create_Fasta_from_features(genome_data['cdss'])
             else:
                 rpt_list = cf.create_Fasta_from_features(genome_data['features'])
-            report_path = os.path.join(self.scratch, 'genome_file.faa')
-        elif report_format == 'mRNA':
+            
+            rpt_string += self.write_to_file(rpt_list,'genome_file.faa',"\n")
+            
+        elif params['FastamRNA']:
             cf = CreateFasta(self.config)
 #           Before version 9 genomes, the cdss didn't exist
             if genome_data['cdss']:
                 rpt_list = cf.create_Fasta_from_mRNA(genome_data['cdss'])
             else:
                 rpt_list = cf.create_Fasta_from_mRNA(genome_data['features'])
-            report_path = os.path.join(self.scratch, 'genome_mRNA_file.fna')
-        elif report_format == 'DNA':
+                
+            rpt_string += self.write_to_file(rpt_list,'genome_mRNA_file.fna',"\n")
+            
+        elif params['showDNA']:
             cf = CreateFasta(self.config)
             report_path = os.path.join(self.scratch, 'genome_dna_file.fna')
             if 'assembly_ref' in genome_data:
@@ -324,19 +334,11 @@ class kb_ObjectInfo:
                 rpt_list = (cf.get_assembly_sequence(input_ref))
             else:
                 rpt_string += 'Did not find the Assembly Reference\n'
+                
+            rpt_string += self.write_to_file(rpt_list,'genome_dna_file.fna',"\n")
+            
         else:
-            raise ValueError('Invalid report option.' + str(report_format))
-
-        if report_format == 'tab' or report_format == 'csv':
-            if rpt_list:
-                rpt_string += self.write_to_file(rpt_list,'genome_tab_file.tsv',"\t")
-                self.write_to_file(rpt_list,'genome_csv_file.csv',",")
-        elif rpt_list:
-            with open(report_path, mode='w') as report_txt:
-                rpt_writer = csv.writer(report_txt, delimiter="\t", quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                for rpt in rpt_list:
-                    rpt_writer.writerow(rpt)
-                    rpt_string += "\t".join(rpt) + "\n"
+            raise ValueError('No valid report option given.' )
         
         html_report_path = os.path.join(self.scratch, 'text_file.html')
         html_report_txt = open(html_report_path, "w")
@@ -366,7 +368,9 @@ class kb_ObjectInfo:
         """
         :param params: instance of type "GenomeSetReportParams" -> structure:
            parameter "input_ref" of type "genomeset_ref", parameter
-           "workspace_name" of String, parameter "report_format" of String
+           "workspace_name" of String, parameter "showGenomes" of type
+           "boolean" (A boolean. 0 = false, other = true.), parameter
+           "showDNA" of type "boolean" (A boolean. 0 = false, other = true.)
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -395,18 +399,18 @@ class kb_ObjectInfo:
         genomeset = self.dfu.get_objects({'object_refs': [input_ref]})
         genome_name = genomeset['data'][0]['info'][1]
         genomeset_data = genomeset['data'][0]['data']
-        report_format = params['report_format']
+        #report_format = params['report_format']
 
         rpt_list = []
         multi_fasta = []
         rpt_string = ''
         
-        if report_format == 'tab' or report_format == 'csv':
+        if params['showGenomes']:
             gsr = CreateMultiGenomeReport(self.config)
-            rpt_list = gsr.readGenomeSet(genome_name, genomeset_data, report_format)
+            rpt_list = gsr.readGenomeSet(genome_name, genomeset_data)
             rpt_string += self.write_to_file(rpt_list,'genomeset_tab_file.tsv',"\t")
             self.write_to_file(rpt_list,'genomeset_cvs_file.csv',",")
-        elif report_format == 'fasta':
+        elif params['showDNA']:
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = [["Assembly Reference","Scientific Name","File Name"]]
             
