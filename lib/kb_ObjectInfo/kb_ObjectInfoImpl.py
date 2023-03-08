@@ -283,7 +283,6 @@ class kb_ObjectInfo:
         genome = self.dfu.get_objects({'object_refs': [input_ref]})
         genome_data = genome['data'][0]['data']
 
-        #report_format = params['report_format']
         rpt_list = []
         rpt_string = ''
         report_path = ''
@@ -396,17 +395,21 @@ class kb_ObjectInfo:
         genomeset = self.dfu.get_objects({'object_refs': [input_ref]})
         genome_name = genomeset['data'][0]['info'][1]
         genomeset_data = genomeset['data'][0]['data']
-        #report_format = params['report_format']
 
         rpt_list = []
         multi_fasta = []
         rpt_string = ''
+        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_txt = open(html_report_path, "w")
         
         if params['showGenomes']:
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = gsr.readGenomeSet(genome_name, genomeset_data)
             rpt_string += self.write_to_file(rpt_list,'genomeset_tab_file.tsv',"\t")
             self.write_to_file(rpt_list,'genomeset_cvs_file.csv',",")
+            htmltable = self.make_HTML(rpt_list)
+            html_report_txt.write(htmltable)
+        
         if params['showDNA']:
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = [["Assembly Reference","Scientific Name","File Name"]]
@@ -437,16 +440,12 @@ class kb_ObjectInfo:
             report_path = os.path.join(self.scratch, 'genomeset_DNA_meta_file.txt')
             rpt_string += self.write_to_file(rpt_list,'genomeset_DNA_meta_file.tsv',"\t")
             self.write_to_file(rpt_list,'genomeset_DNA_meta_file.csv',",")
-        else:
-            raise ValueError('Invalid report option.' + str(report_format))
+            
+#           The fasta can go with the HTML but not the metadata file above.
+            rpt_list.extend(multi_fasta)
+            htmltable = self.make_HTML(rpt_list)
+            html_report_txt.write(htmltable)
  
-#       The fasta can go with the HTML but not the metadata file above.
-        rpt_list.extend(multi_fasta)
-    
-        html_report_path = os.path.join(self.scratch, 'text_file.html')
-        html_report_txt = open(html_report_path, "w")
-        htmltable = self.make_HTML(rpt_list)
-        html_report_txt.write(htmltable)
         html_report_txt.close()
 
         cr = Report_creator(self.config)

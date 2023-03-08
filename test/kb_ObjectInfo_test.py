@@ -258,7 +258,10 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.genome_ref,
                                             'listCoding': 1,
-                                            'listGFF': 1
+                                            'listGFF': 1,
+                                            'FastaAA': 0,
+                                            'FastamRNA': 0,
+                                            'showDNA': 0
                                             })
         print(("GENOME PROTEIN/GFF RETURNED", ret))
         self.assertIn('report_name', ret[0])
@@ -269,7 +272,11 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.minimal_genome_ref,
-                                            'FastaAA': 1
+                                            'listCoding': 0,
+                                            'listGFF': 0,
+                                            'FastaAA': 1,
+                                            'FastamRNA': 0,
+                                            'showDNA': 0
                                             })
         print(("GENOME CDS FASTA RETURNED", ret))
         self.assertIn('report_name', ret[0])
@@ -281,7 +288,11 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.minimal_genome_ref,
-                                            'FastamRNA': 1
+                                            'listCoding': 0,
+                                            'listGFF': 0,
+                                            'FastaAA': 0,
+                                            'FastamRNA': 1,
+                                            'showDNA': 0
                                             })
         print(("GENOME MRNA RETURNED", ret))
         self.assertIn('report_name', ret[0])
@@ -293,6 +304,10 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.minimal_genome_ref,
+                                            'listCoding': 0,
+                                            'listGFF': 0,
+                                            'FastaAA': 0,
+                                            'FastamRNA': 0,
                                             'showDNA': 1
                                             })
         print(("GENOME DNA RETURNED", ret))
@@ -305,7 +320,8 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
                                                'input_ref': genomeset_ref,
-                                               'showGenomes': 1
+                                               'showGenomes': 1,
+                                               'showDNA': 0
                                                })
         print(("GENOME SET GENOME LIST RETURNED", ret))
         self.assertIn('report_name', ret[0])
@@ -318,6 +334,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
                                                'input_ref': genomeset_ref,
+                                               'showGenomes': 0,
                                                'showDNA': 1
                                                })
         print(("GENOME SET FASTA DNA RETURNED", ret))
