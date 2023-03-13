@@ -425,6 +425,7 @@ class CreateFeatureLists:
         # Header
         rpt_list = []
         cf = CreateFasta(self.config)
+        seq_list = []
 #
 #   Type 1 - Order matters
 #
@@ -483,8 +484,8 @@ class CreateFeatureLists:
             count = 0
             for seq in mySequences:
                 seqline = cf.splitSequence(seq['sequence'])
-                rpt_list.append([">" + seq['sequence_id']+'   '+seq['description']])
-                rpt_list.extend(seqline)
+                seq_list.append([">" + seq['sequence_id']+"  "+seq['description']])
+                seq_list.extend(seqline)
                 count += 1
 
 #
@@ -493,7 +494,7 @@ class CreateFeatureLists:
         else:
             logging.error("This type of FeatureSet has not been described yet")
 
-        return rpt_list
+        return rpt_list, seq_list
 
     def readProtComp(self, pyStr):
 # Header
@@ -503,7 +504,7 @@ class CreateFeatureLists:
         id2 = pyStr["genome2ref"]
         genome2 = self.dfu.get_objects({'object_refs': [id2]})['data'][0]['info'][1]
         
-        rpt_list = [["Genome1 = "+genome1],["Genome2 = "+genome2],[" "],
+        rpt_list = [["Genome1 = "+genome1],["Genome2 = "+genome2],["new table"],
                     ["Genome1", "Genome2", "bit-score", "bbh-percent"]]
 
         names1 = pyStr["proteome1names"]
