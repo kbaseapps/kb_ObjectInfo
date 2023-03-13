@@ -224,7 +224,7 @@ class kb_ObjectInfo:
 
         report_path = os.path.join(self.scratch, 'assembly_metadatals_file.html')
         report_txt = open(report_path, "w")
-        htmltable += self.make_HTML(rpt_list,'col_header')
+        htmltable = self.make_HTML(rpt_list,'col_header')
         report_txt.write(htmltable)
         report_txt.write("<pre>" + dna_string + "</pre>")
         report_txt.close()
