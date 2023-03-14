@@ -437,7 +437,7 @@ class CreateFeatureLists:
                 genome_name = self.dfu.get_objects({'object_refs': [pyStr['elements'][index][0]]})['data'][0]['info'][1]
                 rpt_list.append([pyStr['elements'][index][0], genome_name ])
 
-            rpt_list += ([" "],["Ordered Elements:"],["Index","Feature ID","Source Genome Object ID"])
+            rpt_list += (["new table"],["Ordered Elements:"],["Index","Feature ID","Source Genome Object ID"])
             
             count = 1
             for index in eleOrder:
@@ -464,7 +464,7 @@ class CreateFeatureLists:
                         genome_name = self.dfu.get_objects({'object_refs': [gid]})['data'][0]['info'][1]
                         genome_names[gid] = genome_name
 
-            rpt_list += [[" "],["Unordered Elements:"],["Feature ID","Source Genome Object ID","Genome"]]
+            rpt_list += [["new table"],["Unordered Elements:"],["Feature ID","Source Genome Object ID","Genome"]]
             count = 0
             for element in myElements:
                 if isinstance(myElements[element],list):
@@ -497,15 +497,13 @@ class CreateFeatureLists:
         return rpt_list, seq_list
 
     def readProtComp(self, pyStr):
-# Header
- 
         id1 = pyStr["genome1ref"]
         genome1 = self.dfu.get_objects({'object_refs': [id1]})['data'][0]['info'][1]
         id2 = pyStr["genome2ref"]
         genome2 = self.dfu.get_objects({'object_refs': [id2]})['data'][0]['info'][1]
         
-        rpt_list = [["Genome1 = "+genome1],["Genome2 = "+genome2],["new table"],
-                    ["Genome1", "Genome2", "bit-score", "bbh-percent"]]
+        rpt_list1 = [["Genome1", genome1],["Genome2",genome2]]
+        rpt_list2 = [["Genome1", "Genome2", "bit-score", "bbh-percent"]]
 
         names1 = pyStr["proteome1names"]
         names2 = pyStr["proteome2names"]
@@ -516,7 +514,7 @@ class CreateFeatureLists:
         for pos1, name1 in enumerate(names1):
             if not pairs1[pos1]:
                 # The list is empty, no genome2 gene
-                rpt_list.append([name1, 'NA'])
+                rpt_list2.append([name1, 'NA', 0, 0])
                 continue
             for pair in pairs1[pos1]:
                 pos2 = pair[0]
@@ -525,7 +523,7 @@ class CreateFeatureLists:
                 bit_score = pair[1]
                 bbh_percent = pair[2]
                 name2 = names2[pos2]
-                rpt_list.append([name1, name2, str(bit_score), str(bbh_percent)])
+                rpt_list2.append([name1, name2, str(bit_score), str(bbh_percent)])
                 
                 count += 1
                 
@@ -533,7 +531,7 @@ class CreateFeatureLists:
         for pos2, name2 in enumerate(names2):
             if not pairs2[pos2]:
                 # The list is empty, no genome1 gene
-                rpt_list.append(['NA', name2])
+                rpt_list2.append(['NA', name2, 0, 0])
                 
             for pair in pairs2[pos2]:
                 pos1 = pair[0]
@@ -543,8 +541,8 @@ class CreateFeatureLists:
                 bit_score = pair[1]
                 bbh_percent = pair[2]
                 name1 = names1[pos1]
-                rpt_list.append([name1, name2, str(bit_score), str(bbh_percent)])
+                rpt_list2.append([name1, name2, str(bit_score), str(bbh_percent)])
 
                 count += 1             
 
-        return rpt_list
+        return rpt_list1, rpt_list2
