@@ -53,10 +53,6 @@ class kb_ObjectInfo:
         for i, row in enumerate(rpt_list):
             table += "  <tr style=\"border: 1px solid black;\">\n"
             for j, col in enumerate(row):
-                if col == "new table":
-                    table += "  </tr>\n</table><table style=\"border: 1px solid black;\">\n"
-                    continue
-                    
                 if i==0 and style == 'col_header':
                     table += "    <th style=\"border: 1px solid black;\">{0}</th>\n".format(col)
                 elif j==0 and style == 'row_header':
@@ -172,7 +168,7 @@ class kb_ObjectInfo:
         this_list = [["Name",name],["Type",object_type]]
         htmltable = self.make_HTML(rpt_list,'row_header')
         html_report_txt.write(htmltable)
-        rpt_list.append(this_list)
+        rpt_list.extend(this_list)
         
         this_list = [["METADATA"]]
         dna_size = 1.0
@@ -187,14 +183,14 @@ class kb_ObjectInfo:
             this_list.append(["Original filename",assembly_metadata['fasta_handle_info']['node_file_name']])
         htmltable = self.make_HTML(rpt_list,'row_header')
         html_report_txt.write(htmltable)
-        rpt_list.append(this_list)
+        rpt_list.extend(this_list)
             
         this_list = [["DNA BASES","COUNTS","PERCENT"]]
         pct = 1.00
         for base in assembly_metadata['base_counts']:
             pct = 100 * assembly_metadata['base_counts'][base] / dna_size
             this_list.append([base,str(assembly_metadata['base_counts'][base]),str(pct)])
-        rpt_list.append(this_list)
+        rpt_list.extend(this_list)
         htmltable = self.make_HTML(rpt_list,'row_header')
         html_report_txt.write(htmltable)
 
@@ -217,7 +213,9 @@ class kb_ObjectInfo:
                 
         htmltable = self.make_HTML(rpt_list,'row_header')
         html_report_txt.write(htmltable)
-        rpt_list.append(this_list)
+        rpt_list.extend(this_list)
+
+        print ("DEBUG: rpt_list",rpt_list)
 
         rpt_string = self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
         self.write_to_file(rpt_list,'assembly_meta_csv_file.csv',",")
@@ -238,9 +236,6 @@ class kb_ObjectInfo:
                 dna_string += dna
             report_txt.close()
 
-
-        htmltable = self.make_HTML(rpt_list,'col_header')
-        html_report_txt.write(htmltable)
         html_report_txt.write("<pre>" + dna_string + "</pre>")
         html_report_txt.close()
 
@@ -628,25 +623,26 @@ class kb_ObjectInfo:
         if "Number genomes" in gencomp['data'][0]['info'][10]:
             num_genomes = gencomp['data'][0]['info'][10]["Number genomes"]
 
-        overview_list = [["OVERVIEW"],
-                        ["Name",name],
+        overview_list = [["Name",name],
                         ["Number of Genomes",num_genomes],
                         ["Pangenome Reference", gencomp_data["pangenome_ref"]],
                         ["Comparison Name", gencomp_data["name"]],
                         ["Number of Core Families", str(gencomp_data["core_families"])],
                         ["Number of Core Functions", str(gencomp_data["core_functions"])] ]
         if overview_list:
+            rpt_string += "\nOVERVIEW\n"
             rpt_string += self.write_to_file(overview_list,'gencomp_overview_tab.tsv',"\t")
             self.write_to_file(overview_list,'gencomp_overview_csv.csv',",")
                 
             htmltable = self.make_HTML(overview_list,'row_header')
+            html_report_txt.write("<h1>OVERVIEW</h1>")
             html_report_txt.write(htmltable)
 #
 #       GENOMES
 #
         genome_data = gencomp_data["genomes"]
         genome_dict = {}
-        genome_list = [["GENOMES"],["Name","ID","Taxonomy","Number of Families","Number of Features","Number of Functions"]]
+        genome_list = [["Name","ID","Taxonomy","Number of Families","Number of Features","Number of Functions"]]
         sim_list = [["Genome1","Genome2","Number Families in Common","Number Functions in Common"]]
         for gen in genome_data:
             genome_dict[gen["id"]] = gen["name"]
@@ -658,18 +654,21 @@ class kb_ObjectInfo:
                 str(gen["genome_similarity"][g2][1])])
                 
         if genome_list:
+            rpt_string += "\nGENOMES\n"
             rpt_string += self.write_to_file(genome_list,'gencomp_genomes_tab.tsv',"\t")
             self.write_to_file(genome_list,'gencomp_genomes_csv.csv',",")
    
             htmltable = self.make_HTML(genome_list,'col_header')
-            html_report_txt.write("<h1>GENOMES<.h1>")
+            html_report_txt.write("<h1>GENOMES</h1>")
             html_report_txt.write(htmltable)
                 
         if sim_list:
+            rpt_string += "\nSIMILARITY LIST\n"
             rpt_string += self.write_to_file(sim_list,'gencomp_genomes_sim_tab.tsv',"\t")
             self.write_to_file(sim_list,'gencomp_genomes_sim_csv.csv',",")
    
             htmltable = self.make_HTML(sim_list,'col_header')
+            html_report_txt.write("<h1>SIMILARITY LIST</h1>")
             html_report_txt.write(htmltable)
  #
  #      FAMILIES
@@ -691,17 +690,21 @@ class kb_ObjectInfo:
                     fam_list.append([fam["id"],genome_dict[f2],f2,i[0],str(i[2])])
 
         if family_list:
+            rpt_string += "\nFAMILIES\n"
             rpt_string += self.write_to_file(family_list,'gencomp_familes_tab.tsv',"\t")
             self.write_to_file(family_list,'gencomp_families_csv.csv',",")
                 
             htmltable = self.make_HTML(family_list,'col_header')
+            html_report_txt.write("<h1>FAMILIES</h1>")
             html_report_txt.write(htmltable)
                 
         if fam_list:
+            rpt_string += "\nGENES IN FAMILIES\n"
             rpt_string += self.write_to_file(fam_list,'gencomp_familes2_tab.tsv',"\t")
             self.write_to_file(fam_list,'gencomp_families2_csv.csv',",")
                 
             htmltable = self.make_HTML(fam_list,'col_header')
+            html_report_txt.write("<h1>GENES IN FAMILIES</h1>")
             html_report_txt.write(htmltable)
 #
 #       FUNCTIONS
@@ -723,17 +726,21 @@ class kb_ObjectInfo:
                     fun_list.append([fun["id"],genome_dict[f2],f2,i[0],str(i[1]),str(i[2])])
 
         if function_list:
+            rpt_string += "\nFUNCTIONS\n"
             rpt_string += self.write_to_file(function_list,'gencomp_functions_tab.tsv',"\t")
             self.write_to_file(function_list,'gencomp_functions_csv.csv',",")
  
             htmltable = self.make_HTML(function_list,'col_header')
+            html_report_txt.write("<h1>FUNCTIONS</h1>")
             html_report_txt.write(htmltable)
 
         if fun_list:
+            rpt_string += "\nFEATURES WITH A FUNCTION\n"
             rpt_string += self.write_to_file(fun_list,'gencomp_functions2_tab.tsv',"\t")
             self.write_to_file(fun_list,'gencomp_functions2_csv.csv',",")
 
             htmltable = self.make_HTML(fun_list,'col_header')
+            html_report_txt.write("<h1>FEATURES WITH A FUNCTION</h1>")
             html_report_txt.write(htmltable)
             
         html_report_txt.close()
@@ -797,14 +804,18 @@ class kb_ObjectInfo:
         seq_list = []
         dna_string = ""
         
-        (rpt_list,seq_list) = cf.readFeatSeq(setseq_data)
+        (header,desc_list, rpt_list,seq_list) = cf.readFeatSeq(setseq_data)
 
         rpt_string = ''
+        if desc_list:
+            rpt_string += self.write_to_file(rpt_list,'sequence_set_tab_desc.tsv',"\t")
+            self.write_to_file(rpt_list,'sequence_set_csv_desc.csv',",")
         if rpt_list:
+            rpt_string += "\n"+header+"\n"
             rpt_string += self.write_to_file(rpt_list,'sequence_set_tab_list.tsv',"\t")
             self.write_to_file(rpt_list,'sequence_set_csv_list.csv',",")
         if seq_list:
-            dna_string = self.write_to_file(seq_list,'sequence_set_list.fasta',"\t")
+            dna_string += self.write_to_file(seq_list,'sequence_set_list.fasta',"\t")
 
         html_report_path = os.path.join(self.scratch, 'text_file.html')
         html_report_txt = open(html_report_path, "w")

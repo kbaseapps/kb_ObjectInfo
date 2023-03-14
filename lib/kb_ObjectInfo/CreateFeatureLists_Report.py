@@ -423,21 +423,24 @@ class CreateFeatureLists:
     def readFeatSeq(self, pyStr):
         
         # Header
+        desc_list = []
         rpt_list = []
         cf = CreateFasta(self.config)
         seq_list = []
+        header = ""
 #
 #   Type 1 - Order matters
 #
         if 'description' in pyStr and 'elements' in pyStr and 'element_ordering' in pyStr:
-            rpt_list = [['Description', str(pyStr['description'])],['Genomes']]
+            header = "Ordered Elements for "+str(pyStr['description'])
+            desc_list = [["Genome ID","Genome Name"]]
             
             eleOrder = pyStr['element_ordering']
             for index in eleOrder:
                 genome_name = self.dfu.get_objects({'object_refs': [pyStr['elements'][index][0]]})['data'][0]['info'][1]
-                rpt_list.append([pyStr['elements'][index][0], genome_name ])
+                desc_list.append([pyStr['elements'][index][0], genome_name ])
 
-            rpt_list += (["new table"],["Ordered Elements:"],["Index","Feature ID","Source Genome Object ID"])
+            rpt_list += (["Index","Feature ID","Source Genome Object ID"])
             
             count = 1
             for index in eleOrder:
@@ -448,7 +451,8 @@ class CreateFeatureLists:
 #   Type 2 - Unordered
 #
         elif 'description' in pyStr and 'elements' in pyStr:
-            rpt_list = [['Description:', pyStr['description']]]
+            header = "Unordered Elements"
+            desc_list = [['Description:', pyStr['description']]]
             myElements = pyStr['elements']
             genome_names = {}
             
@@ -464,7 +468,7 @@ class CreateFeatureLists:
                         genome_name = self.dfu.get_objects({'object_refs': [gid]})['data'][0]['info'][1]
                         genome_names[gid] = genome_name
 
-            rpt_list += [["new table"],["Unordered Elements:"],["Feature ID","Source Genome Object ID","Genome"]]
+            rpt_list += [["Feature ID","Source Genome Object ID","Genome"]]
             count = 0
             for element in myElements:
                 if isinstance(myElements[element],list):
@@ -478,8 +482,8 @@ class CreateFeatureLists:
 #   Type 3 - With Sequences
 #
         elif 'description' in pyStr and 'sequences' in pyStr and 'sequence_set_id' in pyStr:
-
-            rpt_list = [['Set Description', pyStr['description']],["Sequence Set ID", pyStr['sequence_set_id']],["Sequences:"]]
+            header = "Sequences"
+            desc_list = [['Set Description', pyStr['description']],["Sequence Set ID", pyStr['sequence_set_id']]]
             mySequences = pyStr['sequences']
             count = 0
             for seq in mySequences:
@@ -494,7 +498,7 @@ class CreateFeatureLists:
         else:
             logging.error("This type of FeatureSet has not been described yet")
 
-        return rpt_list, seq_list
+        return (header, desc_list, rpt_list, seq_list)
 
     def readProtComp(self, pyStr):
         id1 = pyStr["genome1ref"]
@@ -514,7 +518,7 @@ class CreateFeatureLists:
         for pos1, name1 in enumerate(names1):
             if not pairs1[pos1]:
                 # The list is empty, no genome2 gene
-                rpt_list2.append([name1, 'NA', 0, 0])
+                rpt_list2.append([name1, 'NA', '0', '0'])
                 continue
             for pair in pairs1[pos1]:
                 pos2 = pair[0]
@@ -531,7 +535,7 @@ class CreateFeatureLists:
         for pos2, name2 in enumerate(names2):
             if not pairs2[pos2]:
                 # The list is empty, no genome1 gene
-                rpt_list2.append(['NA', name2, 0, 0])
+                rpt_list2.append(['NA', name2, '0', '0'])
                 
             for pair in pairs2[pos2]:
                 pos1 = pair[0]
