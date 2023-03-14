@@ -878,7 +878,7 @@ class kb_ObjectInfo:
         if rpt_list1:
             rpt_string += self.write_to_file(rpt_list1,'protcomp_tab_list.tsv',"\t")
             self.write_to_file(rpt_list1,'protcomp_csv_list.csv',",")
-        if rpt_list2"
+        if rpt_list2:
             rpt_string += self.write_to_file(rpt_list2,'protcomp_tab_list.tsv',"\t")
             self.write_to_file(rpt_list2,'protcomp_csv_list.csv',",")
         
