@@ -434,17 +434,21 @@ class CreateFeatureLists:
         if 'description' in pyStr and 'elements' in pyStr and 'element_ordering' in pyStr:
             header = "Ordered Elements for "+str(pyStr['description'])
             desc_list = [["Genome ID","Genome Name"]]
-            
+            genome_names = {}
+                        
             eleOrder = pyStr['element_ordering']
             for index in eleOrder:
-                genome_name = self.dfu.get_objects({'object_refs': [pyStr['elements'][index][0]]})['data'][0]['info'][1]
+                gid = pyStr['elements'][index][0]
+                genome_name = self.dfu.get_objects({'object_refs': [gid]})['data'][0]['info'][1]
+                genome_names[gid] = genome_name
                 desc_list.append([pyStr['elements'][index][0], genome_name ])
 
-            rpt_list = [["Index","Feature ID","Source Genome Object ID"]]
+            rpt_list = [["Index","Feature ID","Source Genome Object ID","Source Genome Name"]]
             
             count = 1
             for index in eleOrder:
-                rpt_list += ([[str(count)] + [index] + pyStr['elements'][index] ])
+                gid = pyStr['elements'][index][0]
+                rpt_list.append([str(count), index, gid, genome_names[gid]])
                 count += 1
 
 #
