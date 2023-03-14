@@ -166,7 +166,7 @@ class kb_ObjectInfo:
         html_report_txt = open(html_report_path, "w")
 
         this_list = [["Name",name],["Type",object_type]]
-        htmltable = self.make_HTML(rpt_list,'row_header')
+        htmltable = self.make_HTML(this_list,'row_header')
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
         
@@ -181,7 +181,7 @@ class kb_ObjectInfo:
                     dna_size = assembly_metadata['dna_size']
         if 'fasta_handle_info' in assembly_metadata and 'node_file_name' in assembly_metadata['fasta_handle_info']:
             this_list.append(["Original filename",assembly_metadata['fasta_handle_info']['node_file_name']])
-        htmltable = self.make_HTML(rpt_list,'row_header')
+        htmltable = self.make_HTML(this_list,'row_header')
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
             
@@ -191,7 +191,7 @@ class kb_ObjectInfo:
             pct = 100 * assembly_metadata['base_counts'][base] / dna_size
             this_list.append([base,str(assembly_metadata['base_counts'][base]),str(pct)])
         rpt_list.extend(this_list)
-        htmltable = self.make_HTML(rpt_list,'row_header')
+        htmltable = self.make_HTML(this_list,'row_header')
         html_report_txt.write(htmltable)
 
         this_list = [["CONTIGS IN THE ASSEMBLY"]]
@@ -211,7 +211,7 @@ class kb_ObjectInfo:
 
                 this_list.append(ctg_list)
                 
-        htmltable = self.make_HTML(rpt_list,'row_header')
+        htmltable = self.make_HTML(this_list,'row_header')
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
 
@@ -805,16 +805,19 @@ class kb_ObjectInfo:
         dna_string = ""
         
         (header,desc_list, rpt_list,seq_list) = cf.readFeatSeq(setseq_data)
-
+        print ("DEBUG: desc_list",desc_list)
+        print ("DEBUG: rpt_list",rpt_list)
+        print ("DEBUG: seq_list",seq_list)
         rpt_string = ''
         if desc_list:
-            rpt_string += self.write_to_file(rpt_list,'sequence_set_tab_desc.tsv',"\t")
-            self.write_to_file(rpt_list,'sequence_set_csv_desc.csv',",")
+            rpt_string += self.write_to_file(desc_list,'sequence_set_tab_desc.tsv',"\t")
+            self.write_to_file(desc_list,'sequence_set_csv_desc.csv',",")
         if rpt_list:
             rpt_string += "\n"+header+"\n"
             rpt_string += self.write_to_file(rpt_list,'sequence_set_tab_list.tsv',"\t")
             self.write_to_file(rpt_list,'sequence_set_csv_list.csv',",")
         if seq_list:
+            rpt_string += "\n"+header+"\n"
             dna_string += self.write_to_file(seq_list,'sequence_set_list.fasta',"\t")
 
         html_report_path = os.path.join(self.scratch, 'text_file.html')
@@ -825,7 +828,8 @@ class kb_ObjectInfo:
         html_report_txt.close()
 
         cr = Report_creator(self.config)
-
+        rpt_string += dna_string
+        
         reported_output = cr.create_report(token, params['workspace_name'],
                                            rpt_string, self.scratch)
 
@@ -887,8 +891,8 @@ class kb_ObjectInfo:
         #Write to csv/tsv file. Create string for html and report output
         rpt_string = ''
         if rpt_list1:
-            rpt_string += self.write_to_file(rpt_list1,'protcomp_tab_list.tsv',"\t")
-            self.write_to_file(rpt_list1,'protcomp_csv_list.csv',",")
+            rpt_string += self.write_to_file(rpt_list1,'protcomp_tab_genome_list.tsv',"\t")
+            self.write_to_file(rpt_list1,'protcomp_csv_genome_list.csv',",")
         if rpt_list2:
             rpt_string += self.write_to_file(rpt_list2,'protcomp_tab_list.tsv',"\t")
             self.write_to_file(rpt_list2,'protcomp_csv_list.csv',",")
@@ -896,6 +900,7 @@ class kb_ObjectInfo:
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         htmltable = self.make_HTML(rpt_list1,'row_header')
+        report_txt.write(htmltable)
         htmltable = self.make_HTML(rpt_list2,'col_header')
         report_txt.write(htmltable)
         report_txt.close()

@@ -440,7 +440,7 @@ class CreateFeatureLists:
                 genome_name = self.dfu.get_objects({'object_refs': [pyStr['elements'][index][0]]})['data'][0]['info'][1]
                 desc_list.append([pyStr['elements'][index][0], genome_name ])
 
-            rpt_list += (["Index","Feature ID","Source Genome Object ID"])
+            rpt_list = [["Index","Feature ID","Source Genome Object ID"]]
             
             count = 1
             for index in eleOrder:
