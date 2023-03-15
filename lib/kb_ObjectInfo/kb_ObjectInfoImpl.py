@@ -165,6 +165,7 @@ class kb_ObjectInfo:
         html_report_path = os.path.join(self.scratch, 'assembly_metadatals_file.html')
         html_report_txt = open(html_report_path, "w")
 
+        rpt_list.extend([["OVERVIEW"]])
         this_list = [["Name",name],["Type",object_type]]
         htmltable = self.make_HTML(this_list,'row_header')
         html_report_txt.write("<h1>OVERVIEW</h1>")
@@ -172,6 +173,7 @@ class kb_ObjectInfo:
         rpt_list.extend(this_list)
         
         rpt_list.extend([["METADATA"]])
+        this_list = []
         dna_size = 1.0
         list = ['assembly_id', 'dna_size', 'gc_content', 'num_contigs',
                 'fasta_handle_ref', 'md5', 'type', 'taxon_ref']
@@ -188,6 +190,7 @@ class kb_ObjectInfo:
         rpt_list.extend(this_list)
             
         rpt_list.extend([["DNA BASES","COUNTS","PERCENT"]])
+        this_list = []
         pct = 1.00
         for base in assembly_metadata['base_counts']:
             pct = 100 * assembly_metadata['base_counts'][base] / dna_size
@@ -196,8 +199,8 @@ class kb_ObjectInfo:
         htmltable = self.make_HTML(this_list,'row_header')
         html_report_txt.write("<h1>DNA Composition</h1>")
         html_report_txt.write(htmltable)
-
-
+        
+        this_list = []
         this_list.append(["Name","Length","GC content","Number of Ns","Contig ID","Description"])
 
         if 'contigs' in assembly_metadata:
@@ -553,15 +556,17 @@ class kb_ObjectInfo:
         
         if rpt_list1 or rpt_list2:
             if rpt_list2:
-                rpt_string += self.write_to_file(rpt_list1,'domain_annotation_tab_count.tsv',"\t")
+                rpt_string += self.write_to_file(rpt_list2,'domain_annotation_tab_count.tsv',"\t")
                 self.write_to_file(rpt_list2,'domain_annotation_csv_count.csv',",")
+                html_report_txt.write("<h1>COUNTS PER DOMAIN</h1>")
                 
                 htmltable = self.make_HTML(rpt_list2,'col_header')
                 html_report_txt.write(htmltable)
 
             if rpt_list1:
                 rpt_string += self.write_to_file(rpt_list1,'domain_annotation_tab_list.tsv',"\t")
-                self.write_to_file(rpt_list2,'domain_annotation_csv_list.csv',",")
+                self.write_to_file(rpt_list1,'domain_annotation_csv_list.csv',",")
+                html_report_txt.write("<h1>LIST OF GENES AND THEIR DOMAINS</h1>")
                 
                 htmltable = self.make_HTML(rpt_list1,'col_header')
                 html_report_txt.write(htmltable)
@@ -820,6 +825,8 @@ class kb_ObjectInfo:
         (header,desc_list, rpt_list,seq_list) = cf.readFeatSeq(setseq_data)
         rpt_string = ''
         if desc_list:
+            rpt_string += "DESCRIPTION\n"
+            html_report_txt.write("<h1>DESCRIPTION</h1>")
             rpt_string += self.write_to_file(desc_list,'sequence_set_tab_desc.tsv',"\t")
             self.write_to_file(desc_list,'sequence_set_csv_desc.csv',",")
             htmltable = self.make_HTML(desc_list,'row_header')
@@ -829,10 +836,12 @@ class kb_ObjectInfo:
             rpt_string += self.write_to_file(rpt_list,'sequence_set_tab_list.tsv',"\t")
             self.write_to_file(rpt_list,'sequence_set_csv_list.csv',",")
             htmltable = self.make_HTML(rpt_list,'col_header')
+            html_report_txt.write("<h1>"+header+"</h1>")
             html_report_txt.write(htmltable)
         if seq_list:
             rpt_string += "\n"+header+"\n"
             dna_string += self.write_to_file(seq_list,'sequence_set_list.fasta',"\t")
+            html_report_txt.write("<h1>"+header+"</h1>")
             html_report_txt.write("<pre>" + dna_string + "</pre>")
 
         html_report_txt.close()
@@ -900,19 +909,23 @@ class kb_ObjectInfo:
         #Write to csv/tsv file. Create string for html and report output
         rpt_string = ''
         if rpt_list1:
+            rpt_string += "List of Genomes\n"
             rpt_string += self.write_to_file(rpt_list1,'protcomp_tab_genome_list.tsv',"\t")
             self.write_to_file(rpt_list1,'protcomp_csv_genome_list.csv',",")
         if rpt_list2:
+            rpt_string += "\nPairwise Comparison of Genomes"
             rpt_string += self.write_to_file(rpt_list2,'protcomp_tab_list.tsv',"\t")
             self.write_to_file(rpt_list2,'protcomp_csv_list.csv',",")
         
         report_path = os.path.join(self.scratch, 'text_file.html')
         report_txt = open(report_path, "w")
         htmltable = self.make_HTML(rpt_list1,'row_header')
-        report_txt.write(htmltable)
+        html_report_txt.write("<h1>LIST OF GENOMES</h1>")
+        html_report_txt.write(htmltable)
         htmltable = self.make_HTML(rpt_list2,'col_header')
-        report_txt.write(htmltable)
-        report_txt.close()
+        html_report_txt.write("<h1>PAIRWISE GENOME COMPARISON</h1>")
+        html_report_txt.write(htmltable)
+        html_report_txt.close()
 
         cr = Report_creator(self.config)
 

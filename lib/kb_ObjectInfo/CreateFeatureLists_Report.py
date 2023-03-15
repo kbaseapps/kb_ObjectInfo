@@ -202,7 +202,7 @@ class CreateFeatureLists:
 
                             
             if 'type' not in feat:
-                feat['type'] = features
+                feat['type'] = 'feature'
 
             location = ''
             contig = ''
