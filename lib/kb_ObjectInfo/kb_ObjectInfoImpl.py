@@ -171,7 +171,6 @@ class kb_ObjectInfo:
         html_report_txt.write("<h1>OVERVIEW</h1>")
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
-        rpt_string = htmltable
          
         rpt_list.extend([["METADATA"]])
         this_list = []
@@ -189,8 +188,6 @@ class kb_ObjectInfo:
         html_report_txt.write("<h1>METADATA</h1>")
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
-                
-        rpt_string += htmltable
         
         rpt_list.extend([["DNA Composition"]])
         rpt_list.extend([["DNA BASES","COUNTS","PERCENT"]])
@@ -203,8 +200,6 @@ class kb_ObjectInfo:
         htmltable = self.make_HTML(this_list,'row_header')
         html_report_txt.write("<h1>DNA Composition</h1>")
         html_report_txt.write(htmltable)
-                        
-        rpt_string += htmltable
         
         this_list = []
         this_list.append(["Name","Length","GC content","Number of Ns","Contig ID","Description"])
@@ -230,9 +225,9 @@ class kb_ObjectInfo:
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
 
-        rpt2_string = self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
+        rpt_string = "<h1>DNA Composition</h1>"
+        rpt_string += self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
         self.write_to_file(rpt_list,'assembly_meta_csv_file.csv',",")
-        rpt_string += htmltable
         
         fasta_list = []
         dna_string = ""
