@@ -21,14 +21,11 @@ class Report_creator:
         output_html_files = list()
         output_zip_files = list()
         first_file = ""
-        second_file = ""
         html_string = ""
         html_count = 0
         with open('/kb/module/data/index_start.txt', 'r') as start_file:
             html_string = start_file.read()
-            
         html_string += "        </div>    </div>    <div id=\"body\">\n"
-        html_string += "        <iframe id=\"content\" "
         
         # Make HTML folder
         html_folder = os.path.join(read_file_path, 'html')
@@ -87,10 +84,6 @@ class Report_creator:
                     first_file = file
                     html_string += "        <iframe id=\"content\" "
                     html_string += "style=\"width: 100%; border: none; \" src=\"" + first_file + "\"></iframe>\n    </div>"
-                elif (second_file == ""):
-                    second_file = file
-                    html_string += "        <iframe id=\"content\" "
-                    html_string += "style=\"width: 100%; border: none; \" src=\"" + second_file + "\"></iframe>\n    </div>"
                     
                 html_count += 1
 
@@ -109,6 +102,18 @@ class Report_creator:
                                   'label': 'HTML Link',
                                   'description': ''})
 
+        with open(os.path.join(html_folder, "index2.html"), 'w') as index_file:
+            index_file.write(html_string)
+
+        shock = self.dfu.file_to_shock({'file_path': html_folder,
+                                        'make_handle': 0,
+                                        'pack': 'zip'})
+        desc = 'Open the text Report in a new window'
+        output_html_files.append({'shock_id': shock['shock_id'],
+                                  'name': 'index2.html',
+                                  'label': 'HTML Link2',
+                                  'description': 'Description'})
+                                  
         short_report = report_string[0:1000]
         report_params = {
             'objects_created': [],
