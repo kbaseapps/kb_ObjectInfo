@@ -225,7 +225,6 @@ class kb_ObjectInfo:
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
 
-        rpt_string = "<h1>DNA Composition</h1>"
         rpt_string += self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
         self.write_to_file(rpt_list,'assembly_meta_csv_file.csv',",")
         
@@ -244,10 +243,6 @@ class kb_ObjectInfo:
                 report_txt.write(dna)
                 dna_string += dna
             report_txt.close()
-            
-        html_report_txt.close()
-        html_report_path = os.path.join(self.scratch, 'assembly_DNA.html')
-        html_report_txt = open(html_report_path, "w")
         
         html_report_txt.write("<h1>FASTA of the DNA Sequences</h1>")
         html_report_txt.write("<pre>" + dna_string + "</pre>")
