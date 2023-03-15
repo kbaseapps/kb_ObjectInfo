@@ -230,7 +230,7 @@ class kb_ObjectInfo:
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
 
-        rpt_string = self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
+        rpt2_string = self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
         self.write_to_file(rpt_list,'assembly_meta_csv_file.csv',",")
         rpt_string += htmltable
         
