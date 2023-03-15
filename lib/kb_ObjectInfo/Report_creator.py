@@ -21,11 +21,15 @@ class Report_creator:
         output_html_files = list()
         output_zip_files = list()
         first_file = ""
+        second_file = ""
         html_string = ""
         html_count = 0
         with open('/kb/module/data/index_start.txt', 'r') as start_file:
             html_string = start_file.read()
-
+            
+        html_string += "        </div>    </div>    <div id=\"body\">\n"
+        html_string += "        <iframe id=\"content\" "
+        
         # Make HTML folder
         html_folder = os.path.join(read_file_path, 'html')
         if not os.path.exists(html_folder):
@@ -81,12 +85,14 @@ class Report_creator:
 
                 if (first_file == ""):
                     first_file = file
-
+                    html_string += "style=\"width: 100%; border: solid; \" src=\"" + first_file + "\">"
+                elif (second_file == ""):
+                    second_file = file
+                    html_string += "style=\"width: 100%; border: solid; \" src=\"" + second_file + "\">"
+                    
                 html_count += 1
-
-        html_string += "        </div>    </div>    <div id=\"body\">\n"
-        html_string += "        <iframe id=\"content\" "
-        html_string += "style=\"width: 100%; border: solid; \" src=\"" + first_file + "\"></iframe>\n    </div>"
+                
+        html_string += "</iframe>\n    </div>"
 
         with open('/kb/module/data/index_end.txt', 'r') as end_file:
             html_string += end_file.read()

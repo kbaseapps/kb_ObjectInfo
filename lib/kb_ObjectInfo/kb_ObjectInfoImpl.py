@@ -162,7 +162,7 @@ class kb_ObjectInfo:
 
         this_list = []
         rpt_list = []
-        html_report_path = os.path.join(self.scratch, 'assembly_metadatals_file.html')
+        html_report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
         html_report_txt = open(html_report_path, "w")
 
         rpt_list.extend([["OVERVIEW"]])
@@ -189,7 +189,7 @@ class kb_ObjectInfo:
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
             
-        rpt_list.extend([["DNA BASES","COUNTS","PERCENT"]])
+        rpt_list.extend([["DNA composision"]["DNA BASES","COUNTS","PERCENT"]])
         this_list = []
         pct = 1.00
         for base in assembly_metadata['base_counts']:
@@ -202,7 +202,8 @@ class kb_ObjectInfo:
         
         this_list = []
         this_list.append(["Name","Length","GC content","Number of Ns","Contig ID","Description"])
-
+        rpt_list.extend([["Contigs in the Assembly"]])
+        
         if 'contigs' in assembly_metadata:
             myContig = assembly_metadata['contigs']
             for ctg in myContig:
@@ -225,6 +226,7 @@ class kb_ObjectInfo:
 
         rpt_string = self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
         self.write_to_file(rpt_list,'assembly_meta_csv_file.csv',",")
+        rpt_string = htmltable
         
         fasta_list = []
         dna_string = ""
@@ -242,6 +244,10 @@ class kb_ObjectInfo:
                 dna_string += dna
             report_txt.close()
             
+        html_report_txt.close()
+        html_report_path = os.path.join(self.scratch, 'assembly_DNA.html')
+        html_report_txt = open(html_report_path, "w")
+        
         html_report_txt.write("<h1>FASTA of the DNA Sequences</h1>")
         html_report_txt.write("<pre>" + dna_string + "</pre>")
         html_report_txt.close()
@@ -917,8 +923,8 @@ class kb_ObjectInfo:
             rpt_string += self.write_to_file(rpt_list2,'protcomp_tab_list.tsv',"\t")
             self.write_to_file(rpt_list2,'protcomp_csv_list.csv',",")
         
-        report_path = os.path.join(self.scratch, 'text_file.html')
-        report_txt = open(report_path, "w")
+        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_txt = open(html_report_path, "w")
         htmltable = self.make_HTML(rpt_list1,'row_header')
         html_report_txt.write("<h1>LIST OF GENOMES</h1>")
         html_report_txt.write(htmltable)

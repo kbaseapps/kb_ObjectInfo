@@ -455,7 +455,7 @@ class CreateFeatureLists:
 #   Type 2 - Unordered
 #
         elif 'description' in pyStr and 'elements' in pyStr:
-            header = "Unordered Elements"
+            header = "Unordered Elements for "+str(pyStr['description'])
             desc_list = [['Description:', pyStr['description']]]
             myElements = pyStr['elements']
             genome_names = {}
