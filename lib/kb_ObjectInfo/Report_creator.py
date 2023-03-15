@@ -85,14 +85,14 @@ class Report_creator:
 
                 if (first_file == ""):
                     first_file = file
-                    html_string += "style=\"width: 100%; border: solid; \" src=\"" + first_file + "\">"
+                    html_string += "        <iframe id=\"content\" "
+                    html_string += "style=\"width: 100%; border: none; \" src=\"" + first_file + "\"></iframe>\n    </div>"
                 elif (second_file == ""):
                     second_file = file
-                    html_string += "style=\"width: 100%; border: solid; \" src=\"" + second_file + "\">"
+                    html_string += "        <iframe id=\"content\" "
+                    html_string += "style=\"width: 100%; border: none; \" src=\"" + second_file + "\"></iframe>\n    </div>"
                     
                 html_count += 1
-                
-        html_string += "</iframe>\n    </div>"
 
         with open('/kb/module/data/index_end.txt', 'r') as end_file:
             html_string += end_file.read()
