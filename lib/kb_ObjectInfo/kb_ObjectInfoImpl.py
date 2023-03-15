@@ -188,8 +188,9 @@ class kb_ObjectInfo:
         html_report_txt.write("<h1>METADATA</h1>")
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
-            
-        rpt_list.extend([["DNA composision"]["DNA BASES","COUNTS","PERCENT"]])
+        
+        rpt_list.extend([["DNA Composition"]])
+        rpt_list.extend([["DNA BASES","COUNTS","PERCENT"]])
         this_list = []
         pct = 1.00
         for base in assembly_metadata['base_counts']:
