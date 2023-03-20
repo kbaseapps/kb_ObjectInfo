@@ -915,7 +915,7 @@ class kb_ObjectInfo:
             rpt_string += self.write_to_file(rpt_list1,'protcomp_tab_genome_list.tsv',"\t")
             self.write_to_file(rpt_list1,'protcomp_csv_genome_list.csv',",")
         if rpt_list2:
-            rpt_string += "\nPairwise Comparison of Genomes"
+            rpt_string += "\nPairwise Comparison of Genomes\n"
             rpt_string += self.write_to_file(rpt_list2,'protcomp_tab_list.tsv',"\t")
             self.write_to_file(rpt_list2,'protcomp_csv_list.csv',",")
         
