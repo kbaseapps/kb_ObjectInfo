@@ -22,6 +22,28 @@
             }
         },
         {
+            "id": "report_format",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [
+                "tab"
+            ],
+            "field_type": "dropdown",
+            "dropdown_options": {
+                "options": [
+                    {
+                        "value": "tab",
+                        "display": "Features, tab-delimited"
+                    },
+                    {
+                        "value": "csv",
+                        "display": "Features, comma-delimited"
+                    }
+                ]
+            }
+        },
+        {
             "id": "showContigs",
             "optional": false,
             "advanced": false,
@@ -54,6 +76,10 @@
                 {
                     "input_parameter": "showContigs",
                     "target_property": "showContigs"
+                },
+                {
+                    "input_parameter": "report_format",
+                    "target_property": "report_format"
                 }
             ],
             "output_mapping": [

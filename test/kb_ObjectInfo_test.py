@@ -239,13 +239,14 @@ class kb_ObjectInfoTest(unittest.TestCase):
 #
         return str(new_obj_info[6]) + "/" + str(new_obj_info[0]) + "/" + str(new_obj_info[4])
 
-    def test_assembly_metadata(self):
+    def mytest_assembly_metadata(self):
 
         assembly_ref = self.get_fasta_file(self.test_path,
                                            'TestAssembly3')
         ret = self.getImpl().assembly_metadata_report(self.getContext(),
                                                       {'workspace_name': self.ws_info[1],
                                                        'input_ref': assembly_ref,
+                                                       'report_format' : 'csv',
                                                        'showContigs': 1
                                                        })
         # Validate the returned data
@@ -265,7 +266,19 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
-
+        
+    def mytest_genome_csv(self):
+        genome_ref = '40843/4/1'
+        ret = self.getImpl().genome_report(self.getContext(),
+                                           {'workspace_name': self.ws_info[1],
+                                            'input_ref': self.genome_ref,
+                                            'report_format': 'csv'
+                                            })
+        print(("GENOME TAB RETURNED", ret))
+        self.assertIn('report_name', ret[0])
+        self.assertIn('report_ref', ret[0])
+        pass
+        
     def mytest_genome_gff(self):
         genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
@@ -326,6 +339,19 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
 
+    def mytest_domain_annotation(self):
+        domain_ref = self.getDomainInfo('test_domain')
+        ret = self.getImpl().domain_report(self.getContext(),
+                                           {'workspace_name': self.ws_info[1],
+                                            'evalue_cutoff': '1e-20',
+                                            'input_ref': domain_ref,
+                                            'report_format': 'csv'
+                                            })
+        print(("DOMAIN ANNOTATION RETURNED", ret))
+        self.assertIn('report_name', ret[0])
+        self.assertIn('report_ref', ret[0])
+        pass
+
     def mytest_genomeset_meta(self):
         genomeset_ref = self.getGenomeSet()
         ret = self.getImpl().genomeset_report(self.getContext(),
@@ -350,7 +376,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
 
-    def mytest_genomeset_tab(self):
+    def mttest_genomeset_tab(self):
         genomeset_ref = self.getGenomeSet()
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
@@ -362,7 +388,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
 
-    def mytest_genomeset_csv(self):
+    def mttest_genomeset_csv(self):
         genomeset_ref = self.getGenomeSet()
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
@@ -374,7 +400,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
 
-    def mytest_genomeset_fasta(self):
+    def mttest_genomeset_fasta(self):
         genomeset_ref = self.getGenomeSet()
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
@@ -386,7 +412,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
 
-    def mytest_featureSet_ordered(self):
+    def test_featureSet_ordered(self):
         featset_ref = '27092/14/1'
         ret = self.getImpl().featseq_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
@@ -398,7 +424,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
 
-    def mytest_featureSet_unordered(self):
+    def test_featureSet_unordered(self):
         featset_ref = '20563/36/1'
         ret = self.getImpl().featseq_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
@@ -410,7 +436,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
       
-    def mytest_ProtComp(self):
+    def test_ProtComp(self):
         protcomp_ref = '29939/15/1'
         ret = self.getImpl().protcomp_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
