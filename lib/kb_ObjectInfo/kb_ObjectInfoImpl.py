@@ -162,11 +162,12 @@ class kb_ObjectInfo:
 
         this_list = []
         rpt_list = []
-        html_report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
-        html_report_txt = open(html_report_path, "w")
-
+        
         rpt_list.extend([["OVERVIEW"]])
         this_list = [["Name",name],["Type",object_type]]
+        
+        html_report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
+        html_report_txt = open(html_report_path, "w")
         htmltable = self.make_HTML(this_list,'row_header')
         html_report_txt.write("<h1>OVERVIEW</h1>")
         html_report_txt.write(htmltable)
@@ -223,6 +224,8 @@ class kb_ObjectInfo:
         htmltable = self.make_HTML(this_list,'row_header')
         html_report_txt.write("<h1>CONTIGS IN THE ASSEMBLY</h1>")
         html_report_txt.write(htmltable)
+        html_report_txt.close()
+        
         rpt_list.extend(this_list)
 
         rpt_string = self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
@@ -244,9 +247,11 @@ class kb_ObjectInfo:
                 dna_string += dna
             report_txt.close()
         
-        html_report_txt.write("<h1>FASTA of the DNA Sequences</h1>")
-        html_report_txt.write("<pre>" + dna_string + "</pre>")
-        html_report_txt.close()
+            html_report_path = os.path.join(self.scratch, 'assembly_DNA_sequences.html')
+            html_report_txt = open(html_report_path, "w")
+            html_report_txt.write("<h1>FASTA of the DNA Sequences</h1>")
+            html_report_txt.write("<pre>" + dna_string + "</pre>")
+            html_report_txt.close()
 
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -311,8 +316,6 @@ class kb_ObjectInfo:
         rpt_list = []
         rpt_string = ''
         report_path = ''
-        html_report_path = os.path.join(self.scratch, 'text_file.html')
-        html_report_txt = open(html_report_path, "w")
         
         if params['listCoding']:
             cf = CreateFeatureLists(self.config)
@@ -320,18 +323,25 @@ class kb_ObjectInfo:
             if rpt_list:
                 rpt_string += self.write_to_file(rpt_list,'genome_tab_file.tsv',"\t")
                 self.write_to_file(rpt_list,'genome_csv_file.csv',",")
+                
+            html_report_path = os.path.join(self.scratch, 'genome_features.html')
+            html_report_txt = open(html_report_path, "w")
             htmltable = self.make_HTML(rpt_list,'col_header')
             html_report_txt.write("<h1>PROTEIN CODING FEATURES</h1>")
             html_report_txt.write(htmltable)
+            html_report_txt.close()
                 
         if params['listGFF']:
             cf = CreateFeatureLists(self.config)
             rpt_list = cf.gff3(genome_data, 'features')
             rpt_string += self.write_to_file(rpt_list,'genome_file.gff',"\t")
-            
+                            
+            html_report_path = os.path.join(self.scratch, 'genome_GFF.html')
+            html_report_txt = open(html_report_path, "w")
             htmltable = self.make_HTML(rpt_list,'col_header')
             html_report_txt.write("<h1>GFF OUTPUT</h1>")
             html_report_txt.write(htmltable)
+            html_report_txt.close()
             
         if params['FastaAA']:
             cf = CreateFasta(self.config)
@@ -343,8 +353,12 @@ class kb_ObjectInfo:
             
             dna_string = self.write_to_file(rpt_list,'genome_file.faa',"\n")
             rpt_string += dna_string[0:200]
+            
+            html_report_path = os.path.join(self.scratch, 'genome_protein_AA.html')
+            html_report_txt = open(html_report_path, "w")
             html_report_txt.write("<h1>PROTEIN CODING AMINO ACIDS</h1>")
             html_report_txt.write("<pre>" + dna_string + "</pre>")
+            html_report_txt.close()
             
         if params['FastamRNA']:
             cf = CreateFasta(self.config)
@@ -356,8 +370,12 @@ class kb_ObjectInfo:
                 
             dna_string = self.write_to_file(rpt_list,'genome_mRNA_file.fna',"\n")
             rpt_string += dna_string[0:200]
+            
+            html_report_path = os.path.join(self.scratch, 'genome_protein_mRNA.html')
+            html_report_txt = open(html_report_path, "w")
             html_report_txt.write("<h1>PROTEIN CODING mRNA</h1>")
             html_report_txt.write("<pre>" + dna_string + "</pre>")
+            html_report_txt.close()
         
         if params['showDNA']:
             cf = CreateFasta(self.config)
@@ -376,10 +394,12 @@ class kb_ObjectInfo:
                 
             dna_string = self.write_to_file(rpt_list,'genome_dna_file.fna',"\n")
             rpt_string += dna_string[0:200]
+            
+            html_report_path = os.path.join(self.scratch, 'genome_protein_mRNA.html')
+            html_report_txt = open(html_report_path, "w")
             html_report_txt.write("<h1>DNA</h1>")
             html_report_txt.write("<pre>" + dna_string + "</pre>")
-
-        html_report_txt.close()
+            html_report_txt.close()
 
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -438,8 +458,6 @@ class kb_ObjectInfo:
         rpt_list = []
         multi_fasta = []
         rpt_string = ''
-        html_report_path = os.path.join(self.scratch, 'text_file.html')
-        html_report_txt = open(html_report_path, "w")
         
         if params['showGenomes']:
             gsr = CreateMultiGenomeReport(self.config)
@@ -447,8 +465,12 @@ class kb_ObjectInfo:
             rpt_string += self.write_to_file(rpt_list,'genomeset_tab_file.tsv',"\t")
             self.write_to_file(rpt_list,'genomeset_cvs_file.csv',",")
             htmltable = self.make_HTML(rpt_list,'col_header')
+            
+            html_report_path = os.path.join(self.scratch, 'genomeset_comparison.html')
+            html_report_txt = open(html_report_path, "w")
             html_report_txt.write("<h1>GENOME COMPARISON</h1>")
             html_report_txt.write(htmltable)
+            html_report_txt.close()
         
         if params['showDNA']:
             gsr = CreateMultiGenomeReport(self.config)
@@ -481,12 +503,12 @@ class kb_ObjectInfo:
             self.write_to_file(rpt_list,'genomeset_DNA_meta_file.csv',",")
             
 #           The fasta not included in the HTML due to length
+            html_report_path = os.path.join(self.scratch, 'genomeset_DNA_meta.html')
+            html_report_txt = open(html_report_path, "w")
             htmltable = self.make_HTML(rpt_list,'col_header')
             html_report_txt.write("<h1>GENOME DOWNLOAD METADATA</h1>")
             html_report_txt.write(htmltable)
-            
- 
-        html_report_txt.close()
+            html_report_txt.close()
 
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
@@ -636,7 +658,7 @@ class kb_ObjectInfo:
         rpt_list2 = []
         cf = CreateFeatureLists(self.config)
         rpt_string = ''
-        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_path = os.path.join(self.scratch, 'pangenome_genome_comparison.html')
         html_report_txt = open(html_report_path, "w")
 #
 #       OVERVIEW
@@ -693,6 +715,8 @@ class kb_ObjectInfo:
             htmltable = self.make_HTML(sim_list,'col_header')
             html_report_txt.write("<h1>SIMILARITY LIST</h1>")
             html_report_txt.write(htmltable)
+            
+        html_report_txt.close()
  #
  #      FAMILIES
  #
@@ -715,19 +739,25 @@ class kb_ObjectInfo:
             rpt_string += "\nFAMILIES\n"
             rpt_string += self.write_to_file(family_list,'gencomp_familes_tab.tsv',"\t")
             self.write_to_file(family_list,'gencomp_families_csv.csv',",")
-                
+                        
+            html_report_path = os.path.join(self.scratch, 'gencomp_family_list.html')
+            html_report_txt = open(html_report_path, "w")
             htmltable = self.make_HTML(family_list,'col_header')
             html_report_txt.write("<h1>FAMILIES</h1>")
             html_report_txt.write(htmltable)
+            html_report_txt.close()
                 
         if fam_list:
             rpt_string += "\nGENES IN FAMILIES\n"
             rpt_string += self.write_to_file(fam_list,'gencomp_familes2_tab.tsv',"\t")
             self.write_to_file(fam_list,'gencomp_families2_csv.csv',",")
-                
+                                
+            html_report_path = os.path.join(self.scratch, 'gencomp_family_genes.html')
+            html_report_txt = open(html_report_path, "w")
             htmltable = self.make_HTML(fam_list,'col_header')
             html_report_txt.write("<h1>GENES IN FAMILIES</h1>")
             html_report_txt.write(htmltable)
+            html_report_txt.close()
 #
 #       FUNCTIONS
 #
@@ -750,21 +780,25 @@ class kb_ObjectInfo:
             rpt_string += "\nFUNCTIONS\n"
             rpt_string += self.write_to_file(function_list,'gencomp_functions_tab.tsv',"\t")
             self.write_to_file(function_list,'gencomp_functions_csv.csv',",")
- 
+                                 
+            html_report_path = os.path.join(self.scratch, 'gencomp_function_list.html')
+            html_report_txt = open(html_report_path, "w")
             htmltable = self.make_HTML(function_list,'col_header')
             html_report_txt.write("<h1>FUNCTIONS</h1>")
             html_report_txt.write(htmltable)
+            html_report_txt.close()
 
         if fun_list:
             rpt_string += "\nFEATURES WITH A FUNCTION\n"
             rpt_string += self.write_to_file(fun_list,'gencomp_functions2_tab.tsv',"\t")
             self.write_to_file(fun_list,'gencomp_functions2_csv.csv',",")
-
+                                 
+            html_report_path = os.path.join(self.scratch, 'gencomp_function_features.html')
+            html_report_txt = open(html_report_path, "w")
             htmltable = self.make_HTML(fun_list,'col_header')
             html_report_txt.write("<h1>FEATURES WITH A FUNCTION</h1>")
             html_report_txt.write(htmltable)
-            
-        html_report_txt.close()
+            html_report_txt.close()
 
         cr = Report_creator(self.config)
 
@@ -923,7 +957,7 @@ class kb_ObjectInfo:
             rpt_string += self.write_to_file(rpt_list2,'protcomp_tab_list.tsv',"\t")
             self.write_to_file(rpt_list2,'protcomp_csv_list.csv',",")
         
-        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_path = os.path.join(self.scratch, 'protcomp_genomes.html')
         html_report_txt = open(html_report_path, "w")
         htmltable = self.make_HTML(rpt_list1,'row_header')
         html_report_txt.write("<h1>LIST OF GENOMES</h1>")
