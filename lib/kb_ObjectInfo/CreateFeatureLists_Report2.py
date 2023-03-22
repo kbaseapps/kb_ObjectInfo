@@ -75,7 +75,7 @@ class CreateFeatureLists:
                         if cat not in cats:
                             cats.append(cat)
                         cat2name[namespace][cat] = cat_name
-                        cat2group[namespace][cat] = 'NA'
+                        cat2group[namespace][cat] = None
 
                     elif namespace == 'TIGR':
                         if line.startswith('!'):
@@ -381,15 +381,13 @@ class CreateFeatureLists:
         for domain in geneDomain:
             list = geneDomain[domain]
             if list[0][2] < cutoff:
-                if '.' in domain and len(domain) < 15:
-                    domain = domain.split('.')[0]
-                    
                 if domain in myDict:
                     myDict[domain] += 1
                 else:
                     myDict[domain] = 1
 
         return myDict
+
 
     #
     #   OBJECT: DomainAnnotation
@@ -399,7 +397,7 @@ class CreateFeatureLists:
     def readDomainAnnCount(self, pyStr, cutoff):
 
         # Header
-        rpt_list = [["Count","Domain","Category","Category Name","Category Group","Domain Name"]]
+        rpt_list = [["Domain", "Count"]]
 
         myData = pyStr['data']
         count = 0
@@ -411,31 +409,11 @@ class CreateFeatureLists:
                 if (gene[4]):
                     myDict = self.countGeneDomain(contig, gene[0], gene[4], format, cutoff, myDict)
 
-        namespace = '--'
-        dom_name = '--'
-        cat = '--'
-        cat_name = '--'
-        cat_group = '--'
-        
         domainList = list(myDict.keys())
         domainList.sort()
         for domain in domainList:
-            if domain in self.domfam2ns and self.domfam2ns[domain] > ' ':
-                namespace = self.domfam2ns[domain]
-                
-            if domain in self.domfam2name and self.domfam2name[domain] > ' ':
-                dom_name = self.domfam2name[domain]
-                
-            if domain in self.domfam2cat and self.domfam2cat[domain] > ' ':
-                    cat = self.domfam2cat[domain]
-                    
-            if cat != '--' and cat in self.cat2name[namespace] and self.cat2name[namespace][cat] > ' ':
-                cat_name = self.cat2name[namespace][cat]
-
-            if cat != '--' and cat in self.cat2group[namespace] and self.cat2group[namespace][cat] > ' ':
-                cat_group = self.cat2group[namespace][cat]
-                
-            rpt_list.append([str(myDict[domain]),domain,cat,cat_name,cat_group,dom_name])
+            rpt_list.append([domain, str(myDict[domain])])
+    
         return rpt_list
 
     #

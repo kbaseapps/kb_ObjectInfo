@@ -553,27 +553,31 @@ class kb_ObjectInfo:
         rpt_list2 = cf.readDomainAnnCount(domain_data, evalue_cutoff)
     
         rpt_string = ''
-        html_report_path = os.path.join(self.scratch, 'text_file.html')
-        html_report_txt = open(html_report_path, "w")
         
         if rpt_list1 or rpt_list2:
             if rpt_list2:
-                rpt_string += self.write_to_file(rpt_list2,'domain_annotation_tab_count.tsv',"\t")
-                self.write_to_file(rpt_list2,'domain_annotation_csv_count.csv',",")
+                rpt_string += self.write_to_file(rpt_list2,'domain_annotation_byDomain.tsv',"\t")
+                self.write_to_file(rpt_list2,'domain_annotation_byDomain.csv',",")
+                        
+                html_report_path = os.path.join(self.scratch, 'domain_annotation_byDomain.html')
+                html_report_txt = open(html_report_path, "w")
                 html_report_txt.write("<h1>COUNTS PER DOMAIN</h1>")
-                
                 htmltable = self.make_HTML(rpt_list2,'col_header')
                 html_report_txt.write(htmltable)
+                html_report_txt.close()
 
             if rpt_list1:
-                rpt_string += self.write_to_file(rpt_list1,'domain_annotation_tab_list.tsv',"\t")
-                self.write_to_file(rpt_list1,'domain_annotation_csv_list.csv',",")
+                rpt_string += self.write_to_file(rpt_list1,'domain_annotation_byGene.tsv',"\t")
+                self.write_to_file(rpt_list1,'domain_annotation_byGene.csv',",")
+                
+                html_report_path = os.path.join(self.scratch, 'domain_annotation_byGene.html')
+                html_report_txt = open(html_report_path, "w")
                 html_report_txt.write("<h1>LIST OF GENES AND THEIR DOMAINS</h1>")
                 
                 htmltable = self.make_HTML(rpt_list1,'col_header')
                 html_report_txt.write(htmltable)
+                html_report_txt.close()
                 
-        html_report_txt.close()
         cr = Report_creator(self.config)
 
         reported_output = cr.create_report(token, params['workspace_name'],
