@@ -1,5 +1,6 @@
 # kb_ObjectInfo release notes
 =========================================
+
 1.2.0
 -----
 1. Add selection boxes for multiple formats
