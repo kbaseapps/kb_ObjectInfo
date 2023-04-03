@@ -120,7 +120,8 @@ class Report_creator:
                                     'description': ''})
                                         
         short_report = report_string
-        if len(report_string > 1000):
+        
+        if len(report_string) > 1000:
             short_report = report_string[0:1000] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>"
             
         report_params = {
