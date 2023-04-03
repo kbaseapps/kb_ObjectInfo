@@ -135,16 +135,6 @@ class Report_creator:
             'report_object_name': 'kb_ObjectInfo_report'
         }
         
-        report_params = {
-            'objects_created': [],
-            'message': "PREVIEW of the first 1000 characters of the output. Tab and comma-delimited output may look funny on the screen because they are intended to be read by a computer. For a 'pretty' output, use the data panel and the objects data viewer, either in the narrative or the landing page.\nFiles in the 'Links' section below will open in a new browser window. Links in the 'Files' section below will download the output when you click on the name.\n\n" + short_report,
-            'direct_html': '',
-            'direct_html_link_index': None,
-            'file_links': output_zip_files,
-            'html_links': output_html_files,
-            'workspace_name': ws,
-            'report_object_name': 'kb_ObjectInfo_report'
-        }
 #       Keep this code in for a little while. I might change my mind. Was > 1000000
         if len(report_string) < 1:
             report_params = {
