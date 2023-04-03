@@ -122,7 +122,7 @@ class Report_creator:
         short_report = report_string
         
         if len(report_string) > 1000:
-            short_report = report_string[0:1000] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>"
+            short_report = report_string[0:1000] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
             
         report_params = {
             'objects_created': [],
@@ -135,18 +135,6 @@ class Report_creator:
             'report_object_name': 'kb_ObjectInfo_report'
         }
         
-#       Keep this code in for a little while. I might change my mind. Was > 1000000
-        if len(report_string) < 1:
-            report_params = {
-                'objects_created': [],
-                'message': '',
-                'direct_html': "Links in the 'HTML' section below will open in a new window. Links in the 'Files' section below will download the output when you click on the name.",
-                'direct_html_link_index': None,
-                'file_links': output_zip_files,
-                'html_links': output_html_files,
-                'workspace_name': ws,
-                'report_object_name': 'kb_ObjectInfo_report'
-            }
         kbase_report_client = KBaseReport(self.callback_url, token=token)
         output = kbase_report_client.create_extended_report(report_params)
         return output
