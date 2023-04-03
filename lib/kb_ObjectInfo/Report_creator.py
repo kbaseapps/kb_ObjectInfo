@@ -119,7 +119,21 @@ class Report_creator:
                                     'label': 'HTML Link '+html_file_list[name],
                                     'description': ''})
                                         
-        short_report = report_string[0:1000]
+        short_report = report_string
+        if len(report_string > 1000):
+            short_report = report_string[0:1000] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>"
+            
+        report_params = {
+            'objects_created': [],
+            'message': "PREVIEW of the first 1000 characters of the output. Tab and comma-delimited output may look funny on the screen because they are intended to be read by a computer. For a 'pretty' display, use the Links below to get a full output in a new browser window. Really long output may bog down some browsers. In this case, download the file and view locally. The Files below will download the output when you click on the name. \n\n" + short_report,
+            'direct_html': '',
+            'direct_html_link_index': None,
+            'file_links': output_zip_files,
+            'html_links': output_html_files,
+            'workspace_name': ws,
+            'report_object_name': 'kb_ObjectInfo_report'
+        }
+        
         report_params = {
             'objects_created': [],
             'message': "PREVIEW of the first 1000 characters of the output. Tab and comma-delimited output may look funny on the screen because they are intended to be read by a computer. For a 'pretty' output, use the data panel and the objects data viewer, either in the narrative or the landing page.\nFiles in the 'Links' section below will open in a new browser window. Links in the 'Files' section below will download the output when you click on the name.\n\n" + short_report,
