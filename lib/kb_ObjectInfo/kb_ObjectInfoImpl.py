@@ -352,7 +352,7 @@ class kb_ObjectInfo:
                 rpt_list = cf.create_Fasta_from_features(genome_data['features'])
             
             dna_string = self.write_to_file(rpt_list,'genome_file.faa',"\n")
-            rpt_string += dna_string[0:200]
+            rpt_string += dna_string[0:200] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>"
             
             html_report_path = os.path.join(self.scratch, 'genome_protein_AA.html')
             html_report_txt = open(html_report_path, "w")
@@ -369,7 +369,7 @@ class kb_ObjectInfo:
                 rpt_list = cf.create_Fasta_from_mRNA(genome_data['features'])
                 
             dna_string = self.write_to_file(rpt_list,'genome_mRNA_file.fna',"\n")
-            rpt_string += dna_string[0:200]
+            rpt_string += dna_string[0:200] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>"
             
             html_report_path = os.path.join(self.scratch, 'genome_protein_mRNA.html')
             html_report_txt = open(html_report_path, "w")
@@ -393,7 +393,7 @@ class kb_ObjectInfo:
                 rpt_string += 'Did not find the Assembly Reference\n'
                 
             dna_string = self.write_to_file(rpt_list,'genome_dna_file.fna',"\n")
-            rpt_string += dna_string[0:200]
+            rpt_string += dna_string[0:200] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>"
             
             html_report_path = os.path.join(self.scratch, 'genome_protein_mRNA.html')
             html_report_txt = open(html_report_path, "w")
@@ -859,7 +859,7 @@ class kb_ObjectInfo:
         seq_list = []
         dna_string = ""
  
-        html_report_path = os.path.join(self.scratch, 'text_file.html')
+        html_report_path = os.path.join(self.scratch, 'sequence_file.html')
         html_report_txt = open(html_report_path, "w")
         
         (header,desc_list, rpt_list,seq_list) = cf.readFeatSeq(setseq_data)
