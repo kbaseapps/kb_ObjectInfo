@@ -204,7 +204,7 @@ class kb_ObjectInfo:
         
         this_list = []
         this_list.append(["Name","Length","GC content","Number of Ns","Contig ID","Description"])
-        rpt_list.extend([["Contigs in the Assembly"],[]])
+        rpt_list.extend([[],["Contigs in the Assembly"]])
         
         if 'contigs' in assembly_metadata:
             myContig = assembly_metadata['contigs']
