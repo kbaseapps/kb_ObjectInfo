@@ -173,7 +173,7 @@ class kb_ObjectInfo:
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
          
-        rpt_list.extend([["METADATA"]])
+        rpt_list.extend([[],["METADATA"]])
         this_list = []
         dna_size = 1.0
         list = ['assembly_id', 'dna_size', 'gc_content', 'num_contigs',
@@ -190,7 +190,7 @@ class kb_ObjectInfo:
         html_report_txt.write(htmltable)
         rpt_list.extend(this_list)
         
-        rpt_list.extend([["DNA Composition"]])
+        rpt_list.extend([[],["DNA Composition"]])
         rpt_list.extend([["DNA BASES","COUNTS","PERCENT"]])
         this_list = []
         pct = 1.00
