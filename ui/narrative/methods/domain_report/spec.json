@@ -1,9 +1,9 @@
 {
-    "ver": "0.0.1",
+    "ver": "1.0.1",
     "authors": [
         "landml"
     ],
-    "contact": "https://kbase.us/contact-us/",
+    "contact": "https://www.kbase.us/support/",
     "categories": ["active","util"],
     "widgets": {
         "input": null,
@@ -32,28 +32,6 @@
                 "validate_as": "float",
                 "min_integer" : 0
             }
-        },
-        {
-            "id": "report_format",
-            "optional": false,
-            "advanced": false,
-            "allow_multiple": false,
-            "default_values": [
-                "tab"
-            ],
-            "field_type": "dropdown",
-            "dropdown_options": {
-                "options": [ 
-					{
-						"value": "tab",
-						"display": "Tab-delimited"
-					},
-					{
-						"value": "csv",
-						"display": "Comma-delimited"
-					}
-				]
-            }
         }
     ],
     "behavior": {
@@ -74,10 +52,6 @@
                 {
                     "input_parameter": "evalue_cutoff",
                     "target_property": "evalue_cutoff"
-                },
-                {
-                    "input_parameter": "report_format",
-                    "target_property": "report_format"
                 }
             ],
             "output_mapping": [

@@ -75,7 +75,7 @@ class CreateFeatureLists:
                         if cat not in cats:
                             cats.append(cat)
                         cat2name[namespace][cat] = cat_name
-                        cat2group[namespace][cat] = None
+                        cat2group[namespace][cat] = 'NA'
 
                     elif namespace == 'TIGR':
                         if line.startswith('!'):
@@ -148,7 +148,7 @@ class CreateFeatureLists:
     #    Create a Delimited Table version of the genes in a genome
     #
 
-    def delimitedTable(self, genome, format, features):
+    def delimitedTable(self, genome, features):
 
 #        seed_basepath = os.path.abspath('/kb/module/data')
 #        seed_subsys   = os.path.join(seed_basepath, 'subsys.txt')
@@ -202,7 +202,7 @@ class CreateFeatureLists:
 
                             
             if 'type' not in feat:
-                feat['type'] = features
+                feat['type'] = 'feature'
 
             location = ''
             contig = ''
@@ -308,7 +308,7 @@ class CreateFeatureLists:
     #   OBJECT: DomainAnnotation
     #   FUNCTION: User-defined function to format all the domains for a gene
     #
-    def printGeneDomain(self, contig, geneName, geneDomain, format, cutoff):
+    def printGeneDomain(self, contig, geneName, geneDomain, cutoff):
         rpt_list = []
         
         for domain in geneDomain:
@@ -353,7 +353,7 @@ class CreateFeatureLists:
     #   Loop through all of the contigs and get all of the genes
     #   Uses printGeneDomain to print out individual lines
     #
-    def readDomainAnnList(self, pyStr, rpt_format, cutoff):
+    def readDomainAnnList(self, pyStr, cutoff):
         # Header
         rpt_list = [["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name", "Category", "Category Name", "Category Group"]]
 
@@ -367,7 +367,7 @@ class CreateFeatureLists:
 
                     # The return list is a list of lists and this is done many times
                     # Need to append them to our list one at a time, otherwise list of lists of lists
-                    rtn_list = (self.printGeneDomain(contig, gene[0], domain, rpt_format, cutoff))
+                    rtn_list = (self.printGeneDomain(contig, gene[0], domain, cutoff))
                     for rtn in rtn_list:
                         rpt_list.append(rtn)
   
@@ -381,6 +381,9 @@ class CreateFeatureLists:
         for domain in geneDomain:
             list = geneDomain[domain]
             if list[0][2] < cutoff:
+                if '.' in domain and len(domain) < 15:
+                    domain = domain.split('.')[0]
+                    
                 if domain in myDict:
                     myDict[domain] += 1
                 else:
@@ -388,16 +391,15 @@ class CreateFeatureLists:
 
         return myDict
 
-
     #
     #   OBJECT: DomainAnnotation
     #   FORMAT: List of the domains and number of occurrences in the genome
     #   Uses countGeneDomain to get the statistics for an individual gene
     #
-    def readDomainAnnCount(self, pyStr, format, cutoff):
+    def readDomainAnnCount(self, pyStr, cutoff):
 
         # Header
-        rpt_list = [["Domain", "Count"]]
+        rpt_list = [["Count","Domain","Category","Category Name","Category Group","Domain Name"]]
 
         myData = pyStr['data']
         count = 0
@@ -409,45 +411,74 @@ class CreateFeatureLists:
                 if (gene[4]):
                     myDict = self.countGeneDomain(contig, gene[0], gene[4], format, cutoff, myDict)
 
+        namespace = '--'
+        dom_name = '--'
+        cat = '--'
+        cat_name = '--'
+        cat_group = '--'
+        
         domainList = list(myDict.keys())
         domainList.sort()
         for domain in domainList:
-            rpt_list.append([domain, str(myDict[domain])])
-    
+            if domain in self.domfam2ns and self.domfam2ns[domain] > ' ':
+                namespace = self.domfam2ns[domain]
+                
+            if domain in self.domfam2name and self.domfam2name[domain] > ' ':
+                dom_name = self.domfam2name[domain]
+                
+            if domain in self.domfam2cat and self.domfam2cat[domain] > ' ':
+                    cat = self.domfam2cat[domain]
+                    
+            if cat != '--' and cat in self.cat2name[namespace] and self.cat2name[namespace][cat] > ' ':
+                cat_name = self.cat2name[namespace][cat]
+
+            if cat != '--' and cat in self.cat2group[namespace] and self.cat2group[namespace][cat] > ' ':
+                cat_group = self.cat2group[namespace][cat]
+                
+            rpt_list.append([str(myDict[domain]),domain,cat,cat_name,cat_group,dom_name])
         return rpt_list
 
     #
     #   OBJECT: FeatureSet or SequenceSet
     #   FORMAT: List of the contents of the object
     #
-    def readFeatSeq(self, pyStr, format):
+    def readFeatSeq(self, pyStr):
         
         # Header
+        desc_list = []
         rpt_list = []
         cf = CreateFasta(self.config)
+        seq_list = []
+        header = ""
 #
 #   Type 1 - Order matters
 #
         if 'description' in pyStr and 'elements' in pyStr and 'element_ordering' in pyStr:
-            rpt_list = [['Description', str(pyStr['description'])],['Genomes']]
-            
+            header = "Ordered Elements for "+str(pyStr['description'])
+            desc_list = [["Genome ID","Genome Name"]]
+            genome_names = {}
+                        
             eleOrder = pyStr['element_ordering']
             for index in eleOrder:
-                genome_name = self.dfu.get_objects({'object_refs': [pyStr['elements'][index][0]]})['data'][0]['info'][1]
-                rpt_list.append([pyStr['elements'][index][0], genome_name ])
+                gid = pyStr['elements'][index][0]
+                genome_name = self.dfu.get_objects({'object_refs': [gid]})['data'][0]['info'][1]
+                genome_names[gid] = genome_name
+                desc_list.append([pyStr['elements'][index][0], genome_name ])
 
-            rpt_list += ([" "],["Ordered Elements:"],["Index","Feature ID","Source Genome Object ID"])
+            rpt_list = [["Index","Feature ID","Source Genome Object ID","Source Genome Name"]]
             
             count = 1
             for index in eleOrder:
-                rpt_list += ([[str(count)] + [index] + pyStr['elements'][index] ])
+                gid = pyStr['elements'][index][0]
+                rpt_list.append([str(count), index, gid, genome_names[gid]])
                 count += 1
 
 #
 #   Type 2 - Unordered
 #
         elif 'description' in pyStr and 'elements' in pyStr:
-            rpt_list = [['Description:', pyStr['description']]]
+            header = "Unordered Elements for "+str(pyStr['description'])
+            desc_list = [['Description:', pyStr['description']]]
             myElements = pyStr['elements']
             genome_names = {}
             
@@ -463,7 +494,7 @@ class CreateFeatureLists:
                         genome_name = self.dfu.get_objects({'object_refs': [gid]})['data'][0]['info'][1]
                         genome_names[gid] = genome_name
 
-            rpt_list += [[" "],["Unordered Elements:"],["Feature ID","Source Genome Object ID","Genome"]]
+            rpt_list += [["Feature ID","Source Genome Object ID","Genome"]]
             count = 0
             for element in myElements:
                 if isinstance(myElements[element],list):
@@ -477,14 +508,14 @@ class CreateFeatureLists:
 #   Type 3 - With Sequences
 #
         elif 'description' in pyStr and 'sequences' in pyStr and 'sequence_set_id' in pyStr:
-
-            rpt_list = [['Set Description', pyStr['description']],["Sequence Set ID", pyStr['sequence_set_id']],["Sequences:"]]
+            header = "Sequences"
+            desc_list = [['Set Description', pyStr['description']],["Sequence Set ID", pyStr['sequence_set_id']]]
             mySequences = pyStr['sequences']
             count = 0
             for seq in mySequences:
                 seqline = cf.splitSequence(seq['sequence'])
-                rpt_list.append([">" + seq['sequence_id']+'   '+seq['description']])
-                rpt_list.extend(seqline)
+                seq_list.append([">" + seq['sequence_id']+"  "+seq['description']])
+                seq_list.extend(seqline)
                 count += 1
 
 #
@@ -493,18 +524,16 @@ class CreateFeatureLists:
         else:
             logging.error("This type of FeatureSet has not been described yet")
 
-        return rpt_list
+        return (header, desc_list, rpt_list, seq_list)
 
-    def readProtComp(self, pyStr,format):
-# Header
- 
+    def readProtComp(self, pyStr):
         id1 = pyStr["genome1ref"]
         genome1 = self.dfu.get_objects({'object_refs': [id1]})['data'][0]['info'][1]
         id2 = pyStr["genome2ref"]
         genome2 = self.dfu.get_objects({'object_refs': [id2]})['data'][0]['info'][1]
         
-        rpt_list = [["Genome1 = "+genome1],["Genome2 = "+genome2],[" "],
-                    ["Genome1", "Genome2", "bit-score", "bbh-percent"]]
+        rpt_list1 = [["Genome1", genome1],["Genome2",genome2]]
+        rpt_list2 = [["Genome1", "Genome2", "bit-score", "bbh-percent"]]
 
         names1 = pyStr["proteome1names"]
         names2 = pyStr["proteome2names"]
@@ -515,7 +544,7 @@ class CreateFeatureLists:
         for pos1, name1 in enumerate(names1):
             if not pairs1[pos1]:
                 # The list is empty, no genome2 gene
-                rpt_list.append([name1, 'NA'])
+                rpt_list2.append([name1, 'NA', '0', '0'])
                 continue
             for pair in pairs1[pos1]:
                 pos2 = pair[0]
@@ -524,7 +553,7 @@ class CreateFeatureLists:
                 bit_score = pair[1]
                 bbh_percent = pair[2]
                 name2 = names2[pos2]
-                rpt_list.append([name1, name2, str(bit_score), str(bbh_percent)])
+                rpt_list2.append([name1, name2, str(bit_score), str(bbh_percent)])
                 
                 count += 1
                 
@@ -532,7 +561,7 @@ class CreateFeatureLists:
         for pos2, name2 in enumerate(names2):
             if not pairs2[pos2]:
                 # The list is empty, no genome1 gene
-                rpt_list.append(['NA', name2])
+                rpt_list2.append(['NA', name2, '0', '0'])
                 
             for pair in pairs2[pos2]:
                 pos1 = pair[0]
@@ -542,8 +571,8 @@ class CreateFeatureLists:
                 bit_score = pair[1]
                 bbh_percent = pair[2]
                 name1 = names1[pos1]
-                rpt_list.append([name1, name2, str(bit_score), str(bbh_percent)])
+                rpt_list2.append([name1, name2, str(bit_score), str(bbh_percent)])
 
                 count += 1             
 
-        return rpt_list
+        return rpt_list1, rpt_list2

@@ -46,13 +46,8 @@ description : |
     are downloadable and used with local tools such as Excel or computer scripts.
     </p>
      
-    <p>This app creates a file on the contents of a FeatureSet or a SequenceSet.
-    Short output will display as TEXT in the Summary section of the output.
-    Longer output will instead have a link to open the TEXT in a new html browser tab.
-    In the Files section of the output will be a link for downloading the files. 
-    Whether short or long, the Summary/Link section is intended to be a preview
-    of the downloadable file. If the file is tab or comma delimited, it may be
-    misaligned on the screen but readable by a computer script.</p>
+    <p>This app creates a file on the contents of a FeatureSet or a SequenceSet. A Summary section has a preview of the full output. It is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script. The HTML link opens a new tab with the full output. The link for downloading the files is in the Files section of the output. 
+    </p>
     
     <p>The inputs are:
     <ul>

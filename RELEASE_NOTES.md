@@ -1,6 +1,28 @@
 # kb_ObjectInfo release notes
 =========================================
 
+1.2.0
+-----
+1. Add selection boxes for multiple formats
+
+2. Combine tab and comma delimited options to all objects where available. Create both outputs with minimal code change.
+
+3. Assembly - In the HTML format, make the top section into a table and make the FastA section into preformatted text.
+
+4. Add GenomeComparison Data format in Downloaded Excel or tsv file
+
+5. Add formatting comments from previous review 
+
+6. Remove the tree option - It is now available through regular export
+
+7. Remove the old_git directory 
+
+8. Remove the test file that ends in .orig 
+
+9. Remove the Meta and Vertical options from GenomeSet. They don’t add anything unique.
+
+10. Remove the old image files (kaleidoscope.png) left over from previous version.
+
 1.1.0
 -----
 1. Whenever csv or tsv are generated, use the Python csv module instead of a write statement. This will avoid any problems with internal commas or tab that may occur in the data.

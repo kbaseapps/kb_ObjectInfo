@@ -32,22 +32,17 @@ parameters :
             Assembly
         short-hint : |
             The Assembly object to analyze.
-    report_format:
-        ui-name : |
-            File Format
-        short-hint : |
-            Specify the format for the file.
     showContigs:
         ui-name : |
             Include a FASTA of the Contigs
         short-hint : |
             Include a FASTA listing of the contigs in the Assembly.
 description : |
-    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> file about an object.</p>
+    <p>This intended purpose of this App is to produce a downloadable <b>TEXT</b> file about an Assembly object.</p>
 
     <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. This App creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
 
-    <p>This App creates files on the contents of an Assembly object. Short output will display as TEXT in the Summary section of the output. Longer output will instead have a link to open the TEXT in a new HTML browser tab. There will be a link for downloading the files in the Files section of the output. Whether short or long, the Summary/Link section is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script.</p>
+    <p>This App creates files on the contents of an Assembly object. A Summary section has a preview of the full output. It is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script. The HTML link opens a new tab with the full output. The link for downloading the files is in the Files section of the output. </p>
 
     <p>The inputs are:
     <ul>

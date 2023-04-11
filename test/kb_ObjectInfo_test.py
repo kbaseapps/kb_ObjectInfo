@@ -235,18 +235,15 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                                             ]
                                                         }]
                                                         })[0]
-#        print ("NEW:", new_obj_info)
-#
+
         return str(new_obj_info[6]) + "/" + str(new_obj_info[0]) + "/" + str(new_obj_info[4])
 
     def mytest_assembly_metadata(self):
-
         assembly_ref = self.get_fasta_file(self.test_path,
                                            'TestAssembly3')
         ret = self.getImpl().assembly_metadata_report(self.getContext(),
                                                       {'workspace_name': self.ws_info[1],
                                                        'input_ref': assembly_ref,
-                                                       'report_format' : 'csv',
                                                        'showContigs': 1
                                                        })
         # Validate the returned data
@@ -255,49 +252,33 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
 
-    def mytest_genome_tab(self):
+    def test_genome_protein_list(self):
         genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.genome_ref,
-                                            'report_format': 'tab'
+                                            'listCoding': 1,
+                                            'listGFF': 1,
+                                            'FastaAA': 0,
+                                            'FastamRNA': 0,
+                                            'showDNA': 0
                                             })
-        print(("GENOME TAB RETURNED", ret))
+        print(("GENOME PROTEIN/GFF RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
         
-    def mytest_genome_csv(self):
-        genome_ref = '40843/4/1'
-        ret = self.getImpl().genome_report(self.getContext(),
-                                           {'workspace_name': self.ws_info[1],
-                                            'input_ref': self.genome_ref,
-                                            'report_format': 'csv'
-                                            })
-        print(("GENOME TAB RETURNED", ret))
-        self.assertIn('report_name', ret[0])
-        self.assertIn('report_ref', ret[0])
-        pass
-        
-    def mytest_genome_gff(self):
-        genome_ref = '40843/4/1'
-        ret = self.getImpl().genome_report(self.getContext(),
-                                           {'workspace_name': self.ws_info[1],
-                                            'input_ref': self.genome_ref,
-                                            'report_format': 'gff'
-                                            })
-        print(("GENOME GFF RETURNED", ret))
-        self.assertIn('report_name', ret[0])
-        self.assertIn('report_ref', ret[0])
-        pass
-
-    def mytest_genome_fasta(self):
+    def mytest_genome_protein_fasta(self):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.minimal_genome_ref,
-                                            'report_format': 'fasta'
+                                            'listCoding': 0,
+                                            'listGFF': 0,
+                                            'FastaAA': 1,
+                                            'FastamRNA': 0,
+                                            'showDNA': 0
                                             })
-        print(("GENOME FASTA RETURNED", ret))
+        print(("GENOME CDS FASTA RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
@@ -307,7 +288,11 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.minimal_genome_ref,
-                                            'report_format': 'mRNA'
+                                            'listCoding': 0,
+                                            'listGFF': 0,
+                                            'FastaAA': 0,
+                                            'FastamRNA': 1,
+                                            'showDNA': 0
                                             })
         print(("GENOME MRNA RETURNED", ret))
         self.assertIn('report_name', ret[0])
@@ -319,145 +304,108 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.minimal_genome_ref,
-                                            'report_format': 'DNA'
+                                            'listCoding': 0,
+                                            'listGFF': 0,
+                                            'FastaAA': 0,
+                                            'FastamRNA': 0,
+                                            'showDNA': 1
                                             })
         print(("GENOME DNA RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
 
+    def mytest_genomeset_genomes(self):
+        genomeset_ref = self.getGenomeSet()
+        ret = self.getImpl().genomeset_report(self.getContext(),
+                                              {'workspace_name': self.ws_info[1],
+                                               'input_ref': genomeset_ref,
+                                               'showGenomes': 1,
+                                               'showDNA': 0
+                                               })
+        print(("GENOME SET GENOME LIST RETURNED", ret))
+        self.assertIn('report_name', ret[0])
+        self.assertIn('report_ref', ret[0])
+        pass
+
+    def mytest_genomeset_dna(self):
+        genomeset_ref = self.getGenomeSet()
+        genomeset_ref = '69582/9/1'
+        ret = self.getImpl().genomeset_report(self.getContext(),
+                                              {'workspace_name': self.ws_info[1],
+                                               'input_ref': genomeset_ref,
+                                               'showGenomes': 0,
+                                               'showDNA': 1
+                                               })
+        print(("GENOME SET FASTA DNA RETURNED", ret))
+        self.assertIn('report_name', ret[0])
+        self.assertIn('report_ref', ret[0])
+        pass
+
     def mytest_domain_annotation(self):
         domain_ref = self.getDomainInfo('test_domain')
         ret = self.getImpl().domain_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'evalue_cutoff': '1e-20',
-                                            'input_ref': domain_ref,
-                                            'report_format': 'tab'
+                                            'input_ref': domain_ref
                                             })
         print(("DOMAIN ANNOTATION RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
 
-    def mytest_domain_annotation(self):
-        domain_ref = self.getDomainInfo('test_domain')
-        ret = self.getImpl().domain_report(self.getContext(),
-                                           {'workspace_name': self.ws_info[1],
-                                            'evalue_cutoff': '1e-20',
-                                            'input_ref': domain_ref,
-                                            'report_format': 'csv'
-                                            })
-        print(("DOMAIN ANNOTATION RETURNED", ret))
-        self.assertIn('report_name', ret[0])
-        self.assertIn('report_ref', ret[0])
-        pass
-
-    def mytest_genomeset_meta(self):
-        genomeset_ref = self.getGenomeSet()
-        ret = self.getImpl().genomeset_report(self.getContext(),
-                                              {'workspace_name': self.ws_info[1],
-                                               'input_ref': genomeset_ref,
-                                               'report_format': 'meta'
-                                               })
-        print(("GENOME SET META RETURNED", ret))
-        self.assertIn('report_name', ret[0])
-        self.assertIn('report_ref', ret[0])
-        pass
-
-    def mytest_genomeset_list(self):
-        genomeset_ref = self.getGenomeSet()
-        ret = self.getImpl().genomeset_report(self.getContext(),
-                                              {'workspace_name': self.ws_info[1],
-                                               'input_ref': genomeset_ref,
-                                               'report_format': 'list'
-                                               })
-        print(("GENOME SET LIST RETURNED", ret))
-        self.assertIn('report_name', ret[0])
-        self.assertIn('report_ref', ret[0])
-        pass
-
-    def mttest_genomeset_tab(self):
-        genomeset_ref = self.getGenomeSet()
-        ret = self.getImpl().genomeset_report(self.getContext(),
-                                              {'workspace_name': self.ws_info[1],
-                                               'input_ref': genomeset_ref,
-                                               'report_format': 'tab'
-                                               })
-        print(("GENOME SET TAB RETURNED", ret))
-        self.assertIn('report_name', ret[0])
-        self.assertIn('report_ref', ret[0])
-        pass
-
-    def mttest_genomeset_csv(self):
-        genomeset_ref = self.getGenomeSet()
-        ret = self.getImpl().genomeset_report(self.getContext(),
-                                              {'workspace_name': self.ws_info[1],
-                                               'input_ref': genomeset_ref,
-                                               'report_format': 'csv'
-                                               })
-        print(("GENOME SET CSV RETURNED", ret))
-        self.assertIn('report_name', ret[0])
-        self.assertIn('report_ref', ret[0])
-        pass
-
-    def mttest_genomeset_fasta(self):
-        genomeset_ref = self.getGenomeSet()
-        ret = self.getImpl().genomeset_report(self.getContext(),
-                                              {'workspace_name': self.ws_info[1],
-                                               'input_ref': genomeset_ref,
-                                               'report_format': 'fasta'
-                                               })
-        print(("GENOME SET FASTA RETURNED", ret))
-        self.assertIn('report_name', ret[0])
-        self.assertIn('report_ref', ret[0])
-        pass
-
-    def test_featureSet_ordered(self):
+    def mytest_featureSet_ordered(self):
         featset_ref = '27092/14/1'
         ret = self.getImpl().featseq_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'input_ref': featset_ref,
-                                            'report_format': 'csv'
+                                            'input_ref': featset_ref
                                             })
         print(("FEATURE SET ORDERED RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
 
-    def test_featureSet_unordered(self):
+    def mytest_featureSet_unordered(self):
         featset_ref = '20563/36/1'
         ret = self.getImpl().featseq_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'input_ref': featset_ref,
-                                            'report_format': 'csv'
+                                            'input_ref': featset_ref
                                             })
         print(("FEATURE SET UNORDERED RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
       
-    def test_ProtComp(self):
-        protcomp_ref = '29939/15/1'
-        ret = self.getImpl().protcomp_report(self.getContext(),
-                                           {'workspace_name': self.ws_info[1],
-                                            'input_ref': protcomp_ref,
-                                            'report_format': 'csv'
-                                            })
-        print(("PROTEOME COMPARISON RETURNED", ret))
-        self.assertIn('report_name', ret[0])
-        self.assertIn('report_ref', ret[0])
-        pass
-    
     def mytest_sequenceSet(self):
         featset_ref = '27092/23/1'
         ret = self.getImpl().featseq_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'input_ref': featset_ref,
-                                            'report_format': 'tab'
+                                            'input_ref': featset_ref
                                             })
         print(("SEQUENCE SET RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
     
-    
+    def mytest_ProtComp(self):
+        protcomp_ref = '29939/15/1'
+        ret = self.getImpl().protcomp_report(self.getContext(),
+                                           {'workspace_name': self.ws_info[1],
+                                            'input_ref': protcomp_ref
+                                            })
+        print(("PROTEOME COMPARISON RETURNED", ret))
+        self.assertIn('report_name', ret[0])
+        self.assertIn('report_ref', ret[0])
+        pass
+
+    def mytest_genomeComp(self):
+        genomeComp_ref = '69789/10/1'
+        ret = self.getImpl().genomecomp_report(self.getContext(),
+                                           {'workspace_name': self.ws_info[1],
+                                            'input_ref': genomeComp_ref,
+                                            'report_format': 'csv'
+                                            })
+        print(("GENOME COMPARISON RETURNED", ret))
+        self.assertIn('report_name', ret[0])
+        self.assertIn('report_ref', ret[0])
+        pass
