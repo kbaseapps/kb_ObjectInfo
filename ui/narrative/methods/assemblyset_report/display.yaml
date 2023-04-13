@@ -32,6 +32,11 @@ parameters :
             AssemblySet
         short-hint : |
             The AssemblySet to be used by the app
+    showContigs:
+        ui-name : |
+            Include a FASTA of the Contigs
+        short-hint : |
+            Include a FASTA listing of the contigs in the Assembly.
 description : |
     <p>This intended purpose of this app is to produce a downloadable <b>TEXT</b> file about an object.</p>
     
@@ -47,6 +52,7 @@ description : |
     <p>The inputs are:
     <ul>
         <li>The KBase AssemblySet object</li>
+      <li>A checkbox for whether or not to include the FASTA of the Assembly objects</li>
 
     </ul>
     </p>

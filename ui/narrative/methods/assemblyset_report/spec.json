@@ -20,6 +20,20 @@
             "text_options": {
                 "valid_ws_types": [ "KBaseSets.AssemblySet"]
             }
+        },
+        {
+            "id": "showContigs",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [
+                "1"
+            ],
+            "field_type": "checkbox",
+            "checkbox_options": {
+                "checked_value": 1,
+                "unchecked_value": 0
+            }
         }
     ],
     "behavior": {
@@ -36,6 +50,10 @@
                     "input_parameter": "input_ref",
                     "target_property": "input_ref",
                     "target_type_transform": "resolved-ref"
+                },
+                {
+                    "input_parameter": "showContigs",
+                    "target_property": "showContigs"
                 }
             ],
             "output_mapping": [

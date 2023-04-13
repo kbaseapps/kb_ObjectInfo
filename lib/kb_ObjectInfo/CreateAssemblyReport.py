@@ -13,7 +13,7 @@ class CreateAssemblyReport:
                
     def assembly_overview(self,obj_list):
         header = "OVERVIEW"
-        this_list = [["Name","Type","Assembly Type"]]
+        this_list = [["Assembly Name","Type","Assembly Type"]]
         
         for assembly in obj_list['data']:
             name = "Assembly Data Object"
@@ -35,7 +35,7 @@ class CreateAssemblyReport:
                 
         list = ['assembly_id', 'dna_size', 'gc_content', 'num_contigs',
                 'fasta_handle_ref', 'md5', 'type', 'taxon_ref',"Original filename"]
-        this_list.extend([list])
+        this_list.extend(["Assembly Name",list])
                 
         for assembly_metadata in obj_list['data']:
             name = "Assembly Data Object"
@@ -62,7 +62,7 @@ class CreateAssemblyReport:
         
     def assembly_dnabases(self,obj_list):
         header = "DNA Composition"
-        this_list = [["Name","Total DNA Bases",
+        this_list = [["Assembly Name","Total DNA Bases",
                         "A Count","A Percent","C Count","C Percent",
                         "G Count","G Percent","T Count","T Percent"]]
  
@@ -88,7 +88,6 @@ class CreateAssemblyReport:
     def assembly_contigs(self,obj_list):
         header = "Contigs in the Assembly"
         this_list= [["Assembly Name","Contig Name","Length","GC content","Number of Ns","Contig ID","Description"]]
-        this_list.extend([["Contigs in the Assembly"]])
         
         for assembly_metadata in obj_list['data']:
             name = "Assembly Data Object"
