@@ -1,0 +1,59 @@
+#
+# define display information
+#
+name: Assembly Set Object Info
+tooltip: |
+    Create text info files based on an Assembly Set data object
+screenshots: []
+
+icon: ObjectInfo_icon.png
+
+#
+# define a set of similar methods that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            []
+        next:
+            []
+    methods:
+        related:
+            []
+        next:
+            []
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    input_ref :
+        ui-name : |
+            AssemblySet
+        short-hint : |
+            The AssemblySet to be used by the app
+description : |
+    <p>This intended purpose of this app is to produce a downloadable <b>TEXT</b> file about an object.</p>
+    
+    <p>Most KBase data objects already have some type of pretty HTML table,
+    either as output from an app or by dragging the object onto the narrative.
+    This app serves a different purpose. This app creates one or more files that
+    are downloadable and used with local tools such as Excel or computer scripts.
+    </p>
+     
+    <p>This app creates a file on the contents of an AssemblySet.
+    A Summary section has a preview of the full output. It is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script. The HTML link opens a new tab with the full output. The link for downloading the files is in the Files section of the output.</p>
+    
+    <p>The inputs are:
+    <ul>
+        <li>The KBase AssemblySet object</li>
+
+    </ul>
+    </p>
+
+    
+publications :
+    -
+        display-text: |
+            Arkin AP, Cottingham RW, Henry CS, Harris NL, Stevens RL, Maslov S, et al. KBase: The United States Department of Energy Systems Biology Knowledgebase. Nature Biotechnology. 2018;36: 566. doi: 10.1038/nbt.4163
+        link: https://www.nature.com/articles/nbt.4163
