@@ -201,6 +201,10 @@ class kb_ObjectInfo:
             (header) = car.assembly_contigs(assembly)
             rpt_list.extend([[],[header]])
         
+        cr = Report_creator(self.config)
+        reported_output = cr.create_report(token, params['workspace_name'],
+                                           rpt_string, self.scratch)
+                                           
         output = {'report_name': reported_output['name'],
                            'report_ref': reported_output['ref']}
         mystr = pformat(output)
@@ -304,7 +308,11 @@ class kb_ObjectInfo:
         if showContigs:
             (header) = car.assembly_contigs(obj_list)
             rpt_list.extend([[],[header]])
-        
+       
+        cr = Report_creator(self.config)
+        reported_output = cr.create_report(token, params['workspace_name'],
+                                           rpt_string, self.scratch)
+                                           
         output = {'report_name': reported_output['name'],
                     'report_ref': reported_output['ref']}
         mystr = pformat(output)
