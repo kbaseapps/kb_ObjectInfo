@@ -198,7 +198,7 @@ class kb_ObjectInfo:
         self.write_to_file(rpt_list,'assembly_meta_csv_file.csv',",")
                                           
         if showContigs:
-            (header) = car.assembly_dna(assembly)
+            (header) = car.assembly_dna(assembly,self.scratch)
             rpt_list.extend([[],[header]])
         
         cr = Report_creator(self.config)
