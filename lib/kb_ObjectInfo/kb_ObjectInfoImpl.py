@@ -309,6 +309,9 @@ class kb_ObjectInfo:
             (header) = car.assembly_contigs(obj_list)
             rpt_list.extend([[],[header]])
        
+        rpt_string = self.write_to_file(rpt_list,'assembly_set_tab_file.tsv',"\t")
+        self.write_to_file(rpt_list,'assembly_set_csv_file.csv',",")
+                                          
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
                                            rpt_string, self.scratch)
