@@ -201,10 +201,6 @@ class kb_ObjectInfo:
             (header) = car.assembly_contigs(assembly)
             rpt_list.extend([[],[header]])
         
-        cr = Report_creator(self.config)
-        reported_output = cr.create_report(token, params['workspace_name'],
-                                    rpt_string, self.scratch)
-
         output = {'report_name': reported_output['name'],
                            'report_ref': reported_output['ref']}
         mystr = pformat(output)
@@ -264,7 +260,6 @@ class kb_ObjectInfo:
         
         for i in range(num_assem):
             assemref.append(assemblylist[i]['ref'])
-            print("DEBUG:",assemblylist[i]['ref'])
         
         html_report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
         html_report_txt = open(html_report_path, "w")
@@ -310,8 +305,10 @@ class kb_ObjectInfo:
             (header) = car.assembly_contigs(obj_list)
             rpt_list.extend([[],[header]])
         
-        output = {'report_name': 'report name',
-                  'report_ref': 'reference'}
+        output = {'report_name': reported_output['name'],
+                    'report_ref': reported_output['ref']}
+        mystr = pformat(output)
+        logging.info(f"Returning: {mystr}")
         #END assemblyset_report
 
         # At some point might do deeper type checking...
