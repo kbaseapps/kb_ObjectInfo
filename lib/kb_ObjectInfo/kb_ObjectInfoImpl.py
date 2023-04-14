@@ -192,6 +192,7 @@ class kb_ObjectInfo:
         html_report_txt.write(htmltable)
         rpt_list.extend([[],[header]])
         rpt_list.extend(this_list)
+        html_report_txt.close()
 
         rpt_string = self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
         self.write_to_file(rpt_list,'assembly_meta_csv_file.csv',",")
@@ -263,6 +264,7 @@ class kb_ObjectInfo:
         
         for i in range(num_assem):
             assemref.append(assemblylist[i]['ref'])
+            print("DEBUG:",assemblylist[i]['ref'])
         
         html_report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
         html_report_txt = open(html_report_path, "w")
@@ -302,6 +304,7 @@ class kb_ObjectInfo:
         html_report_txt.write(htmltable)
         rpt_list.extend([[],[header]])
         rpt_list.extend(this_list)
+        html_report_txt.close()
                                   
         if showContigs:
             (header) = car.assembly_contigs(obj_list)
