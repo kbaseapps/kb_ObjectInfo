@@ -166,7 +166,7 @@ class kb_ObjectInfo:
         htmltable = self.make_HTML(this_list,'col_header')
         html_report_txt.write("<h1>"+header+"</h1>")
         html_report_txt.write(htmltable)
-        rpt_list.extend([[],[header]])
+        rpt_list.extend([[header]])
         rpt_list.extend(this_list)
         
         (header,this_list) = car.assembly_metadata(assembly)
@@ -198,7 +198,7 @@ class kb_ObjectInfo:
         self.write_to_file(rpt_list,'assembly_meta_csv_file.csv',",")
                                           
         if showContigs:
-            (header) = car.assembly_contigs(assembly)
+            (header) = car.assembly_dna(assembly)
             rpt_list.extend([[],[header]])
         
         cr = Report_creator(self.config)
@@ -306,9 +306,9 @@ class kb_ObjectInfo:
         html_report_txt.close()
                                   
         if showContigs:
-            (header) = car.assembly_contigs(obj_list)
+            (header) = car.assembly_dna(obj_list,self.scratch)
             rpt_list.extend([[],[header]])
-       
+
         rpt_string = self.write_to_file(rpt_list,'assembly_set_tab_file.tsv',"\t")
         self.write_to_file(rpt_list,'assembly_set_csv_file.csv',",")
                                           
