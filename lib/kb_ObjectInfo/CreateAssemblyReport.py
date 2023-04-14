@@ -106,7 +106,7 @@ class CreateAssemblyReport:
                         else:
                             ctg_list.append("")
 
-                        this_list.append(ctg_list)
+                    this_list.append(ctg_list)
                         
         return(header,this_list)
         
