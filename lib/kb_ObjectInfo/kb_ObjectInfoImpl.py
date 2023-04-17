@@ -1107,9 +1107,12 @@ class kb_ObjectInfo:
         
         rpt_list.extend([[],['Row Lables'],["Row","Label"]])
         this_list = [["Row","Label"]]
+        longlabel = 0
         for row in row_labels.keys():
             rpt_list.extend([[row,row_labels[row]]])
             this_list.extend([[row,row_labels[row]]])
+            if len(row) > longlabel:
+                longlabel = len(row)
             
         rpt_string = self.write_to_file(rpt_list,'MSA_tab_file.tsv',"\t")
         self.write_to_file(rpt_list,'MSA_csv_file.csv',",")
@@ -1119,7 +1122,7 @@ class kb_ObjectInfo:
         html_report_txt.write(htmltable)
         
 ##      ALIGNMENT
-        msa_list = [["CLUSTAL W multiple sequence alignment"]]
+        msa_list = [["CLUSTAL W multiple sequence alignment"],[]]
         colsz = 50
         start = 0
         while True:
@@ -1127,7 +1130,7 @@ class kb_ObjectInfo:
             if end > align_length:
                 end = align_length
             for row in row_order:
-                tmp_str = '{0:32} {1:50} {2:8}'.format(row,alignment[row][start:end],str(end))
+                tmp_str = '{0:{3}} {1:50} {2:8}'.format(row,alignment[row][start:end],str(end),longlabel)
                 #msa_list.append([[row,alignment[row][start:end],str(end)]])
                 msa_list.append([tmp_str])
             msa_list.append([])
