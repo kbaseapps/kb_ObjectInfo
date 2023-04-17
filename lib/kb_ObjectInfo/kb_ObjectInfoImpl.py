@@ -1061,6 +1061,106 @@ class kb_ObjectInfo:
         # ctx is the context object
         # return variables are: output
         #BEGIN msa_report
+        token = ctx['token']
+
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting Multiple Sequence Alignment Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params:\n{mystr}")
+
+        input_ref = params['input_ref']
+        cf = CreateFasta(self.config)
+        
+        html_report_path = os.path.join(self.scratch, 'MSA_file.html')
+        html_report_txt = open(html_report_path, "w")
+
+        rpt_list = []
+        msa_list = self.dfu.get_objects({'object_refs': [input_ref]})['data'][0]['data']
+        
+        name = "Generic MSA"
+        if 'name' in msa_list:
+            name = msa_list['name']
+        desc = 'Unknown'
+        if 'description' in msa_list:
+            desc = msa_list['description']
+        align_length = 0
+        if 'alignment_length' in msa_list:
+            align_length = msa_list['alignment_length']
+        seq_type = 'Unknown'
+        if 'sequence_type' in msa_list:
+            seq_type = msa_list['sequence_type']
+        row_order = []
+        if 'row_order' in msa_list:
+            row_order = msa_list['row_order']
+        row_labels = {}
+        if 'default_row_labels' in msa_list:
+            row_labels = msa_list['default_row_labels']
+        alignment = {}
+        if 'alignment' in msa_list:
+            alignment = msa_list['alignment']
+        
+        rpt_list = [["MSA Name","Description","Alignment Length","Sequence Type"]]
+        rpt_list.extend([[name, desc,align_length,seq_type]])
+        
+        rpt_list.extend([[],['Row Lables']])
+        for row in row_labels.keys():
+            rpt_list.extend([[row,row_labels[row]]])
+            
+        rpt_string = self.write_to_file(rpt_list,'MSA_tab_file.tsv',"\t")
+        self.write_to_file(rpt_list1,'MSA_csv_file.csv',",")
+                
+        htmltable = self.make_HTML(rpt_list,'col_header')
+        html_report_txt.write("<h1>MSA Overview</h1>")
+        html_report_txt.write(htmltable)
+        
+##      ALIGNMENT
+        colsz = 50
+        start = 0
+        while True:
+            end = start + colsz
+            if end > align_length:
+                end = align_length
+            for row in row_order:
+                tmp_str = '{0:32} {1:50} {2:8}'.format(row,alignment[row][start:end],str(end))
+                #msa_list.append([[row,alignment[row][start:end],str(end)]])
+                msa_list.append([tmp_str])
+            msa_list.append([])
+            start += colsz
+            if start > align_length:
+#                False
+                break
+                
+        msa_list = [["CLUSTAL W multiple sequence alignment"]]
+        msa_file_name = 'MSA_alignment_file.aln'
+        msa_string = self.write_to_file(msa_list,msa_file_name,"\n")
+        print("DEBUG msa",msa_string)
+                                
+        htmltable = self.make_HTML(msa_list,'col_header')
+        html_report_txt.write("<h1>MSA Alignment</h1>")
+        html_report_txt.write(htmltable)
+        html_report_txt.close()
+        
+##      FASTA
+        fasta_list = []
+        for row in row_order:
+            align = alignment[row].replace('-','')
+            fasta_list.extend([[">" + row ]])
+            fasta_list.extend(cf.splitSequence(align))
+        
+        fasta_file_name = 'MSA_fasta_file.fna'
+        if seq_type == 'protein':
+            fasta_file_name = 'MSA_protein_file.faa'
+        fasta_string = self.write_to_file(fasta_list,fasta_file_name,"\n")
+        print ('DEBUG fasta',fasta_string)
+                                    
+        cr = Report_creator(self.config)
+        reported_output = cr.create_report(token, params['workspace_name'],
+                                           rpt_string, self.scratch)
+                                           
+        output = {'report_name': reported_output['name'],
+                    'report_ref': reported_output['ref']}
+        mystr = pformat(output)
+        logging.info(f"Returning: {mystr}")
         #END msa_report
 
         # At some point might do deeper type checking...
@@ -1069,6 +1169,7 @@ class kb_ObjectInfo:
                              'output is not type dict as required.')
         # return the results
         return [output]
+        
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",
