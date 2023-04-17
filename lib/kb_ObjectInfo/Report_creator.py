@@ -79,6 +79,13 @@ class Report_creator:
                                          'name': file,
                                          'label': label,
                                          'description': desc})
+            elif (file.endswith(".aln")):
+                desc = 'MSA text file generated for output '
+                output_zip_files.append({'path': os.path.join(read_file_path, file),
+                                         'name': file,
+                                         'label': label,
+                                         'description': desc})
+                                    
             elif (file.endswith(".html")):
                 # Move html into html folder
                 shutil.move(os.path.join(read_file_path, file), os.path.join(html_folder, file))

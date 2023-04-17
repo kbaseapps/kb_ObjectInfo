@@ -1103,16 +1103,18 @@ class kb_ObjectInfo:
         rpt_list.extend([[name, desc, str(align_length),seq_type]])
         html_report_txt.write("<h1>MSA Overview</h1>")
         htmltable = self.make_HTML(rpt_list,'col_header')
+        html_report_txt.write(htmltable)
         
-        rpt_list.extend([[],['Row Lables']])
-        this_list = [['Row Lables'],["Row","Label"]]
+        rpt_list.extend([[],['Row Lables'],["Row","Label"]])
+        this_list = [["Row","Label"]]
         for row in row_labels.keys():
             rpt_list.extend([[row,row_labels[row]]])
             this_list.extend([[row,row_labels[row]]])
             
         rpt_string = self.write_to_file(rpt_list,'MSA_tab_file.tsv',"\t")
         self.write_to_file(rpt_list,'MSA_csv_file.csv',",")
-                
+                        
+        html_report_txt.write("<h1>Row Labels</h1>")
         htmltable = self.make_HTML(this_list,'col_header')
         html_report_txt.write(htmltable)
         
