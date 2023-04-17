@@ -1100,20 +1100,21 @@ class kb_ObjectInfo:
             alignment = msa_list['alignment']
         
         rpt_list = [["MSA Name","Description","Alignment Length","Sequence Type"]]
-        rpt_list.extend([[name, desc,align_length,seq_type]])
+        rpt_list.extend([[name, desc, str(align_length),seq_type]])
         
         rpt_list.extend([[],['Row Lables']])
         for row in row_labels.keys():
             rpt_list.extend([[row,row_labels[row]]])
             
         rpt_string = self.write_to_file(rpt_list,'MSA_tab_file.tsv',"\t")
-        self.write_to_file(rpt_list1,'MSA_csv_file.csv',",")
+        self.write_to_file(rpt_list,'MSA_csv_file.csv',",")
                 
         htmltable = self.make_HTML(rpt_list,'col_header')
         html_report_txt.write("<h1>MSA Overview</h1>")
         html_report_txt.write(htmltable)
         
 ##      ALIGNMENT
+        msa_list = [["CLUSTAL W multiple sequence alignment"]]
         colsz = 50
         start = 0
         while True:
@@ -1130,10 +1131,7 @@ class kb_ObjectInfo:
 #                False
                 break
                 
-        msa_list = [["CLUSTAL W multiple sequence alignment"]]
-        msa_file_name = 'MSA_alignment_file.aln'
-        msa_string = self.write_to_file(msa_list,msa_file_name,"\n")
-        print("DEBUG msa",msa_string)
+        msa_string = self.write_to_file(msa_list,'MSA_alignment_file.aln',"\n")
                                 
         htmltable = self.make_HTML(msa_list,'col_header')
         html_report_txt.write("<h1>MSA Alignment</h1>")
@@ -1151,7 +1149,6 @@ class kb_ObjectInfo:
         if seq_type == 'protein':
             fasta_file_name = 'MSA_protein_file.faa'
         fasta_string = self.write_to_file(fasta_list,fasta_file_name,"\n")
-        print ('DEBUG fasta',fasta_string)
                                     
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
