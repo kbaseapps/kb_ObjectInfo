@@ -476,7 +476,8 @@ class CreateFeatureLists:
                 cat_list = sorted(ns2cat[namespace])
                 
             for cat in cat_list:
-                rpt_list.append([namespace,cat2group[cat],cat,cat2name[cat],str(myDict[cat])])
+                if cat in myDict:
+                    rpt_list.append([namespace,cat2group[cat],cat,cat2name[cat],str(myDict[cat])])
                 
         return rpt_list
 

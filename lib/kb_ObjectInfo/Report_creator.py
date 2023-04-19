@@ -34,8 +34,10 @@ class Report_creator:
         html_folder = os.path.join(read_file_path, 'html')
         if not os.path.exists(html_folder):
             os.mkdir(html_folder)
-
-        for file in os.listdir(read_file_path):
+        listdir = os.listdir(read_file_path)
+        listdir.sort()
+        
+        for file in listdir:
             label = ".".join(file.split(".")[1:])
             if (file.endswith(".zip")):
                 desc = 'Zip file generated for output '

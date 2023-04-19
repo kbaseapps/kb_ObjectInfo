@@ -855,7 +855,7 @@ class kb_ObjectInfo:
                 html_report_path = os.path.join(self.scratch, 'domain_annotation_byCategory.html')
                 html_report_txt = open(html_report_path, "w")
                 html_report_txt.write("<h1>COUNTS PER CATEGORY</h1>")
-                htmltable = self.make_HTML(rpt_list2,'col_header')
+                htmltable = self.make_HTML(rpt_list3,'col_header')
                 html_report_txt.write(htmltable)
                 html_report_txt.close()
 
