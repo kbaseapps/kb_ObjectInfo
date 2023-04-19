@@ -34,7 +34,7 @@ class kb_ObjectInfo:
     ######################################### noqa
     VERSION = "1.2.0"
     GIT_URL = "https://github.com/kbaseapps/kb_ObjectInfo"
-    GIT_COMMIT_HASH = "0e8d1c51dd1f4d33c1803ad230d13421b3ca47fc"
+    GIT_COMMIT_HASH = "3de363edefcedf987fa3c34b133cab87fba4118a"
 
     #BEGIN_CLASS_HEADER
 
@@ -222,7 +222,8 @@ class kb_ObjectInfo:
         """
         :param params: instance of type "AssemblySetReportParams" ->
            structure: parameter "input_ref" of type "assemblyset_ref",
-           parameter "workspace_name" of String
+           parameter "workspace_name" of String, parameter "showContigs" of
+           type "boolean" (A boolean. 0 = false, other = true.)
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -328,8 +329,6 @@ class kb_ObjectInfo:
                              'output is not type dict as required.')
         # return the results
         return [output]
-        
-       
 
     def genome_report(self, ctx, params):
         """
@@ -1187,7 +1186,6 @@ class kb_ObjectInfo:
                              'output is not type dict as required.')
         # return the results
         return [output]
-        
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",
