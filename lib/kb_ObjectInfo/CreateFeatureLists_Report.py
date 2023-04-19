@@ -439,6 +439,48 @@ class CreateFeatureLists:
         return rpt_list
 
     #
+    #   OBJECT: DomainAnnotation
+    #   FORMAT: List of the domains and number of occurrences in the genome
+    #   Uses countGeneDomain to get the statistics for an individual gene
+    #
+    def readDomainAnnCatCount(self, domainCount):
+
+        # Header
+        #rpt_list = [["Count","Domain","Category","Category Name","Category Group","Domain Name"]]
+        rpt_list = [["Namespace","Category Group","Category","Category Name","Count"]]
+        
+        cat2group = {}
+        cat2name  = {}
+        ns2cat    = {}
+        myDict    = {}
+        
+        for (geneCount,domain,cat,cat_name,cat_group,dom_name) in domainCount:
+            if domain == 'Domain':
+                continue
+            if cat in myDict:
+                myDict[cat] += int(geneCount)
+            else:
+                myDict[cat] = int(geneCount)
+                cat2group[cat] = cat_group
+                cat2name[cat]  = cat_name
+                namespace = self.domfam2ns[domain]
+                if namespace in ns2cat:
+                    ns2cat[namespace].append(cat)
+                else:
+                    ns2cat[namespace] = [cat]
+        
+        for namespace in sorted(ns2cat.keys()):
+            if namespace == 'COG':
+                cat_list = ['D','M','N','O','T','U','V', 'B','J','K','L', 'C', 'E', 'F', 'G', 'H','I','P', 'Q',  'R', 'S']
+            else:
+                cat_list = sorted(ns2cat[namespace])
+                
+            for cat in cat_list:
+                rpt_list.append([namespace,cat2group[cat],cat,cat2name[cat],str(myDict[cat])])
+                
+        return rpt_list
+
+    #
     #   OBJECT: FeatureSet or SequenceSet
     #   FORMAT: List of the contents of the object
     #

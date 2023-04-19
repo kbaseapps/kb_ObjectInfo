@@ -44,6 +44,7 @@ module kb_ObjectInfo {
     typedef structure {
         assemblyset_ref input_ref;
         string workspace_name;
+        boolean showContigs;
     } AssemblySetReportParams;
 
     typedef structure {

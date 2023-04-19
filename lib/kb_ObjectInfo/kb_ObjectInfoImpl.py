@@ -832,6 +832,8 @@ class kb_ObjectInfo:
         cf = CreateFeatureLists(self.config)
         rpt_list1 = cf.readDomainAnnList(domain_data, evalue_cutoff)
         rpt_list2 = cf.readDomainAnnCount(domain_data, evalue_cutoff)
+        rpt_list3 = cf.readDomainAnnCatCount(rpt_list2)
+        print ("DEBUG: list3",rpt_list3)
     
         rpt_string = ''
         
@@ -843,6 +845,17 @@ class kb_ObjectInfo:
                 html_report_path = os.path.join(self.scratch, 'domain_annotation_byDomain.html')
                 html_report_txt = open(html_report_path, "w")
                 html_report_txt.write("<h1>COUNTS PER DOMAIN</h1>")
+                htmltable = self.make_HTML(rpt_list2,'col_header')
+                html_report_txt.write(htmltable)
+                html_report_txt.close()
+                    
+            if rpt_list3:
+                rpt_string += self.write_to_file(rpt_list3,'domain_annotation_byCategory.tsv',"\t")
+                self.write_to_file(rpt_list3,'domain_annotation_byCategory.csv',",")
+                        
+                html_report_path = os.path.join(self.scratch, 'domain_annotation_byCategory.html')
+                html_report_txt = open(html_report_path, "w")
+                html_report_txt.write("<h1>COUNTS PER CATEGORY</h1>")
                 htmltable = self.make_HTML(rpt_list2,'col_header')
                 html_report_txt.write(htmltable)
                 html_report_txt.close()
