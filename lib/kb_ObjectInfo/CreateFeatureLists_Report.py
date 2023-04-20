@@ -51,7 +51,9 @@ class CreateFeatureLists:
         for namespace in ['COG', 'PF', 'TIGR', 'SEED']:
 
             cat2name[namespace] = dict()
+            cat2name['Other'] = []
             cat2group[namespace] = dict()
+            cat2group['Other'] = []
 #            domfam2cat[namespace] = dict()
 #            cat2domfams[namespace] = dict()
 #            domfam2group[namespace]  = dict()
@@ -95,6 +97,7 @@ class CreateFeatureLists:
                             cats.append(cat)
                         #cat_disp = re.sub('_', ' ', cat)
                         #cat2name[namespace][cat] = cat_disp
+                        
 
             # get domfam to cat map, and vice versa
             with open(domain_to_cat_map_path[namespace], 'r') as dom2cat_map_handle:
@@ -310,6 +313,8 @@ class CreateFeatureLists:
     #
     def printGeneDomain(self, contig, geneName, geneDomain, cutoff):
         rpt_list = []
+        cat2name = []
+        cat2group = []
         
         for domain in geneDomain:
             list = geneDomain[domain]
@@ -320,29 +325,29 @@ class CreateFeatureLists:
                 if domain in self.domfam2ns:
                     namespace = self.domfam2ns[domain]
                 else:
-                    namespace = ' '
+                    namespace = 'Other'
 
                 if domain in self.domfam2name:
                     dom_name = self.domfam2name[domain]
                 else:
-                    dom_name = ' '
+                    dom_name = 'Other'
 
                 if domain in self.domfam2cat:
                     cat = self.domfam2cat[domain]
                 else:
-                    cat = ' '
+                    cat = 'Other'
 
-                if cat > ' ' and cat in self.cat2name[namespace]:
+                if cat > ' ' and namespace in self.cat2name and cat in self.cat2name[namespace]:
                     cat_name = self.cat2name[namespace][cat]
                 else:
-                    cat_name = ' '
+                    cat_name = 'Other'
 
-                if cat > ' ' and cat in self.cat2group[namespace]:
+                if cat > ' '  and namespace in self.cat2group and cat in self.cat2group[namespace] :
                     cat_group = self.cat2group[namespace][cat]
                 else:
-                    cat_group = ' '
+                    cat_group = 'Other'
 
-                rpt_list.append([contig, geneName, domain, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, cat, cat_name, str(cat_group)])
+                rpt_list.append([contig, geneName, domain, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, namespace, cat, cat_name, str(cat_group)])
                 
         # Returning a list of lists
         return rpt_list
@@ -355,7 +360,7 @@ class CreateFeatureLists:
     #
     def readDomainAnnList(self, pyStr, cutoff):
         # Header
-        rpt_list = [["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name", "Category", "Category Name", "Category Group"]]
+        rpt_list = [["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name","Namespace", "Category", "Category Name", "Category Group"]]
 
         myData = pyStr['data']
 
@@ -399,7 +404,7 @@ class CreateFeatureLists:
     def readDomainAnnCount(self, pyStr, cutoff):
 
         # Header
-        rpt_list = [["Count","Domain","Category","Category Name","Category Group","Domain Name"]]
+        rpt_list = [["Count","Domain","Namespace","Category","Category Name","Category Group","Domain Name"]]
 
         myData = pyStr['data']
         count = 0
@@ -422,20 +427,31 @@ class CreateFeatureLists:
         for domain in domainList:
             if domain in self.domfam2ns and self.domfam2ns[domain] > ' ':
                 namespace = self.domfam2ns[domain]
+            else:
+                namespace = 'Other'
                 
             if domain in self.domfam2name and self.domfam2name[domain] > ' ':
                 dom_name = self.domfam2name[domain]
+            else:
+                dom_name = 'Other'
                 
             if domain in self.domfam2cat and self.domfam2cat[domain] > ' ':
                     cat = self.domfam2cat[domain]
+            else:
+                cat = 'Other'
                     
             if cat != '--' and cat in self.cat2name[namespace] and self.cat2name[namespace][cat] > ' ':
                 cat_name = self.cat2name[namespace][cat]
+            else:
+                cat_name = 'Other'
 
             if cat != '--' and cat in self.cat2group[namespace] and self.cat2group[namespace][cat] > ' ':
                 cat_group = self.cat2group[namespace][cat]
+            else:
+                cat_name = 'Other'
                 
-            rpt_list.append([str(myDict[domain]),domain,cat,cat_name,cat_group,dom_name])
+            rpt_list.append([str(myDict[domain]),domain,namespace,cat,cat_name,cat_group,dom_name])
+
         return rpt_list
 
     #
@@ -454,7 +470,7 @@ class CreateFeatureLists:
         ns2cat    = {}
         myDict    = {}
         
-        for (geneCount,domain,cat,cat_name,cat_group,dom_name) in domainCount:
+        for (geneCount,domain,namespace,cat,cat_name,cat_group,dom_name) in domainCount:
             if domain == 'Domain':
                 continue
             if cat in myDict:
@@ -463,7 +479,11 @@ class CreateFeatureLists:
                 myDict[cat] = int(geneCount)
                 cat2group[cat] = cat_group
                 cat2name[cat]  = cat_name
-                namespace = self.domfam2ns[domain]
+                if domain in self.domfam2ns:
+                    namespace = self.domfam2ns[domain]
+                else:
+                    namespace = 'Other'
+                    
                 if namespace in ns2cat:
                     ns2cat[namespace].append(cat)
                 else:
@@ -471,7 +491,7 @@ class CreateFeatureLists:
         
         for namespace in sorted(ns2cat.keys()):
             if namespace == 'COG':
-                cat_list = ['D','M','N','O','T','U','V', 'B','J','K','L', 'C', 'E', 'F', 'G', 'H','I','P', 'Q',  'R', 'S']
+                cat_list = ['D','M','N','O','T','U','V','W','Y','Z','A', 'B','J','K','L', 'C', 'E', 'F', 'G', 'H','I','P', 'Q', 'X', 'R', 'S']
             else:
                 cat_list = sorted(ns2cat[namespace])
                 
