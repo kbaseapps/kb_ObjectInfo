@@ -22,5 +22,5 @@ I	METABOLISM	Lipid transport and metabolism
 P	METABOLISM	Inorganic ion transport and metabolism
 Q	METABOLISM	Secondary metabolites biosynthesis, transport, and catabolism
 X	MOBILOME	Mobilome: prophages, transposons
-R	POOR CHAR	  General function prediction only
-S	POOR CHAR	  Function unknown
+R	POOR CHAR	General function prediction only
+S	POOR CHAR	Function unknown

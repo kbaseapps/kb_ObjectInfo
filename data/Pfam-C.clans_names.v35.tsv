@@ -1,0 +1,654 @@
+CL0247	2H	2H phosphoesterase superfamily	
+CL0328	2heme_cytochrom	Transmembrane di-heme cytochrome superfamily	
+CL0571	30K_movement	30 kDa viral movement proteins superfamily	
+CL0344	4Fe-4S	4Fe-4S ferredoxins	
+CL0457	4HB_MCP	Aspartate chemoreceptor, signal-transduction ligand-binding	
+CL0053	4H_Cytokine	4-helical cytokine superfamily	
+CL0670	4PPT	4'-phosphopantetheinyl transferase superfamily	
+CL0464	5_3_exonuc_C	5'-3'-exonuclease C-terminal sub-region	
+CL0106	6PGD_C	6-phosphogluconate dehydrogenase C-terminal-like superfamily	
+CL0059	6_Hairpin	Six-hairpin glycosidase superfamily	
+CL0671	AAA_lid	AAA+ ATPase lid domain superfamily	
+CL0603	AA_dh_N	Aminoacid dehydrogenase-like, N-terminal domain superfamily	
+CL0181	ABC-2	ABC-2-transporter-like clan	
+CL0241	ABC_membrane	ABC transporter membrane domain clan	
+CL0028	AB_hydrolase	Alpha/Beta hydrolase fold	
+CL0070	ACT	ACT-like domain	
+CL0403	ADC-like	Acetoacetate decarboxylase-like	
+CL0092	ADF	Actin depolymerizing Factor	
+CL0084	ADP-ribosyl	ADP-ribosylation Superfamily	
+CL0243	AEP	Archaeo-eukaryotic primase	
+CL0278	AIG2	AIG2/ChaC-like superfamily	
+CL0615	ALDC	ALDC superfamily	
+CL0099	ALDH-like	ALDH-like superfamily	
+CL0531	AMP-binding_C	AMP-binding enzyme C-terminal domain superfamily	
+CL0356	AMP_N-like	Creatinase/prolidase N-terminal domain superfamily	
+CL0378	ANL	ANL superfamily	
+CL0650	AOC_barrel	AOC barrel-like superfamily	
+CL0062	APC	APC superfamily	
+CL0545	APCOP-app_sub	subdomain	
+CL0133	AT14A-like	AT14A-like	
+CL0179	ATP-grasp	ATP-grasp superfamily	
+CL0255	ATP_synthase	ATP synthase F0 subunit	
+CL0478	ATPase_I_AtpR	F-type and N-type ATPase, I/AtpR subunit	
+CL0330	AVL9	Late secretory pathway transport machinery	
+CL0578	AbiEI	Antitoxin of Type IV toxin-antitoxin, Abi system	
+CL0132	AbrB	AbrB/MraZ DNA-binding domain	
+CL0332	AcetylDC-like	Acetyl-decarboxylase like superfamily	
+CL0257	Acetyltrans	N-acetyltransferase like	
+CL0108	Actin_ATPase	Actin-like ATPase Superfamily	
+CL0713	Acyl-CoA_desat	Integral membrane Acyl-coA desaturase superfamily	
+CL0087	Acyl-CoA_dh	Acyl-CoA dehydrogenase, C-terminal domain-like	
+CL0544	AcylCoA_ox_dh_N	Acyl-coenzyme A oxidase/dehydrogenase N-terminal	
+CL0316	Acyl_transf_3	Membrane acyl transferase superfamily	
+CL0622	Acylphosphatase	Acylphosphatase/BLUF domain-like superfamily	
+CL0228	Acyltransferase	Acyltransferase clan	
+CL0204	Adhesin	Bacterial adhesin superfamily	
+CL0345	Aerolisin_ETX	Aerolysin/ETX pore-forming domain superfamily	
+CL0648	Aha1_BPI	Aha1/BPI domain-like superfamily	
+CL0423	AhpD-like	AhpD-like superfamily	
+CL0441	AlbA	RNA-DNA binding Alba-like superfamily	
+CL0088	Alk_phosphatase	Alkaline phosphatase-like	
+CL0284	Allatostatin	Allatostatin superfamily	
+CL0034	Amidohydrolase	Amidohydrolase superfamily	
+CL0685	AmpE_CobD-like	AmpE/CobD like	
+CL0465	Ank	Ankyrin repeat superfamily	
+CL0416	Anoctamin-like	Transmembrane protein families of the Anoctamin type	
+CL0645	Anti-sigma_N	N-terminal, cytoplasmic domain of anti-sigma factor superfamily	
+CL0627	Antibiotic_NAT	DUF436/YokD-like superfamily	
+CL0620	Antihemostatic	Leech antihemostatic protein superfamily	
+CL0453	Apoptosis-Inhib	Inhibitors of suppressors of apoptosis Bax/Bak	
+CL0716	Aquaporin-like	Aquaporin-like superfamily	
+CL0700	ArdcN	ArdcN superfamily	
+CL0302	Arginase	Arginase/deacetylase superfamily	
+CL0135	Arrestin_N-like	Arrestin_N-like	
+CL0401	AsmA-like	AsmA-like OmpF regulator protein superfamily	
+CL0399	Asp-glut_race	Aspartate/glutamate racemase superfamily	
+CL0551	BCLiA	Bcl-2 inhibitors of programmed cell death	
+CL0688	BECR	Barnase-EndoU-ColicinE5/D-RelE like nuclease	
+CL0665	BET	BET superfamily	
+CL0417	BIR-like	BIR-like domains	
+CL0404	BPD_transp_1	BPD transporter like	
+CL0459	BRCT-like	BRCT like	
+CL0143	B_Fructosidase	Beta fructosidase superfamily	
+CL0598	B_GA	Bacterial immunoglobulin/albumin-binding domain superfamily	
+CL0446	Bacteriocin_TLN	Translocation domain of colicin-like bacteriocins	
+CL0209	Bet_v_1_like	Bet v 1 like	
+CL0013	Beta-lactamase	Serine beta-lactamase-like superfamily	
+CL0080	Beta-tent	Beta-tent fold	
+CL0186	Beta_propeller	Beta propeller clan	
+CL0006	C1	Protein kinase C, C1 domain	
+CL0100	C1q_TNF	C1q and TNF superfamily	
+CL0154	C2	C2 superfamily	
+CL0361	C2H2-zf	Classical C2H2 and C2HC zinc fingers	
+CL0659	CAP	Cysteine-rich secretory proteins	
+CL0391	CAP_C-like	Adenylate cyclase associated (CAP) C terminal like	
+CL0203	CBD	Carbohydrate binding domain superfamily	
+CL0559	CBD9-like	Small molecule-binding and fam 9 carbohydrate-binding module	
+CL0535	CBM	Carbohydrate-binding superfamily	
+CL0155	CBM_14_19	Carbohydrate binding domain 14/19 clan	
+CL0537	CCCH_zf	CCCH-zinc finger	
+CL0281	CCT	CCT like-motif	
+CL0109	CDA	Cytidine deaminase-like (CDA) superfamily	
+CL0293	CDC	Cholesterol-dependent cytolysin superfamily	
+CL0188	CH	Calponin homology domain	
+CL0351	CHCH	Coiled-coil helix coiled-coil helix superfamily	
+CL0367	CI-2	CI-2 family of serine protease inhibitors	
+CL0678	CLIP	CLIP domain superfamily	
+CL0663	CNF1_YfiH	CNF1/YfiH-like putative cysteine hydrolases	
+CL0714	COX1-like	Cytochrome c oxidase subunit I-like superfamily	
+CL0064	CPA_AT	CPA/AT transporter superfamily	
+CL0512	CRAL_TRIO	CRAL-TRIO domain superfamily	
+CL0586	CTC1	CST, telomere maintenance, complex subunit CTC1	
+CL0234	CTPT	CTP transferase-like superfamily	
+CL0164	CUB	CUB clan	
+CL0026	CU_oxidase	Multicopper oxidase-like domain	
+CL0273	CYTH	CYTH-like phosphatase superfamily	
+CL0056	C_Lectin	C-type lectin-like superfamily	
+CL0165	Cache	Cache-like domain	
+CL0163	Calcineurin	Calcineurin-like phosphoesterase superfamily	
+CL0116	Calycin	Calycin superfamily	
+CL0448	Cargo_bd_muHD	Second domain of Mu2 adaptin subunit (ap50) of ap2 adaptor	
+CL0693	Cas9_lobe	Cas9 helical lobe domain	
+CL0624	CcdB_PemK	Cell growth inhibitor/plasmid maintenance toxic component superfamily	
+CL0402	Cdc48_2-like	Cdc48 domain 2-like	
+CL0560	Chalcone-like	Chalcone isomerase-like superfamily	
+CL0392	Chaperone-J	Chaperone J-domain superfamily	
+CL0355	CheC-like	CheC-like superfamily	
+CL0304	CheY	CheY-like superfamily	
+CL0634	CheY-binding	CheY-binding domain of CheA superfamily	
+CL0043	Chelatase	Chelatase Superfamily	
+CL0176	Chemosens_recp	Chemosensory 7tm receptor superfamily	
+CL0694	Choline_binding	Choline binding repeat superfamily	
+CL0127	ClpP_crotonase	ClpP/Crotonase superfamily	
+CL0149	CoA-acyltrans	CoA-dependent acyltransferase superfamily	
+CL0601	Cob_adeno_trans	Cobalamin adenosyltransferase-like superfamily	
+CL0640	Colicin_D_E5	Colicin D/E5 nuclease domain superfamily	
+CL0621	Colipase	Colipase-like superfamily	
+CL0425	ComplexI-N	NADH dehydrogenase I, subunit N	
+CL0004	Concanavalin	Concanavalin-like lectin/glucanase superfamily	
+CL0430	CopD_like	Copper resistance protein D	
+CL0047	CuAO_N2_N3	Copper amine oxidase, domains 1 and 2	
+CL0029	Cupin	Cupin fold	
+CL0065	Cyclin	Cyclin-like superfamily	
+CL0475	Cyclophil-like	Cyclophilin-like superfamily	
+CL0121	Cystatin	Cystatin-like superfamily	
+CL0079	Cystine-knot	Cystine-knot cytokine superfamily	
+CL0318	Cytochrome-c	Cytochrome c superfamily	
+CL0258	DALR	DALR superfamily	
+CL0288	DAP_epimerase	DAP epimerase superfamily	
+CL0195	DBL	Duff-binding like superfamily	
+CL0387	DHFred	Dihydrofolate reductase-like	
+CL0224	DHQS	Dehydroquinate synthase-like superfamily	
+CL0308	DMSO_reductase	Dimethyl sulfoxide reductase type II family	
+CL0184	DMT	Drug/Metabolite transporter superfamily	
+CL0382	DNA-mend	DNA breaking-rejoining enzyme superfamily	
+CL0405	DNA_b-psBarrel	DNA-binding pseudo-barrel domain	
+CL0060	DNA_clamp	DNA clamp superfamily	
+CL0078	DNA_ligase	DNA/RNA ligase superfamily	
+CL0194	DNA_pol_B-like	DNA polymerase B like	
+CL0242	DNA_primase_lrg	DNA primase large subunit like	
+CL0530	DNase_I-like	DNase I-like	
+CL0199	DPBB	Double Psi beta barrel glucanase	
+CL0196	DSRM	DSRM-like clan	
+CL0528	DUF1214	DUF1214-like	
+CL0594	DUF1735	DUF1735-like superfamily	
+CL0471	DUF362	DUF362-like superfamily	
+CL0041	Death	Death Domain Superfamily	
+CL0075	Defensin	Defensin/myotoxin-like superfamily	
+CL0205	Di-copper	Di-copper centre-containing domain	
+CL0032	Dim_A_B_barrel	Dimeric alpha/beta barrel superfamily	
+CL0310	DinB	DinB-like superfamily	
+CL0635	DmpA_ArgJ	DmpA/ArgJ-like superfamily	
+CL0494	DnaA_N	DNA-A N-terminal domain-like superfamily	
+CL0131	DoxD-like	DoxD-like	
+CL0394	DsrEFH-like	DsrEFH-like superfamily	
+CL0159	E-set	Ig-like fold superfamily (E-set)	
+CL0699	EAD1	EAD1-like clan	
+CL0245	EDD	EDD superfamily	
+CL0437	EF-G_C	Transcription elongation factor G C-terminal	
+CL0575	EFTPs	Translation proteins of Elongation Factors superfamily	
+CL0220	EF_hand	EF-hand like superfamily	
+CL0001	EGF	EGF superfamily	
+CL0706	EMC6	EMC6	
+CL0009	ENTH_VHS	ENTH/ANTH/VHS superfamily	
+CL0290	EPT_RTPC	EPT/RTPC-like superfamily	
+CL0610	ETAP	Electron transport accessory protein superfamily	
+CL0695	EndoU	EndoU-like endoribonuclease superfamily	
+CL0227	Enolase_N	Enolase N-terminal domain-like superfamily	
+CL0256	Enolase_TIM	Enolase like TIM barrel	
+CL0331	EpsM	General secretion pathway protein M	
+CL0628	EspA_CesA	EspA/CesA-like superfamily	
+CL0352	EsxAB	WXG100-A/WXG100-B dimer	
+CL0271	F-box	F-box-like domain	
+CL0277	FAD-oxidase_C	FAD-linked oxidase C-terminal domain superfamily	
+CL0085	FAD_DHS	DHS-like NAD/FAD-binding domain	
+CL0076	FAD_Lum_binding	Riboflavin synthase/Ferredoxin reductase FAD binding domain	
+CL0077	FAD_PCMH	PCMH-like FAD binding	
+CL0086	FAD_oxidored	FAD-linked oxidoreductase	
+CL0377	FAH	Fumarylacetoacetate hydrolase, C-terminal domain, superfamily	
+CL0162	FBA	F-box associated	
+CL0289	FBD	Folate binding domain	
+CL0632	FERM_M	FERM middle domain superfamily	
+CL0584	FF	FF domain	
+CL0647	FG_rpt	Nucleoporin FG repeat	
+CL0487	FKBP	FKBP-like superfamily	
+CL0336	FMN-binding	FMN-binding split barrel superfamily	
+CL0529	FMN-dep-NRtase	FMN-dependent nitroreductase-like	
+CL0307	FUSC	Fusaric acid resistance protein-like superfamily	
+CL0388	FadR-C	Fatty acid responsive transcription factor FadR, C-terminal domain	
+CL0486	Fer2	2Fe-2S iron-sulfur cluster binding domain	
+CL0667	Fer2_BFD	Bacterioferritin-associated ferredoxin superfamily	
+CL0044	Ferritin	Ferritin-like Superfamily	
+CL0422	Fibrinogen_C	Fibrinogen C-terminal domain-like	
+CL0450	FimbA	Fimbriae A and Mfa superfamily	
+CL0488	FixH-like	FixH-like	
+CL0042	Flavoprotein	Flavoprotein	
+CL0436	FliG	Flagellar motor switch family	
+CL0451	FnI-like	von Willebrand Factor like superfamily	
+CL0325	Form_Glyc_dh	Formate/glycerate dehydrogenase catalytic domain-like superfamily	
+CL0412	Frag1-like	Frag1 like	
+CL0225	FtsL	FtsL-like superfamily	
+CL0393	FucI-AraA_C	FucI/AraA C-terminal domain-like [50443]	
+CL0335	FumRed-TM	Fumarate reductase respiratory complex transmembrane subunits	
+CL0507	Fungal_trans	Fungal specific transcription factor domain	
+CL0595	Fusion_gly	Fusion glycoprotein superfamily	
+CL0644	Fz	Frizzled cysteine-rich domain-related superfamily	
+CL0449	G-PATCH	DExH-box splicing factor binding site	
+CL0593	G5	B region of SasG biofilm-forming surface protein	
+CL0250	GAD	GAD domain superfamily	
+CL0139	GADPH_aa-bio_dh	Amino acid biosynthesis and glycosomal dehydrogenase	
+CL0161	GAF	GAF domain-like	
+CL0523	GAG-polyprotein	LTR-copia-type polyprotein segment	
+CL0409	GAP	GTPase activation domain superfamily	
+CL0202	GBD	Galactose-binding domain-like superfamily	
+CL0540	GCP	Gamma-tubulin complex superfamily	
+CL0286	GCS	gamma-glutamylcysteine synthetase/glutamine synthetase clan	
+CL0069	GFP	GFP-like superfamily	
+CL0547	GF_recep_C-rich	Growth factor receptor Cys-rich	
+CL0400	GG-leader	Double-Glycine leader-peptide cleavage motif	
+CL0599	GH57_38_middle	Families 57/38 glycoside transferase middle domain superfamily	
+CL0369	GHD	Glycosyl hydrolase domain superfamily	
+CL0677	GHMP_C	GHMP C-terminal domain superfamily	
+CL0158	GH_CE	Glycoside hydrolase/deacetylase superfamily	
+CL0418	GIY-YIG	GIY-YIG endonuclease superfamily	
+CL0197	GME	GME superfamily	
+CL0521	GOLD-like	Sec14-like superfamily of golgi trafficking	
+CL0192	GPCR_A	Family A G protein-coupled receptor-like superfamily	
+CL0497	GST_C	Glutathione S-transferase, C-terminal domain	
+CL0110	GT-A	Glycosyl transferase clan GT-A	
+CL0113	GT-B	Glycosyl transferase clan GT-B	
+CL0111	GT-C	Glycosyl transferase GT-C superfamily	
+CL0673	GYF	GYF domain	
+CL0661	Gain	GPCR autoproteolysis inducing	
+CL0103	Gal_mutarotase	Galactose Mutarotase-like superfamily	
+CL0279	GatB_YqeY	YqeY-like superfamily	
+CL0089	GlnB-like	GlnB-like superfamily	
+CL0090	Globin	Globin-like	
+CL0420	GlpM-like	Bacterial membrane GlpM-like group	
+CL0014	Glutaminase_I	Class-I Glutamine amidotransferase superfamily	
+CL0500	Glycine-zipper	Glycine-zipper TM superfamily	
+CL0058	Glyco_hydro_tim	Tim barrel glycosyl hydrolase superfamily	
+CL0104	Glyoxalase	VOC superfamily	
+CL0145	Golgi-transport	Golgi-transport	
+CL0456	Golgi_traff	Shuttling between cyosol and Golgi, peripheral membrane family	
+CL0296	GroES	GroES-like superfamily	
+CL0315	Gx_transp	Gx transporter superfamily	
+CL0363	H-int	Hedgehog/intein (Hint) superfamily	
+CL0303	H2TH	Helix-two-turns-helix superfamily	
+CL0137	HAD	HAD superfamily	
+CL0681	HAMP	HAMP domains	
+CL0275	HAS-barrel	HAS-barrel superfamily	
+CL0237	HD_PDEase	HD/PDEase superfamily	
+CL0536	HEXAPEP	Hexapeptide repeat superfamily	
+CL0198	HHH	Helix-hairpin-helix superfamily	
+CL0265	HIT	HIT superfamily	
+CL0704	HMA	HMA domain superfamily	
+CL0114	HMG-box	HMG-box like superfamily	
+CL0210	HNOX-like	Heme NO and oxygen binding like	
+CL0230	HO	Heme oxygenase-like superfamily	
+CL0426	HRDC-like	HRDC-like superfamily	
+CL0190	HSP20	HSP20-like chaperone superfamily	
+CL0123	HTH	Helix-turn-helix clan	
+CL0481	HUH	His-hydrophobic-His tranposase Y1,Y2 superfamily	
+CL0039	HUP	HUP - HIGH-signature proteins, UspA, and PP-ATPase.	
+CL0306	HeH	LEM/SAP HeH motif	
+CL0552	Hect	Hect, E3 ligase catalytic domain	
+CL0312	HemS_ChuX	Heme iron utilization protein-like superfamily	
+CL0146	Herpes_glyco	Herpes glycoprotein	
+CL0611	Hexon	Hexon-like superfamily	
+CL0546	Hexosaminidase	beta-N-acetylhexosaminidase-like domain	
+CL0263	His-Me_finger	His-Me finger endonuclease superfamily	
+CL0025	His_Kinase_A	His Kinase A (phospho-acceptor) domain	
+CL0071	His_phosphatase	Histidine phosphatase superfamily	
+CL0012	Histone	Histone superfamily	
+CL0563	Holin-II	Bacteriophage holin superfamily II	
+CL0564	Holin-III	Holin superfamily III	
+CL0562	Holin-V	Holin superfamily V	
+CL0324	Homing_endonuc	Homing endonuclease-like superfamily	
+CL0050	HotDog	HotDog superfamily	
+CL0372	Hy-ly_N	Hyaluronate lyase-like catalytic, N-terminal domain	
+CL0105	Hybrid	Barrel sandwich hybrid superfamily	
+CL0385	Hydrophilin	Hydrophilin-like superfamily	
+CL0447	Hypoth_1	DUF1304/DUF3784 clan	
+CL0380	IDO-like	Indolic compounds 2,3-dioxygenase-like superfamily	
+CL0548	IHF-likeDNA-bdg	IHF-like DNA-binding protein superfamily	
+CL0458	IIaaRS-ABD	Class II aaRS Anticodon-binding domain-like	
+CL0246	ISOCOT_Fold	Isomerase,CoA transferase & Translation initiation factor Superfamily	
+CL0516	ISP-domain	Rieske-like iron-sulphur domain	
+CL0182	IT	IT (Ion Transporter) superfamily	
+CL0011	Ig	Immunoglobulin superfamily	
+CL0371	Inovirus-Coat	Inovirus (filamentous phage) major coat protein	
+CL0239	Insulin	Insulin-like superfamily	
+CL0359	Intron-mat_II	Type II intron maturase-like superfamily	
+CL0030	Ion_channel	Ion channel (VIC) superfamily	
+CL0270	Iso_DH	Isocitrate/Isopropylmalate dehydrogenase-like superfamily	
+CL0366	JAB	JAB-like superfamily	
+CL0573	KA1-like	Kinase associated domain 1-like	
+CL0007	KH	K-Homology (KH) domain Superfamily	
+CL0589	KIX_like	Kix domain of CBP (creb binding protein) and MED13/15	
+CL0291	KNTase_C	Nucleotidyltransferase substrate binding domain	
+CL0107	KOW	KOW domain	
+CL0637	KaiA_RbsU	KaiA/RbsU domain superfamily	
+CL0005	Kazal	Kazal like domain	
+CL0520	Keratin_assoc	Keratin_associated superfamily	
+CL0157	Kleisin	Kleisin superfamily	
+CL0054	Knottin_1	Scorpion toxin-like knottin superfamily	
+CL0602	Kringle	Kringle/FnII superfamily	
+CL0614	L27	L27 domain superfamily	
+CL0721	LAMP	LAMP superfamily	
+CL0513	LCCL-domain	LCCL-domain like	
+CL0341	LDH_C	LDH C-terminal domain-like superfamily	
+CL0410	LEF-8-like	LEF-8 like region of RNA polymerase Rpb2	
+CL0532	LIG	Lipid-binding Ig-like superfamily	
+CL0022	LRR	Leucine Rich Repeat	
+CL0515	LTXXQ-like	LTXXQ-like superfamily	
+CL0491	LYR-like	Complex1_LYR-like superfamily	
+CL0720	Lag3_N	Lag3 N-terminal region superfamily	
+CL0364	Leu-IlvD	LeuD/IlvD-like	
+CL0636	Leukocidin	Leukocidin-like superfamily	
+CL0626	Levi_coat	RNA bacteriophage capsid protein superfamily	
+CL0283	LigB	LigB-like superfamily	
+CL0561	LisH	LisH-like	
+CL0048	LolA_LolB	LolA/B superfamily	
+CL0421	LppaM	Lipo-protein attachment motif superfamily	
+CL0292	LysE	LysE transporter superfamily	
+CL0187	LysM	LysM-like domain	
+CL0037	Lysozyme	Lysozyme-like superfamily	
+CL0226	M6PR	Mannose 6-phosphate receptor	
+CL0223	MACRO	MACRO domain superfamily	
+CL0193	MBB	Outer membrane beta-barrel protein superfamily	
+CL0081	MBD-like	MBD-like DNA-binding domain	
+CL0682	MBG	Mirror Beta Grasp superfamily	
+CL0517	MBOAT-like	Membrane-bound O-acyltransferase,MBOAT,superfamily	
+CL0618	MCR	Methyl-coenzyme M reductase subunit superfamily	
+CL0015	MFS	Major Facilitator Superfamily	
+CL0343	MHC	MHC antigen-recognition domain	
+CL0683	MICOS	Mitochondrial contact site complex	
+CL0082	MIF	Tautomerase/MIF superfamily	
+CL0251	MORN	MORN repeat	
+CL0524	MPT63-MPB63	Antigen MPT63/MPB63 (immunoprotective extracellular	
+CL0360	MTH1187-YkoF	MTH1187/YkoF-like superfamily	
+CL0651	Mad2	Mad2 superfamily	
+CL0269	Maf	Maf/Ham1 superfamily	
+CL0568	Man_lectin	Mannoase-binding lectin superfamily	
+CL0396	Marvel-like	MARVEL domain containing superfamily	
+CL0074	Matrix	Retroviral matrix superfamily	
+CL0231	MazG	all-alpha NTP pyrophosphohydrolase superfamily	
+CL0142	Membrane_trans	Membrane and transport protein	
+CL0057	Met_repress	MetJ/Arc repressor, antitoxin of TA systems superfamily	
+CL0381	Metallo-HOrase	Metallo-hydrolase/oxidoreductase superfamily	
+CL0461	Metallothionein	Metal-bound fold, usually iron, metallothionein superfamily	
+CL0160	Methionine_synt	Cobalamin-independent synthase	
+CL0719	Moesin_tail	Moesin tail domain superfamily	
+CL0619	Mog1p_PsbP	Mog1p/PsbP-like superfamily	
+CL0141	MtN3-like	MtN3-like, vesicle-trafficking cargo-receptors	
+CL0317	Multiheme_cytos	Multiheme cytochrome superfamily	
+CL0365	MurF-HprK_N	MurF and HprK N-domain-like superfamily	
+CL0222	MviN_MATE	MviN, MATE-like superfamily	
+CL0063	NADP_Rossmann	FAD/NAD(P)-binding Rossmann fold Superfamily	
+CL0091	NAD_Ferredoxin	Ferredoxin / Ferric reductase-like NAD binding	
+CL0701	NAD_kinase_C	NAD-kinase beta sandwich domain superfamily	
+CL0684	NFACT_RNA-bind	NEMF/FbpA/Caliban/Tae2 RNA binding	
+CL0669	NOG1_N	NOG1 N-temrinal helical domain superfamily	
+CL0435	NPR	Nitrogen permease regulator family	
+CL0051	NTF2	NTF2-like superfamily	
+CL0052	NTN	NTN hydrolase superfamily	
+CL0260	NTP_transf	Nucleotidyltransferase superfamily	
+CL0261	NUDIX	NUDIX superfamily	
+CL0715	Nckap1_CYFIP1-2	Nckap1/CYFIP 1/2 superfamily	
+CL0232	NifU	NifU C-terminal domain-like superfamily	
+CL0498	Nribosyltransf	N-(deoxy)ribosyltransferase-like superfamily	
+CL0156	Nucleocapsid	Mononegaviral nucleocapsid superfamily	
+CL0055	Nucleoplasmin	Nucleoplasmin-like/VP (viral coat and capsid proteins) superfamily	
+CL0585	Nucleoporin_A	Nucleoporin superfamily	
+CL0276	Nucleot_cyclase	Nucleotide cyclase superfamily	
+CL0633	NusB	NusB-like superfamily	
+CL0439	NusG-like	NusG-like	
+CL0499	O-anti_assembly	O-antigen assembly enzyme superfamily	
+CL0021	OB	OB fold	
+CL0658	OB_enterotoxin	Bacterial enterotoxin OB-fold	
+CL0590	OML_zippers	Major outer membrane lipoprotein zipper superfamily	
+CL0083	Omega_toxin	Omega toxin-like	
+CL0259	OstA	OstA superfamily	
+CL0376	Oxa1	Cytochrome oxidase biogenesis family	
+CL0023	P-loop_NTPase	P-loop containing nucleoside triphosphate hydrolase superfamily	
+CL0073	P53-like	Beta-sandwich DNA-binding domain	
+CL0301	PA14	PA14 superfamily	
+CL0168	PAN	PAN-like	
+CL0183	PAS_Fold	PAS domain clan	
+CL0638	PAZ	PAZ domain superfamily	
+CL0177	PBP	Periplasmic binding protein clan	
+CL0236	PDDEXK	PD-(D/E)XK nuclease superfamily	
+CL0466	PDZ-like	PDZ domain-like peptide-binding superfamily	
+CL0101	PELOTA	Pelota - RNA ribose binding superfamily	
+CL0374	PEP-carboxyk	PEP carboxykinase-like superfamily	
+CL0431	PF	Profilin-like superfamily	
+CL0240	PFK	PFK-like superfamily	
+CL0339	PFL-like	PFL-like glycyl radical enzyme superfamily	
+CL0244	PGBD	PGBD superfamily	
+CL0266	PH	PH domain-like superfamily	
+CL0612	PHM_PNGase_F	PHM/PNGase F superfamily	
+CL0280	PIN	PIN domain superfamily	
+CL0151	PK_TIM	Pyruvate kinase-like TIM barrel superfamily	
+CL0016	PKinase	Protein kinase superfamily	
+CL0629	PLA2	Phospholipase A2 superfamily	
+CL0321	PLAT	PLAT domain like superfamily	
+CL0384	PLC	PLC-like phosphodiesterases	
+CL0479	PLD	Phospholipase D superfamily	
+CL0061	PLP_aminotran	PLP dependent aminotransferase superfamily	
+CL0191	POTRA	POTRA domain superfamily	
+CL0033	POZ	POZ domain superfamily	
+CL0314	PP-binding	ACP-like superfamily	
+CL0238	PP2C	PP2C-like superfamily	
+CL0570	PPP-I	Protease propeptides/inhibitors	
+CL0350	PRC-barrel	PRC-barrel like superfamily	
+CL0166	PRD	PRD domain superfamily	
+CL0533	PRTase-like	PRPP synthetase-associated protein 1	
+CL0630	PSI	Plexin fold superfamily	
+CL0305	PTH2	Peptidyl-tRNA hydrolase II superfamily	
+CL0493	PTS_EIIC	Phosphotransferase system, EIIC superfamily	
+CL0340	PTase-anion_tr	Phosphotransferase/anion transport protein superfamily	
+CL0178	PUA	PUA/ASCH superfamily	
+CL0408	PUP	Purine and uridine phosphorylase superfamily	
+CL0556	PapD-like	PapD-like superfamily,immunoglobulin-like beta sandwich	
+CL0248	ParBc	ParB-like superfamily	
+CL0577	Paramyxovirin_C	C protein of Paramyovirinae families	
+CL0323	Patatin	Patatin/FabD/lysophospholipase-like superfamily	
+CL0268	Pec_lyase-like	Pectate lyase-like beta helix	
+CL0505	Pentapeptide	Pentapeptide repeat	
+CL0320	PepSY	PepSY domain-like superfamily	
+CL0490	PepSY_TM-like	PepSY_TM-like	
+CL0096	Pept_Inhib_IE	Peptidase Inhibitor Clan IE	
+CL0129	Peptidase_AA	Peptidase clan AA	
+CL0130	Peptidase_AD	Peptidase clan AD	
+CL0125	Peptidase_CA	Peptidase clan CA	
+CL0093	Peptidase_CD	Peptidase clan CD	
+CL0126	Peptidase_MA	Peptidase clan MA	
+CL0170	Peptidase_MD	Peptidase MD	
+CL0094	Peptidase_ME	LuxS/MPP-like metallohydrolase	
+CL0035	Peptidase_MH	Peptidase clan MH/MC/MF	
+CL0095	Peptidase_ML	Peptidase Clan ML	
+CL0124	Peptidase_PA	Peptidase clan PA	
+CL0299	Peptidase_SF	Peptidase clan SF	
+CL0201	Peptidase_SH	Peptidase clan SH	
+CL0472	Peptidase_U	Peptidase clan U	
+CL0718	Perilipin_sf	Perilipin superfamily	
+CL0144	Periplas_BP	Periplasmic binding protein like	
+CL0617	Peroxidase	Heme-dependent peroxidases superfamily	
+CL0484	Peroxisome	Peroxisome-like domain	
+CL0379	PgaPase	Pyroglutamate aminopeptidase superfamily	
+CL0373	Phage-coat	Phage coat superfamily	
+CL0567	Phage_TACs	Phage tail assembly chaperone	
+CL0569	Phage_TTPs	Phage tail tube proteins superfamily	
+CL0504	Phage_barrel	Phage tail beta-barrel superfamily	
+CL0606	Phage_fibre	Phage fibre superfamily	
+CL0348	Phage_tail	Phage virion morphogenesis superfamily	
+CL0691	Phage_tail_2	Phage tail like superfamily	
+CL0249	Phage_tail_L	Phage minor tail protein L clan	
+CL0383	PheT-TilS	Phenylalanine- and lysidine-tRNA synthetase domain superfamily	
+CL0297	PhoU	PhoU-like superfamily	
+CL0368	PhosC-NucP1	Phospholipase C/P1 nuclease superfamily	
+CL0031	Phosphatase	Phosphatase superfamily	
+CL0171	Phospoesterase	inositol polyphosphate 1 phosphatase like superfamily	
+CL0655	PilP	GspC HR domain/PilP-like superfamily	
+CL0327	Pilus	Pilus subunit	
+CL0136	Plasmid-antitox	Plasmid toxin-antitoxin system	
+CL0708	Polo-box	Polo-box superfamily	
+CL0597	Post-HMGL	Post-HMGL domain-like superfamily	
+CL0668	Pre-PUA	Pre-PUA superfamily	
+CL0483	PreATP-grasp	Probable substrate-binding preceding ATP-grasp domain	
+CL0200	Prefoldin	Prefoldin	
+CL0482	Prolamin	Prolamin	
+CL0649	PseudoU_synth	Pseudouridine synthase superfamily	
+CL0235	PspA	PspA/ESCRT-III	
+CL0362	RAMPS-Cas5-like	CRISPR-associated (Cas) Repair Associated Mysterious Proteins	
+CL0542	RAS_GEF_N	Ras guanyl-nucleotide exchange factor activity N-term	
+CL0509	RBP11-like	RBP11-like subunits of RNA polymerase	
+CL0337	RF	Release factor superfamily	
+CL0272	RGS	RGS-like superfamily	
+CL0068	RIIa	RIIa-like fold	
+CL0229	RING	Ring-finger/U-box superfamily	
+CL0398	RMMBL_DRMBL	RNA/DNA-metabolising metallo-beta-lactamase motif	
+CL0322	RND_permease	RND permease superfamily	
+CL0219	RNase_H	Ribonuclease H-like superfamily	
+CL0539	RNase_III	RNase III domain-like superfamily	
+CL0221	RRM	RRM-like clan	
+CL0027	RdRP	RNA dependent RNA polymerase	
+CL0608	Reductase_C	FAD/NAD-linked reductase C-terminal domain superfamily	
+CL0326	Reo_sigma	Virus attachment protein superfamily	
+CL0169	Rep	Rep-like domain	
+CL0511	Retroviral_zf	Retrovirus zinc finger-like domains	
+CL0207	Rhomboid-like	Integral membrane protein / protease	
+CL0346	Ribo_L29	Ribosomal protein L29, L29p, superfamily	
+CL0118	Ribokinase	Ribokinase-like superfamily	
+CL0588	Ribos_L15p_L18e	Ribosomal proteins L15 bacteria, L18e archaea	
+CL0639	Rof	Rof/RNase P subunit-like superfamily	
+CL0217	Rotavirus_VP7	Rotavirus VP7 protein	
+CL0045	Rubredoxin	Rubredoxin-like	
+CL0267	S11_L18p	Ribosomal protein S11/L18p superfamily	
+CL0600	S15_NS1	S15/NS1 RNA-binding domain superfamily	
+CL0652	S24e_L23_L15e	Ribosomal S24e, L23 and L15e superfamily	
+CL0492	S4	S4 domain superfamily	
+CL0329	S5	Ribosomal protein S5 domain 2-like superfamily	
+CL0489	SAF	SAF-like beta clip superfamily	
+CL0003	SAM	Sterile Alpha Motif (SAM) domain	
+CL0311	SCP2	SCP-2 sterol transfer superfamily	
+CL0697	SDH_beta	Serine dehydratase beta chain superfamily	
+CL0264	SGNH_hydrolase	SGNH hydrolase superfamily	
+CL0541	SH2-like	SH2, phosphotyrosine-recognition domain superfamily	
+CL0010	SH3	Src homology-3 domain	
+CL0660	SHOCT	SHOCT superfamily	
+CL0319	SHS2	SHS2 domain	
+CL0474	SICA_like	SICA alpha/beta like extracellular domains	
+CL0067	SIS	SIS domain fold	
+CL0676	SLATT	SMODS and LOG-Smf/DprA-Associating Two TM	
+CL0349	SLOG	SMF/DprA-LOG (SLOG)	
+CL0357	SMAD-FHA	SMAD/FHA domain superfamily	
+CL0212	SNARE	SNARE-like superfamily	
+CL0445	SNARE-fusion	SNARE-fusion membrane complex superfamily	
+CL0642	SOCS_box	SOCS-box like superfamily	
+CL0503	SOR	Superoxide reductase-like superfamily	
+CL0433	SPFH	SPFH superfamily	
+CL0616	SPOC	SPOC domain-like superfamily	
+CL0098	SPOUT	SPOUT Methyltransferase Superfamily	
+CL0550	SRCR	SRCR-like	
+CL0623	SRP9_14	SRP alu RNA binding heterodimer, SRP9/14 superfamily	
+CL0587	STAND_N	N-terminal of fungal STAND proteins superfamily	
+CL0576	STARBD	Starch-binding domain like superfamily	
+CL0502	STAS	STAS domain superfamily	
+CL0709	STING	STING domain superfamily	
+CL0173	STIR	STIR superfamily	
+CL0526	SUKH	SUKH superfamily	
+CL0707	Saposin_like	Saposin-like superfamily	
+CL0294	Sec10	Sec10-like superfamily	
+CL0282	Serum_albumin	Serum albumin superfamily	
+CL0213	ShK-like	Sea anemone toxin k like	
+CL0434	Sialidase	Sialidase superfamily	
+CL0527	Sm-like	Sm (Small RNA binding protein domain)	
+CL0115	Steroid_dh	Steroid oxidoreductase superfamily	
+CL0506	Succ_CoA_synth	Succinyl-CoA synthetase flavodoxin domain superfamily	
+CL0233	SufE_NifU	SufE/NifU superfamily	
+CL0646	T3SS	Type III secretion system domain superfamily	
+CL0419	T3SS-Chaperone	Type III secretion system types a and b chaperone	
+CL0424	T3SS-hook	Type III secretion system-derived superfamily, hook-related	
+CL0679	TACC	Transforming acidic coiled-coil	
+CL0300	TAT	Twin-Arginine Translocation Motif	
+CL0407	TBP-like	TATA-binding protein like	
+CL0334	THBO-biosyn	Tetrahydrobiopterin biosynthesis-like enzyme superfamily	
+CL0254	THDP-binding	Thiamin diphosphate-binding superfamily	
+CL0572	TIKI	Tiki-like, or EreA-ChaN-like 2His 2Glu metallopreotease SF	
+CL0353	TIMP-like	TIMP-like superfamily	
+CL0036	TIM_barrel	Common phosphate binding-site TIM barrel superfamily	
+CL0591	TKC_like	Transketolase C-terminal domain-like superfamily	
+CL0607	TNF_receptor	TNF receptor-like superfamily	
+CL0462	TPA-repeat	Transcription elongation factor C-terminal nonapeptide repeat	
+CL0020	TPR	Tetratrico peptide repeat superfamily	
+CL0389	TRAF	TRAF domain-like superfamily	
+CL0175	TRASH	TRASH superfamily	
+CL0206	TRB	Transcriptional repressor beta-barrel domain	
+CL0477	TRD	DNA methylase specificity domain	
+CL0692	TSP1	TSP1 superfamily	
+CL0689	TSP3	Thrombospondin type 3 repeat superfamily	
+CL0496	Tad-like	Flp pilus-biogenesis Tad-like superfamily	
+CL0414	TerB	Tellurits and antibiotic resistance superfamily	
+CL0613	Terp_synthase	Terpenoid synthases superfamily	
+CL0174	TetR_C	TetR protein, C-terminal domain-like	
+CL0347	Tetraspannin	Tetraspannin-like	
+CL0046	Thiolase	Thiolase-like Superfamily	
+CL0172	Thioredoxin	Thioredoxin-like	
+CL0470	ThrE	Threonine/Serine exporter ThrE superfamily	
+CL0428	TolA-TonB-Cterm	TolA/TonB C-terminal	
+CL0342	TolB_N	TolB, N-terminal domain	
+CL0413	Toprim-like	Toprim domain	
+CL0147	Traffic	Trafficking protein	
+CL0375	Transporter	Transporter-like superfamily, four TM region	
+CL0287	Transthyretin	Transthyretin superfamily	
+CL0690	TrbC_VirB2	TrbC/VirB2 pilin superfamily	
+CL0698	TrbL	TrbL/VirB6 plasmid conjugal transfer protein	
+CL0066	Trefoil	Beta-trefoil superfamily	
+CL0262	Trigger_C	Trigger factor/SurA domain	
+CL0674	Triple_B_spiral	Triple beta spiral	
+CL0662	Triple_barrel	Triple barrel superfamily	
+CL0582	TrkA_C	TrkA C-terminal domain-like	
+CL0452	Tropomyosin-lke	Tropomyosin-like superfamily	
+CL0395	Tubby_C	Tubby C-terminal domain-like	
+CL0566	Tubulin	Tubulin nucleotide-binding domain-like, GTPase	
+CL0442	Tubulin_C	Tubulin, FtsZ and Misato and their C-termini,	
+CL0049	Tudor	Tudor domain 'Royal family'	
+CL0397	TusA-like	TusA-like superfamily	
+CL0097	TypeIII_Chap	Type III secretory system chaperone	
+CL0664	UB2H	UB2H/UvrB interaction domain superfamily	
+CL0214	UBA	UBA superfamily	
+CL0208	UBC	Ubiquitin conjugating enzyme like superfamily	
+CL0702	UIM	Ubiquitin interacting motif	
+CL0122	UTRA	Chorismate lyase/UTRA superfamily	
+CL0072	Ubiquitin	Ubiquitin superfamily	
+CL0429	UcrQ-like	UcrQ-like	
+CL0370	Uteroglobin	Uteroglobin-like superfamily	
+CL0705	VBS-like	VBS-like four-helical bundle superfamily	
+CL0653	VCCI	VCCI superfamily superfamily	
+CL0596	VPS23_C	Endosomal sorting complex assembly domain	
+CL0656	VSA	Variant surface antigens	
+CL0666	Vault	Major Vault Protein repeat superfamily	
+CL0411	Vir	Antigenic variants from Plasmodium cell-surface	
+CL0148	Viral_Gag	Viral Gag protein	
+CL0140	Viral_NABP	Viral nucleic acid binding	
+CL0543	Viral_gly_cn_dm	Viral glycoprotein central and dimerisation domains	
+CL0696	Vmethyltransf	Viral methyltranferase superfamily	
+CL0295	Vps51	Vps51 domain superfamily	
+CL0274	WRKY-GCM1	WRKY-GCM1 superfamily	
+CL0680	WW	WW domain	
+CL0654	WYL	WYL-like superfamily	
+CL0717	YbaB	YbaB superfamily	
+CL0522	YbjQ-like	YbjQ-like superfamily	
+CL0710	YeeE	YeeE-like transporter superfamily	
+CL0631	YgaC_TfoX-N	YgaC/TfoX-N like superfamily	
+CL0112	Yip1	Yip1/YIF1-like	
+CL0406	YjbJ-CsbD-like	YjbJ-CsbD-like superfamily	
+CL0534	YjgF-like	YjgF-like superfamily	
+CL0508	YkuD	L,D-transpeptidase catalytic domain	
+CL0643	YqbG	YqbG-like superfamily	
+CL0580	YqgF	YqgF-like family	
+CL0703	YtcA	YtcA-like superfamily	
+CL0285	YycI_YycH	YycI/YycH superfamily	
+CL0167	Zn_Beta_Ribbon	Zinc beta-ribbon	
+CL0687	Zn_chelatase	Zinc chelating superfamily	
+CL0686	aG_PT	Alpha-glutamyl/putrescinyl thymine phosphorylase	
+CL0354	bBprotInhib	beta-Barrel protease inhibitors	
+CL0018	bZIP	bZIP-like leucine zipper	
+CL0592	beta_Roll	beta-strand roll of R-module,  superfamily	
+CL0153	dUTPase	dUTPase like superfamily	
+CL0625	eIF4e	eIF4e-like superfamily	
+CL0333	gCrystallin	Gamma-Crystallin-like superfamily	
+CL0469	l-integrase_N	lambda integrase N-terminal domain	
+CL0672	p35	Baculovirus p35 protein superfamily	
+CL0525	pap2	Acid phosphatase/Vanadium-dependent haloperoxidase	
+CL0604	post-AAA	post-AAA+ oligomerization domain-like superfamily	
+CL0609	sPC4_like	PC4-like superfamily	
+CL0605	ssDNA_NP_VP	ssDNA viruses Nucleoplasmin-like/VP coat superfamily	
+CL0476	tRNA-IECD_N	tRNA-intron endonuclease catalytic domain-like N-term	
+CL0298	tRNA_bind_arm	tRNA-binding arm superfamily	
+CL0040	tRNA_synt_II	Class II aminoacyl-tRNA and Biotin synthetases	
+CL0117	uPAR_Ly6_toxin	uPAR/Ly6/CD59/snake toxin-receptor superfamily	
+CL0128	vWA-like	von Willebrand factor type A	
