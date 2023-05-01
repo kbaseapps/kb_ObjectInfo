@@ -829,10 +829,7 @@ class kb_ObjectInfo:
         rpt_list2 = []
         
         cf = CreateFeatureLists(self.config)
-        rpt_list1 = cf.readDomainAnnList(domain_data, evalue_cutoff)
-        rpt_list2 = cf.readDomainAnnCount(rpt_list1)
-        rpt_list3 = cf.readDomainAnnCatCount(rpt_list2)
-        print("DEBUG",rpt_list3)
+        (rpt_list1,rpt_list2,rpt_list3) = cf.readDomainAnnList(domain_data, evalue_cutoff)
     
         rpt_string = ''
         

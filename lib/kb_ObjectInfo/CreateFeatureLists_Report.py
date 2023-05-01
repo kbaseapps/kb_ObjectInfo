@@ -12,25 +12,12 @@ class CreateFeatureLists:
         self.config = config
         self.callback_url = os.environ['SDK_CALLBACK_URL']
         self.dfu = DataFileUtil(self.callback_url)
-        (self.cats, self.cat2name, self.cat2group, self.domfam2cat, self.domfam2name, self.domfam2ns) = self._configure_categories()
+        #(self.cats, self.cat2name, self.cat2group, self.domfam2cat, self.domfam2name, self.domfam2ns) = self._configure_categories()
         logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',
                         level=logging.INFO,
                         datefmt='%Y-%m-%d %H:%M:%S')
 
-    def _configure_categories(self):
-
-        # https://www.ncbi.nlm.nih.gov/Structure/cdd/cdd_help.shtml#CDSource_external
-        # cd00009   - Conserved Protein Domain Family - curated at NCBI
-        # cl21655   - Part of CDD at NCBI but not predicted
-        # COG5463   - Clusters of Orthologous Genes (COGs)
-        # KOG0989   - Eukaryotic COGs
-        # NF011716  - NCBIfams
-        # PF00015   - Protein Families - Pfam
-        # PRK000000 - Protein Clusters - NCBI - okay to exclue CHL, MTH, PHA, PLN, PTZ, convert pfam to PF
-        # sd000043   - Conserved Protein Domain Family - Domain models specifically built to annotate structural motifs;
-        # smart00156 - Simple Modular Architecture Research Tool
-        # TIGR03904  - The Institute for Genomic Research's database of protein families - TIGRfam
-        
+    def configure_seed_categories(self):
         domain_desc_basepath = os.path.abspath('/kb/module/data')
         domfam2name  = dict()
         domfam2ns = dict()
@@ -40,7 +27,7 @@ class CreateFeatureLists:
         cat2group    = dict()
             
         # Initialize
-        for namespace in ['COG','PF','TIGR','PRK','NCBIfams','cdd','Other','smart','SEED']:
+        for namespace in ['SEED']:
             cat2name[namespace] = dict()
             cat2group[namespace] = dict()
             
@@ -72,26 +59,6 @@ class CreateFeatureLists:
                 domfam2name[domfam]  = dom_name
         dom2cat_map_handle.close()
         
-#
-#       Define all the categories and all of the domains
-#       All the old and new data sources now combined in combine_data_sources.py
-#
-        with open(os.path.join(domain_desc_basepath,'all_domains.tsv'), 'r') as dom2cat_map_handle:
-            for line in dom2cat_map_handle.readlines():
-                [namespace,domfam,short_name,dom_name,cat] = line.split("\t")[0:5]
-                domfam2ns[domfam] = namespace
-                domfam2name[domfam]  = dom_name
-                domfam2cat[domfam] = cat
-        dom2cat_map_handle.close()
-
-        with open(os.path.join(domain_desc_basepath,'all_categories.tsv'), 'r') as dom2cat_map_handle:
-            for line in dom2cat_map_handle.readlines():
-                [namespace,cat,cat_name,cat_group] = line.split("\t")[0:4]
-                if cat not in cats:
-                    cats.append(cat)
-                cat2name[namespace][cat] = cat_name
-                cat2group[namespace][cat] = cat_group
-        dom2cat_map_handle.close()
         
         return(cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns)
         
@@ -101,21 +68,8 @@ class CreateFeatureLists:
 
     def delimitedTable(self, genome, features):
 
-#        seed_basepath = os.path.abspath('/kb/module/data')
-#        seed_subsys   = os.path.join(seed_basepath, 'subsys.txt')
-
-#        seed_cat = dict()
-
-#        with open(seed_subsys, 'r') as seed_handle:
-#            for line in seed_handle.readlines():
-#
-#                line = line.strip()
-#                [cat_group, cat_subgroup, cat, seedfam] = line.split("\t")[0:4]
-#                if seedfam in seed_cat:
-#                    seed_cat[seedfam] += "; " + cat
-#                else:
-#                    seed_cat[seedfam] = cat
-        seed_cat = self.domfam2cat
+        (cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns) = self.configure_seed_categories()
+        seed_cat = domfam2cat
         
         rpt_list = [["Feature ID", "Feature type", "Contig", "Start", "Stop", "Strand", "Feature Function", "Aliases",
                     "RAST Functional Assignment", "RAST Functional Group 1", "RAST Functional Group 2"]]
@@ -179,10 +133,10 @@ class CreateFeatureLists:
             catgroup = ''
             subgroup = ''
             if cat > ' ':
-                if cat in self.cat2group['SEED']:
-                    catgroup = self.cat2group['SEED'][cat] 
-                if domfam in self.domfam2name:
-                    subgroup = self.domfam2name[domfam]
+                if cat in cat2group['SEED']:
+                    catgroup = cat2group['SEED'][cat]
+                if domfam in domfam2name:
+                    subgroup = domfam2name[domfam]
  
             rpt_list.append([feat['id'], feat['type'], contig, str(start), str(stop), strand, feat['function'], aliases, cat, subgroup, catgroup])
 
@@ -255,63 +209,55 @@ class CreateFeatureLists:
     # -----------------------------------------------------------------
     #   Domain Annotation Reports
     #
+    def configure_domains(self):
 
-    #   OBJECT: DomainAnnotation
-    #   FUNCTION: User-defined function to format all the domains for a gene
-    #
-    def printGeneDomain(self, contig, geneName, geneDomain, cutoff):
-        rpt_list1 = []
-        cat2name = dict()
-        cat2group = dict()
+        # https://www.ncbi.nlm.nih.gov/Structure/cdd/cdd_help.shtml#CDSource_external
+        # cd00009   - Conserved Protein Domain Family - curated at NCBI
+        # cl21655   - Part of CDD at NCBI but not predicted
+        # COG5463   - Clusters of Orthologous Genes (COGs)
+        # KOG0989   - Eukaryotic COGs
+        # NF011716  - NCBIfams
+        # PF00015   - Protein Families - Pfam
+        # PRK000000 - Protein Clusters - NCBI - okay to exclue CHL, MTH, PHA, PLN, PTZ, convert pfam to PF
+        # sd000043   - Conserved Protein Domain Family - Domain models specifically built to annotate structural motifs;
+        # smart00156 - Simple Modular Architecture Research Tool
+        # TIGR03904  - The Institute for Genomic Research's database of protein families - TIGRfam
         
-        for domain in geneDomain:
-            list = geneDomain[domain]
-            if list[0][2] < cutoff:
-                if '.' in domain and len(domain) < 15:
-                    domain = domain.split('.')[0]
+        domain_desc_basepath = os.path.abspath('/kb/module/data')
+        domfam2name  = dict()
+        domfam2ns = dict()
+        domfam2cat   = dict()
+        cats = []
+        cat2name     = dict()
+        cat2group    = dict()
+            
+        # Initialize
+        for namespace in ['COG','PF','TIGR','PRK','NCBIfams','cdd','Other','smart']:
+            cat2name[namespace] = dict()
+            cat2group[namespace] = dict()
+#
+#       Define all the categories and all of the domains
+#       All the old and new data sources now combined in combine_data_sources.py
+#
+        with open(os.path.join(domain_desc_basepath,'all_domains.tsv'), 'r') as dom2cat_map_handle:
+            for line in dom2cat_map_handle.readlines():
+                [namespace,domfam,short_name,dom_name,cat] = line.split("\t")[0:5]
+                domfam2ns[domfam] = namespace
+                domfam2name[domfam]  = dom_name
+                domfam2cat[domfam] = cat
+        dom2cat_map_handle.close()
 
-                if domain in self.domfam2ns:
-                    namespace = self.domfam2ns[domain]
-                else:
-                    namespace = 'Other'
-                    self.domfam2ns[domain] = namespace
-
-                if domain in self.domfam2name:
-                    dom_name = self.domfam2name[domain]
-                else:
-                    dom_name = 'Other'
-                    self.domfam2name[domain] = dom_name
-
-                if domain in self.domfam2cat:
-                    cat = self.domfam2cat[domain]
-                else:
-                    cat = 'Other'
-                    self.domfam2cat[domain] = cat
-
-                if namespace not in cat2name:
-                    cat2name[namespace]  = dict()
-                    #print ("DEBUG NAMESPACE",namespace)
-                if namespace not in cat2group:
-                    cat2group[namespace] = dict()
-                    
-                if cat > ' ' and namespace in self.cat2name and cat in self.cat2name[namespace]:
-                    cat_name = self.cat2name[namespace][cat]
-                else:
-                    cat = 'Other'
-                    cat_name = 'Other'
-                    self.cat2name[namespace][cat] = cat_name
-
-                if cat > ' '  and namespace in self.cat2group and cat in self.cat2group[namespace] :
-                    cat_group = self.cat2group[namespace][cat]
-                else:
-                    cat_group = 'Other'
-                    self.cat2group[namespace][cat] = cat_group
-                    
-                rpt_list1.append([contig, geneName, domain, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, namespace, cat, cat_name, str(cat_group)])
-                
-        # Returning a list of lists
-        return rpt_list1
-
+        with open(os.path.join(domain_desc_basepath,'all_categories.tsv'), 'r') as dom2cat_map_handle:
+            for line in dom2cat_map_handle.readlines():
+                [namespace,cat,cat_name,cat_group] = line.split("\t")[0:4]
+                if cat not in cats:
+                    cats.append(cat)
+                cat2name[namespace][cat] = cat_name
+                cat2group[namespace][cat] = cat_group
+        dom2cat_map_handle.close()
+        
+        return(cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns)
+        
     #
     #   OBJECT: DomainAnnotation
     #   FORMAT: tab or comma delimited list of the genes, domains, e-values, and start/stop of domain hit
@@ -319,44 +265,72 @@ class CreateFeatureLists:
     #   Uses printGeneDomain to print out individual lines
     #
     def readDomainAnnList(self, pyStr, cutoff):
+    
+        (cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns) = self.configure_domains()
         # Header
         rpt_list1 = [["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name","Namespace", "Category", "Category Name", "Category Group"]]
 
         myData = pyStr['data']
-
+                    
+        rpt_list1 = []
+        
         for contig in myData:
             contigData = myData[contig]
             for gene in contigData:
                 if (gene[4]):
-                    domain = gene[4]
-
-                    # The return list is a list of lists and this is done many times
-                    # Need to append them to our list one at a time, otherwise list of lists of lists
-                    rtn_list = (self.printGeneDomain(contig, gene[0], domain, cutoff))
-                    for rtn in rtn_list:
-                        rpt_list1.append(rtn)
-                        
-        return rpt_list1
-
-    
+                    geneDomain = gene[4]
+                    geneName   = gene[0]
         
-        #
-    #   OBJECT: DomainAnnotation
-    #   FORMAT: List of the domains and number of occurrences in the genome
-    #
-    def readDomainAnnCount(self, geneList):
+                    for domain in geneDomain:
+                        list = geneDomain[domain]
+                        if list[0][2] < cutoff:
+                            if '.' in domain and len(domain) < 15:
+                                domain = domain.split('.')[0]
+
+                            if domain in domfam2ns:
+                                namespace = domfam2ns[domain]
+                            else:
+                                namespace = 'Other'
+                                domfam2ns[domain] = namespace
+
+                            if domain in domfam2name:
+                                dom_name = domfam2name[domain]
+                            else:
+                                dom_name = 'Other'
+                                domfam2name[domain] = dom_name
+
+                            if domain in domfam2cat:
+                                cat = domfam2cat[domain]
+                            else:
+                                cat = 'Other'
+                                domfam2cat[domain] = cat
+
+                            if namespace not in cat2name:
+                                cat2name[namespace]  = dict()
+                            if namespace not in cat2group:
+                                cat2group[namespace] = dict()
+                    
+                            if cat > ' ' and namespace in cat2name and cat in cat2name[namespace]:
+                                cat_name = cat2name[namespace][cat]
+                            else:
+                                cat = 'Other'
+                                cat_name = 'Other'
+                                cat2name[namespace][cat] = cat_name
+
+                            if cat > ' '  and namespace in cat2group and cat in cat2group[namespace] :
+                                cat_group = cat2group[namespace][cat]
+                            else:
+                                cat_group = 'Other'
+                                cat2group[namespace][cat] = cat_group
+                                        
+                            rpt_list1.append([contig, geneName, domain, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, namespace, cat, cat_name, str(cat_group)])
+                
         # Header
         rpt_list2 = [["Count","Domain","Namespace","Category","Category Name","Category Group","Domain Name"]]
 
         myDict = {}
-        ## Make assignments for new stuff not in the look up tables
-        cat2group      = self.cat2group
-        cat2name       = self.cat2name
-        domfam2ns      = self.domfam2ns
-        domfam2name    = self.domfam2name
-        domfam2cat     = self.domfam2cat
         
-        for (contig, geneName, domain, evalue, start, stop, dom_name, namespace, cat, cat_name, cat_group) in geneList:
+        for (contig, geneName, domain, evalue, start, stop, dom_name, namespace, cat, cat_name, cat_group) in rpt_list1:
             # First line from previous list
             if contig == 'Contig':
                 continue
@@ -375,14 +349,6 @@ class CreateFeatureLists:
             
             rpt_list2.append([str(myDict[domain]),domain,namespace,cat,cat_name,cat_group,dom_name])
 
-        return rpt_list2
-
-    #
-    #   OBJECT: DomainAnnotation
-    #   FORMAT: List of the categories and number of genes occurrences
-    #
-    def readDomainAnnCatCount(self, domainCount):
-
         # Header
         rpt_list3 = [["Namespace","Category Group","Category","Category Name","Count"]]
         
@@ -391,11 +357,8 @@ class CreateFeatureLists:
         ns2cat['PF']   = []
         ns2cat['TIGR'] = []
         myDict         = {}
-        ## Make assignments for new stuff not in the look up tables
-        cat2group      = self.cat2group
-        cat2name       = self.cat2name
         
-        for (geneCount,domain,namespace,cat,cat_name,cat_group,dom_name) in domainCount:
+        for (geneCount,domain,namespace,cat,cat_name,cat_group,dom_name) in rpt_list2:
                 
             # No category. No point in summarizing
             if namespace != 'COG' and namespace != 'PF' and namespace != 'TIGR':
@@ -430,7 +393,7 @@ class CreateFeatureLists:
                 if cat in myDict:
                     rpt_list3.append([namespace,cat2group[namespace][cat],cat,cat2name[namespace][cat],str(myDict[cat])])
       
-        return rpt_list3
+        return (rpt_list1, rpt_list2, rpt_list3)
 
     #
     #   OBJECT: FeatureSet or SequenceSet
