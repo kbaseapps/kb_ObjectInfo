@@ -271,8 +271,6 @@ class CreateFeatureLists:
         rpt_list1 = [["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name","Namespace", "Category", "Category Name", "Category Group"]]
 
         myData = pyStr['data']
-                    
-        rpt_list1 = []
         
         for contig in myData:
             contigData = myData[contig]
@@ -291,6 +289,20 @@ class CreateFeatureLists:
                                 namespace = domfam2ns[domain]
                             else:
                                 namespace = 'Other'
+                                if domain.startswith('COG'):
+                                    namespace = 'COG'
+                                elif domain.startswith('PF') or domain.startswith('pfam'):
+                                    namespace = 'PF'
+                                elif domain.startswith('TIGR'):
+                                    namespace = 'TIGR'
+                                elif domain.startswith('PRK'):
+                                    namespace = 'PRK'
+                                elif domain.startswith('smart'):
+                                    namespace = 'smart'
+                                elif domain.startswith('NF'):
+                                    namespace = 'NCBIfams'
+                                elif domain.startswith('cd') or domain.startswith('cl') or domain.startswith('sd'):
+                                    namespace = 'cdd'
                                 domfam2ns[domain] = namespace
 
                             if domain in domfam2name:
@@ -348,7 +360,7 @@ class CreateFeatureLists:
             cat_group = cat2group[namespace][cat]
             
             rpt_list2.append([str(myDict[domain]),domain,namespace,cat,cat_name,cat_group,dom_name])
-
+                                        
         # Header
         rpt_list3 = [["Namespace","Category Group","Category","Category Name","Count"]]
         
