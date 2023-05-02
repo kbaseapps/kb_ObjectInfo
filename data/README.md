@@ -15,3 +15,4 @@ pfamA.txt - https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/database_fi
 
 Pfam-C (clans) - http://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/
 
+TIGRfam - https://ftp.ncbi.nlm.nih.gov/hmm/TIGRFAMs/release_15.0/

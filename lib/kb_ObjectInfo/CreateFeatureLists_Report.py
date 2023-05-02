@@ -227,6 +227,7 @@ class CreateFeatureLists:
         domfam2name  = dict()
         domfam2ns = dict()
         domfam2cat   = dict()
+        domfam2short = dict()
         cats = []
         cat2name     = dict()
         cat2group    = dict()
@@ -245,6 +246,7 @@ class CreateFeatureLists:
                 domfam2ns[domfam] = namespace
                 domfam2name[domfam]  = dom_name
                 domfam2cat[domfam] = cat
+                domfam2short[domfam] = short_name
         dom2cat_map_handle.close()
 
         with open(os.path.join(domain_desc_basepath,'all_categories.tsv'), 'r') as dom2cat_map_handle:
@@ -256,7 +258,7 @@ class CreateFeatureLists:
                 cat2group[namespace][cat] = cat_group
         dom2cat_map_handle.close()
         
-        return(cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns)
+        return(cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns, domfam2short)
         
     #
     #   OBJECT: DomainAnnotation
@@ -266,9 +268,9 @@ class CreateFeatureLists:
     #
     def readDomainAnnList(self, pyStr, cutoff):
     
-        (cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns) = self.configure_domains()
+        (cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns, domfam2short) = self.configure_domains()
         # Header
-        rpt_list1 = [["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name","Namespace", "Category", "Category Name", "Category Group"]]
+        rpt_list1 = [["Contig", "Gene ID", "Domain", "Short Name", "Evalue", "Start", "Stop","Domain Name","Namespace", "Category", "Category Name", "Category Group"]]
 
         myData = pyStr['data']
         
@@ -317,6 +319,12 @@ class CreateFeatureLists:
                                 cat = 'Other'
                                 domfam2cat[domain] = cat
 
+                            if domain in domfam2short:
+                                short_name = domfam2short[domain]
+                            else:
+                                short_name = 'Other'
+                                domfam2short[domain] = cat
+
                             if namespace not in cat2name:
                                 cat2name[namespace]  = dict()
                             if namespace not in cat2group:
@@ -335,14 +343,14 @@ class CreateFeatureLists:
                                 cat_group = 'Other'
                                 cat2group[namespace][cat] = cat_group
                                         
-                            rpt_list1.append([contig, geneName, domain, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, namespace, cat, cat_name, str(cat_group)])
+                            rpt_list1.append([contig, geneName, domain, short_name, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, namespace, cat, cat_name, str(cat_group)])
                 
         # Header
-        rpt_list2 = [["Count","Domain","Namespace","Category","Category Name","Category Group","Domain Name"]]
+        rpt_list2 = [["Count","Domain","Short Name","Namespace","Category","Category Name","Category Group","Domain Name"]]
 
         myDict = {}
         
-        for (contig, geneName, domain, evalue, start, stop, dom_name, namespace, cat, cat_name, cat_group) in rpt_list1:
+        for (contig, geneName, domain, short_name, evalue, start, stop, dom_name, namespace, cat, cat_name, cat_group) in rpt_list1:
             # First line from previous list
             if contig == 'Contig':
                 continue
@@ -353,13 +361,14 @@ class CreateFeatureLists:
                 myDict[domain] = 1
                 
         for domain in sorted(myDict.keys()):
-            namespace = domfam2ns[domain]
-            dom_name  = domfam2name[domain]
-            cat       = domfam2cat[domain]
-            cat_name  = cat2name[namespace][cat]
-            cat_group = cat2group[namespace][cat]
+            namespace  = domfam2ns[domain]
+            dom_name   = domfam2name[domain]
+            short_name = domfam2short[domain]
+            cat        = domfam2cat[domain]
+            cat_name   = cat2name[namespace][cat]
+            cat_group  = cat2group[namespace][cat]
             
-            rpt_list2.append([str(myDict[domain]),domain,namespace,cat,cat_name,cat_group,dom_name])
+            rpt_list2.append([str(myDict[domain]),domain,short_name,namespace,cat,cat_name,cat_group,dom_name])
                                         
         # Header
         rpt_list3 = [["Namespace","Category Group","Category","Category Name","Count"]]
@@ -373,7 +382,7 @@ class CreateFeatureLists:
         myDict['PF']   = {}
         myDict['TIGR'] = {}
         
-        for (geneCount,domain,namespace,cat,cat_name,cat_group,dom_name) in rpt_list2:
+        for (geneCount,domain,short_name, namespace,cat,cat_name,cat_group,dom_name) in rpt_list2:
                 
             # No category. No point in summarizing
             if namespace != 'COG' and namespace != 'PF' and namespace != 'TIGR':

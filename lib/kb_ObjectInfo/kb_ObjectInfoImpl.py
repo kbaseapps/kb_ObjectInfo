@@ -832,7 +832,13 @@ class kb_ObjectInfo:
         (rpt_list1,rpt_list2,rpt_list3) = cf.readDomainAnnList(domain_data, evalue_cutoff)
     
         rpt_string = ''
-        
+        resources = "<p>The following may be helpful</p><ul>"
+        resources += "<li>COGS - https://ftp.ncbi.nih.gov/pub/COG/COG2020/data/</li>"
+        resources += "<li>Pfam - http://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/</li>"
+        resources += "<li>TIGRFAM - ftp://ftp.jcvi.org/pub/data/TIGRFAMs/ or https://ftp.ncbi.nlm.nih.gov/hmm/TIGRFAMs/release_15.0/</li>"
+        resources += "<li>NCBIfams - https://ftp.ncbi.nlm.nih.gov/hmm/9.0/</li>"
+        resources += "<li>CDD (COGS, NCBI-curated, SMART, PRK) - ftp://ftp.ncbi.nih.gov/pub/mmdb/cdd</li>"
+        resources += "</ul>"
         if rpt_list1 or rpt_list2:
             if rpt_list1:
                 rpt_string += self.write_to_file(rpt_list1,'domain_annotation_byGene.tsv',"\t")
@@ -841,7 +847,7 @@ class kb_ObjectInfo:
                 html_report_path = os.path.join(self.scratch, 'domain_annotation_byGene.html')
                 html_report_txt = open(html_report_path, "w")
                 html_report_txt.write("<h1>LIST OF GENES AND THEIR DOMAINS</h1>")
-                
+                html_report_txt.write(resources)
                 htmltable = self.make_HTML(rpt_list1,'col_header')
                 html_report_txt.write(htmltable)
                 html_report_txt.close()
@@ -853,6 +859,7 @@ class kb_ObjectInfo:
                 html_report_path = os.path.join(self.scratch, 'domain_annotation_byDomain.html')
                 html_report_txt = open(html_report_path, "w")
                 html_report_txt.write("<h1>COUNTS PER DOMAIN</h1>")
+                html_report_txt.write(resources)
                 htmltable = self.make_HTML(rpt_list2,'col_header')
                 html_report_txt.write(htmltable)
                 html_report_txt.close()
@@ -864,6 +871,7 @@ class kb_ObjectInfo:
                 html_report_path = os.path.join(self.scratch, 'domain_annotation_byCategory.html')
                 html_report_txt = open(html_report_path, "w")
                 html_report_txt.write("<h1>COUNTS PER CATEGORY</h1>")
+                html_report_txt.write(resources)
                 htmltable = self.make_HTML(rpt_list3,'col_header')
                 html_report_txt.write(htmltable)
                 html_report_txt.close()
