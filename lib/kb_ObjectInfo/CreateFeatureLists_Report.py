@@ -369,6 +369,9 @@ class CreateFeatureLists:
         ns2cat['PF']   = []
         ns2cat['TIGR'] = []
         myDict         = {}
+        myDict['COG']  = {}
+        myDict['PF']   = {}
+        myDict['TIGR'] = {}
         
         for (geneCount,domain,namespace,cat,cat_name,cat_group,dom_name) in rpt_list2:
                 
@@ -385,10 +388,10 @@ class CreateFeatureLists:
             if cat not in cat2name[namespace]:
                 cat2name[namespace][cat] = 'Other'
             
-            if cat in myDict:
-                myDict[cat] += int(geneCount)
+            if cat in myDict[namespace]:
+                myDict[namespace][cat] += int(geneCount)
             else:
-                myDict[cat] = int(geneCount)
+                myDict[namespace][cat] = int(geneCount)
                     
                 if namespace in ns2cat:
                     ns2cat[namespace].append(cat)
@@ -402,8 +405,8 @@ class CreateFeatureLists:
                 cat_list = sorted(ns2cat[namespace])
                 
             for cat in cat_list:
-                if cat in myDict:
-                    rpt_list3.append([namespace,cat2group[namespace][cat],cat,cat2name[namespace][cat],str(myDict[cat])])
+                if cat in myDict[namespace]:
+                    rpt_list3.append([namespace,cat2group[namespace][cat],cat,cat2name[namespace][cat],str(myDict[namespace][cat])])
       
         return (rpt_list1, rpt_list2, rpt_list3)
 
