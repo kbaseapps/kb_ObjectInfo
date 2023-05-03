@@ -455,7 +455,7 @@ class kb_ObjectInfo:
             dna_string = self.write_to_file(rpt_list,'genome_dna_file.fna',"\n")
             rpt_string += dna_string[0:200] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
             
-            html_report_path = os.path.join(self.scratch, 'genome_protein_mRNA.html')
+            html_report_path = os.path.join(self.scratch, 'genome_DNA.html')
             html_report_txt = open(html_report_path, "w")
             html_report_txt.write("<h1>DNA</h1>")
             html_report_txt.write("<pre>" + dna_string + "</pre>")
