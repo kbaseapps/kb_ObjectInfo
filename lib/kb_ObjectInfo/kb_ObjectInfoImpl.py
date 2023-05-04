@@ -473,39 +473,70 @@ class kb_ObjectInfo:
             rpt_list = gsr.readGenomeSet(genome_name, genomeset_data)
             rpt_string += self.write_to_file(rpt_list,'genomeset_tab_file.tsv',"\t")
             self.write_to_file(rpt_list,'genomeset_cvs_file.csv',",")
-            htmltable = self.make_HTML(rpt_list,'col_header')
             
+            htmltable = self.make_HTML(rpt_list,'col_header')
             html_report_path = os.path.join(self.scratch, 'genomeset_comparison.html')
             html_report_txt = open(html_report_path, "w")
             html_report_txt.write("<h1>GENOME COMPARISON</h1>")
             html_report_txt.write(htmltable)
             html_report_txt.close()
-            
+                    
+        if params['listCoding']:
+            cf = CreateFeatureLists(self.config)
+            rpt_list = []
+            for ele in myGS:
+                genome = self.dfu.get_objects({'object_refs': [myGS[ele]['ref']]})
+                genome_data = genome['data'][0]['data']
+
+                rpt_list += cf.delimitedTable(genome_data, 'features')
+                
+            if rpt_list:
+                rpt_string += self.write_to_file(rpt_list,'genome_tab_file.tsv',"\t")
+                self.write_to_file(rpt_list,'genome_csv_file.csv',",")
+                
+            html_report_path = os.path.join(self.scratch, 'genome_features.html')
+            html_report_txt = open(html_report_path, "w")
+            htmltable = self.make_HTML(rpt_list,'col_header')
+            html_report_txt.write("<h1>PROTEIN CODING FEATURES</h1>")
+            html_report_txt.write(htmltable)
+            html_report_txt.close()
+                
         if params['listGFF']:
             gsr = CreateMultiGenomeReport(self.config)
-        
-            #rpt_list = gsr.readGenomeSet(genome_name, genomeset_data)
-
             myGS = genomeset_data['elements']
     
             for ele in myGS:
-                genome = self.dfu.get_objects({'object_refs': [myGS[ele]['ref']]})
-                #rpt_list += cf.gff3(genome_data, 'features')
-                #rpt_string += self.write_to_file(rpt_list,'genome_file.gff',"\t")
-                #genome_data = genome['data'][0]['data']
-
                 gff_return = self.gfu.genome_to_gff({'genome_ref':myGS[ele]['ref'],'is_gtf':0,'target_dir':self.scratch})
-                print ("DEBUG:",gff_return)
-            #rpt_string += self.write_to_file(rpt_list,'genomeset_tab_file.tsv',"\t")
-            #self.write_to_file(rpt_list,'genomeset_cvs_file.csv',",")
-            #htmltable = self.make_HTML(rpt_list,'col_header')
-            
-            #html_report_path = os.path.join(self.scratch, 'genomeset_comparison.html')
-            #html_report_txt = open(html_report_path, "w")
-            #html_report_txt.write("<h1>GENOME COMPARISON</h1>")
-            #html_report_txt.write(htmltable)
-            #html_report_txt.close()
-            
+                rpt_string += "Created " + gff_return['file_path'] + "\n"
+             
+        if params['listGBK']:
+            gsr = CreateMultiGenomeReport(self.config)
+            myGS = genomeset_data['elements']
+    
+            for ele in myGS:
+                gbk_return = self.gfu.genome_to_genbank({'genome_ref':myGS[ele]['ref'],'target_dir':self.scratch})
+                print("DEBUG: return",gbk_return)
+                rpt_string += "Created " + gbk_return['genbank_file']['file_path'] + "\n"
+ 
+              
+        if params['FastaAA']:
+            gsr = CreateMultiGenomeReport(self.config)
+            myGS = genomeset_data['elements']
+    
+            for ele in myGS:
+                cds_return = self.gfu.genome_proteins_to_fasta({'genome_ref':myGS[ele]['ref']})
+                print("DEBUG: return",cds_return)
+                rpt_string += "Created " + cds_return['file_path'] + "\n"
+               
+        if params['FastamRNA']:
+            gsr = CreateMultiGenomeReport(self.config)
+            myGS = genomeset_data['elements']
+    
+            for ele in myGS:
+                mrna_return = self.gfu.genome_features_to_fasta({'genome_ref':myGS[ele]['ref']})
+                print("DEBUG: return",mrna_return)
+                rpt_string += "Created " + mrna_return['file_path'] + "\n"
+ 
         if params['showDNA']:
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = [["Assembly Reference","Scientific Name","File Name"]]
