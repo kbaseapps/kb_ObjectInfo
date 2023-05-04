@@ -483,6 +483,8 @@ class kb_ObjectInfo:
                     
         if params['listCoding']:
             cf = CreateFeatureLists(self.config)
+            gsr = CreateMultiGenomeReport(self.config)
+            myGS = genomeset_data['elements']
             rpt_list = []
             for ele in myGS:
                 genome = self.dfu.get_objects({'object_refs': [myGS[ele]['ref']]})
