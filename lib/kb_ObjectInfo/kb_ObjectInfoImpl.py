@@ -8,6 +8,7 @@ from Bio import SeqIO
 from pprint import pprint, pformat
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.DataFileUtilClient import DataFileUtil
+from installed_clients.GenomeFileUtilClient import GenomeFileUtil
 from .CreateFasta_Report import CreateFasta
 from .CreateFeatureLists_Report import CreateFeatureLists
 from .CreateMultiGenomeReport import CreateMultiGenomeReport
@@ -31,9 +32,9 @@ class kb_ObjectInfo:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "1.1.0"
+    VERSION = "1.2.2"
     GIT_URL = "https://github.com/kbaseapps/kb_ObjectInfo"
-    GIT_COMMIT_HASH = "8bd0e2cb6021e152255036fa9842d782360a48d2"
+    GIT_COMMIT_HASH = "0e8d1c51dd1f4d33c1803ad230d13421b3ca47fc"
 
     #BEGIN_CLASS_HEADER
 
@@ -92,6 +93,7 @@ class kb_ObjectInfo:
                         datefmt='%Y-%m-%d %H:%M:%S')
         self.workspaceURL = config['workspace-url']
         self.dfu = DataFileUtil(self.callback_url)
+        self.gfu = GenomeFileUtil(self.callback_url)
         self.scratch = os.path.abspath(config['scratch'])
         self.config = config
         #END_CONSTRUCTOR
@@ -274,13 +276,13 @@ class kb_ObjectInfo:
         """
         :param params: instance of type "GenomeReportParams" -> structure:
            parameter "input_ref" of type "genome_ref", parameter
-           "workspace_name" of String, parameter "showDNA" of type "boolean"
-           (A boolean. 0 = false, other = true.), parameter "listCoding" of
-           type "boolean" (A boolean. 0 = false, other = true.), parameter
+           "workspace_name" of String, parameter "listCoding" of type
+           "boolean" (A boolean. 0 = false, other = true.), parameter
            "listGFF" of type "boolean" (A boolean. 0 = false, other = true.),
            parameter "FastaAA" of type "boolean" (A boolean. 0 = false, other
            = true.), parameter "FastamRNA" of type "boolean" (A boolean. 0 =
-           false, other = true.)
+           false, other = true.), parameter "showDNA" of type "boolean" (A
+           boolean. 0 = false, other = true.)
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -425,7 +427,14 @@ class kb_ObjectInfo:
            parameter "input_ref" of type "genomeset_ref", parameter
            "workspace_name" of String, parameter "showGenomes" of type
            "boolean" (A boolean. 0 = false, other = true.), parameter
-           "showDNA" of type "boolean" (A boolean. 0 = false, other = true.)
+           "listCoding" of type "boolean" (A boolean. 0 = false, other =
+           true.), parameter "listGFF" of type "boolean" (A boolean. 0 =
+           false, other = true.), parameter "listGBK" of type "boolean" (A
+           boolean. 0 = false, other = true.), parameter "FastaAA" of type
+           "boolean" (A boolean. 0 = false, other = true.), parameter
+           "FastamRNA" of type "boolean" (A boolean. 0 = false, other =
+           true.), parameter "showDNA" of type "boolean" (A boolean. 0 =
+           false, other = true.)
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -471,7 +480,32 @@ class kb_ObjectInfo:
             html_report_txt.write("<h1>GENOME COMPARISON</h1>")
             html_report_txt.write(htmltable)
             html_report_txt.close()
+            
+        if params['listGFF']:
+            gsr = CreateMultiGenomeReport(self.config)
         
+            #rpt_list = gsr.readGenomeSet(genome_name, genomeset_data)
+
+            myGS = genomeset_data['elements']
+    
+            for ele in myGS:
+                genome = self.dfu.get_objects({'object_refs': [myGS[ele]['ref']]})
+                #rpt_list += cf.gff3(genome_data, 'features')
+                #rpt_string += self.write_to_file(rpt_list,'genome_file.gff',"\t")
+                #genome_data = genome['data'][0]['data']
+
+                gff_return = self.gfu.genome_to_gff({'genome_ref':myGS[ele]['ref'],'is_gtf':0,'target_dir':self.scratch})
+                print ("DEBUG:",gff_return)
+            #rpt_string += self.write_to_file(rpt_list,'genomeset_tab_file.tsv',"\t")
+            #self.write_to_file(rpt_list,'genomeset_cvs_file.csv',",")
+            #htmltable = self.make_HTML(rpt_list,'col_header')
+            
+            #html_report_path = os.path.join(self.scratch, 'genomeset_comparison.html')
+            #html_report_txt = open(html_report_path, "w")
+            #html_report_txt.write("<h1>GENOME COMPARISON</h1>")
+            #html_report_txt.write(htmltable)
+            #html_report_txt.close()
+            
         if params['showDNA']:
             gsr = CreateMultiGenomeReport(self.config)
             rpt_list = [["Assembly Reference","Scientific Name","File Name"]]

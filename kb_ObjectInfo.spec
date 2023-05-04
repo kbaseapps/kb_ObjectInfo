@@ -53,6 +53,11 @@ module kb_ObjectInfo {
         genomeset_ref input_ref;
         string workspace_name;
         boolean showGenomes;
+        boolean listCoding;
+        boolean listGFF;
+        boolean listGBK;
+        boolean FastaAA;
+        boolean FastamRNA;
         boolean showDNA;
     } GenomeSetReportParams;
 

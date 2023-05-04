@@ -36,12 +36,82 @@
            }
        },
        {
-           "id": "showDNA",
+           "id": "listCoding",
            "optional": false,
            "advanced": false,
            "allow_multiple": false,
            "default_values": [
                "1"
+           ],
+           "field_type": "checkbox",
+           "checkbox_options": {
+               "checked_value": 1,
+               "unchecked_value": 0
+           }
+       },
+       {
+           "id": "listGFF",
+           "optional": false,
+           "advanced": false,
+           "allow_multiple": false,
+           "default_values": [
+               "0"
+           ],
+           "field_type": "checkbox",
+           "checkbox_options": {
+               "checked_value": 1,
+               "unchecked_value": 0
+           }
+       },
+       {
+           "id": "listGBK",
+           "optional": false,
+           "advanced": false,
+           "allow_multiple": false,
+           "default_values": [
+               "0"
+           ],
+           "field_type": "checkbox",
+           "checkbox_options": {
+               "checked_value": 1,
+               "unchecked_value": 0
+           }
+       },
+       {
+           "id": "FastaAA",
+           "optional": false,
+           "advanced": false,
+           "allow_multiple": false,
+           "default_values": [
+               "1"
+           ],
+           "field_type": "checkbox",
+           "checkbox_options": {
+               "checked_value": 1,
+               "unchecked_value": 0
+           }
+       },
+       {
+           "id": "FastamRNA",
+           "optional": false,
+           "advanced": false,
+           "allow_multiple": false,
+           "default_values": [
+               "0"
+           ],
+           "field_type": "checkbox",
+           "checkbox_options": {
+               "checked_value": 1,
+               "unchecked_value": 0
+           }
+       },
+       {
+           "id": "showDNA",
+           "optional": false,
+           "advanced": false,
+           "allow_multiple": false,
+           "default_values": [
+               "0"
            ],
            "field_type": "checkbox",
            "checkbox_options": {
@@ -68,6 +138,26 @@
                 {
                     "input_parameter": "showGenomes",
                     "target_property": "showGenomes"
+                },
+                {
+                    "input_parameter": "listCoding",
+                    "target_property": "listCoding"
+                },
+                {
+                    "input_parameter": "listGFF",
+                    "target_property": "listGFF"
+                },
+                {
+                    "input_parameter": "listGBK",
+                    "target_property": "listGBK"
+                },
+                {
+                    "input_parameter": "FastaAA",
+                    "target_property": "FastaAA"
+                },
+                {
+                    "input_parameter": "FastamRNA",
+                    "target_property": "FastamRNA"
                 },
                 {
                     "input_parameter": "showDNA",
