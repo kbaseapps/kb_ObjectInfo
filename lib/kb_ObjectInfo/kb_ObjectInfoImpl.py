@@ -9,7 +9,7 @@ from pprint import pprint, pformat
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.GenomeFileUtilClient import GenomeFileUtil
-from installed_clients.kb_staging_exporter import kb_staging_downloader
+from installed_clients.kb_staging_exporterClient import kb_staging_exporter
 from .CreateFasta_Report import CreateFasta
 from .CreateFeatureLists_Report import CreateFeatureLists
 from .CreateMultiGenomeReport import CreateMultiGenomeReport
@@ -95,9 +95,11 @@ class kb_ObjectInfo:
         self.workspaceURL = config['workspace-url']
         self.dfu = DataFileUtil(self.callback_url)
         self.gfu = GenomeFileUtil(self.callback_url)
-        self.sd  = kb_staging_downloader(self.callback_url)
+        self.sd  = kb_staging_exporter(self.callback_url)
         self.scratch = os.path.abspath(config['scratch'])
         self.config = config
+        
+        print("DEBUG CONFIG",config)
         #END_CONSTRUCTOR
         pass
 
@@ -524,7 +526,8 @@ class kb_ObjectInfo:
                 rpt_string += "Created " + file_path + "\n"
                 print('DEBUG: Created',file_path)
  
-            self.sd.export_to_staging({'genome_ref':myGS[ele]['ref'], 'destination_dir':'ObjectInfo', 'generate_report':1, 'export_genome':{'export_genome_gff': 1} })
+                gbk_return = self.sd.export_to_staging({'input_ref':myGS[ele]['ref'], 'destination_dir':'ObjectInfo', 'workspace_name': workspace_name, 'generate_report':1, 'export_genome':{'export_genome_genbank': 1} })
+                print("DEBUG: return",gbk_return)
             
         if params['FastaAA']:
             gsr = CreateMultiGenomeReport(self.config)
