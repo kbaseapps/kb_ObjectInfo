@@ -15,6 +15,10 @@
   "type" : "sdk",
   "version_tag" : "release"
 }, {
+  "module_name" : "kb_staging_exporter",
+  "type" : "sdk",
+  "version_tag" : "release"
+}, {
   "module_name" : "KBaseReport",
   "type" : "sdk",
   "version_tag" : "release"
