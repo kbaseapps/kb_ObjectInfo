@@ -95,7 +95,6 @@ class Report_creator:
                 # Create an index file -  header lines
                 with open('/kb/module/data/index_start.txt', 'r') as start_file:
                     html_string = start_file.read()
-                start_file.close()
                     
                 html_string += "        </div>    </div>    <div id=\"body\">\n"
                 html_string += "        <iframe id=\"content\" "
@@ -104,13 +103,11 @@ class Report_creator:
                 # Add the closing lines
                 with open('/kb/module/data/index_end.txt', 'r') as end_file:
                     html_string += end_file.read()
-                end_file.close()
                 
                 # Write the index html file to the directory
                 file_name = "index"+str(html_count)+".html"
                 with open(os.path.join(html_folder, file_name), 'w') as index_file:
                     index_file.write(html_string)
-                index_file.close()
             
                 html_file_list[file_name] = file
                 html_count += 1

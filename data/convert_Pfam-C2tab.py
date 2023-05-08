@@ -3,9 +3,8 @@ path = '/Users/mland/my_KBASE/kb_ObjectInfo/data/'
 
 cat = 'Other'
 
-outfile = open(path + "Pfam-C.clans.v35.tsv","w")
 
-with open(path + "Pfam-C.tsv", "r") as file1:
+with open(path + "Pfam-C.tsv", "r") as file1, open(path + "Pfam-C.clans.v35.tsv","w") as outfile:
     for line in file1:
         newline = line.replace("\n", "")
         (header,linetype,desc) = newline.split("\t")[0:3]
@@ -26,6 +25,3 @@ with open(path + "Pfam-C.tsv", "r") as file1:
         elif linetype == "DE":
             cat_name = desc
             cat_name = cat_name.replace('"','')
-
-file1.close()
-outfile.close()

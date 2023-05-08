@@ -76,7 +76,6 @@ class kb_ObjectInfo:
             for rpt in rpt_list:
                 rpt_writer.writerow(rpt)
                 rpt_string += rpt_delimiter.join(rpt) + "\n"
-            report_txt.close()
             
         return rpt_string
        

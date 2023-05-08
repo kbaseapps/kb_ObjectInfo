@@ -38,7 +38,6 @@ class CreateFeatureLists:
                 [cat_group, cat] = line.split("\t")[0:2]
                 if cat not in cats:
                     cats.append(cat)
-        dom_cat_handle.close()
 
         # get domfam to cat map, and vice versa
         with open(os.path.join(domain_desc_basepath, 'SEED_subsys.txt'), 'r') as dom2cat_map_handle:
@@ -57,7 +56,6 @@ class CreateFeatureLists:
                 domfam2ns[domfam] = 'SEED'
                 domfam2cat[domfam] = cat
                 domfam2name[domfam]  = dom_name
-        dom2cat_map_handle.close()
         
         
         return(cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns)
@@ -247,7 +245,6 @@ class CreateFeatureLists:
                 domfam2name[domfam]  = dom_name
                 domfam2cat[domfam] = cat
                 domfam2short[domfam] = short_name
-        dom2cat_map_handle.close()
 
         with open(os.path.join(domain_desc_basepath,'all_categories.tsv'), 'r') as dom2cat_map_handle:
             for line in dom2cat_map_handle.readlines():
@@ -255,8 +252,7 @@ class CreateFeatureLists:
                 if cat not in cats:
                     cats.append(cat)
                 cat2name[namespace][cat] = cat_name
-                cat2group[namespace][cat] = cat_group
-        dom2cat_map_handle.close()
+                cat2group[namespace][cat] = cat_group=
         
         return(cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns, domfam2short)
         
