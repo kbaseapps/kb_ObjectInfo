@@ -98,8 +98,6 @@ class kb_ObjectInfo:
         self.sd  = kb_staging_exporter(self.callback_url)
         self.scratch = os.path.abspath(config['scratch'])
         self.config = config
-        
-        print("DEBUG CONFIG",config)
         #END_CONSTRUCTOR
         pass
 
@@ -521,13 +519,12 @@ class kb_ObjectInfo:
     
             for ele in myGS:
                 gbk_return = self.gfu.genome_to_genbank({'genome_ref':myGS[ele]['ref'],'target_dir':self.scratch})
-                print("DEBUG: return",gbk_return)
+                print("DEBUG: return 1",gbk_return)
                 file_path = gbk_return['genbank_file']['file_path'].replace('/kb/module/work/tmp/','')
                 rpt_string += "Created " + file_path + "\n"
-                print('DEBUG: Created',file_path)
  
-                gbk_return = self.sd.export_to_staging({'input_ref':myGS[ele]['ref'], 'destination_dir':'ObjectInfo', 'workspace_name': workspace_name, 'generate_report':1, 'export_genome':{'export_genome_genbank': 1} })
-                print("DEBUG: return",gbk_return)
+                gbk_return = self.sd.export_to_staging({'input_ref':myGS[ele]['ref'], 'destination_dir':'ObjectInfo', 'workspace_name': workspace_name, 'export_genome':{'export_genome_genbank': 1} })
+                print("DEBUG: return 2",gbk_return)
             
         if params['FastaAA']:
             gsr = CreateMultiGenomeReport(self.config)
@@ -535,7 +532,6 @@ class kb_ObjectInfo:
     
             for ele in myGS:
                 cds_return = self.gfu.genome_proteins_to_fasta({'genome_ref':myGS[ele]['ref']})
-                print("DEBUG: return",cds_return)
                 rpt_string += "Created " + cds_return['file_path'] + "\n"
                
         if params['FastamRNA']:
@@ -544,7 +540,6 @@ class kb_ObjectInfo:
     
             for ele in myGS:
                 mrna_return = self.gfu.genome_features_to_fasta({'genome_ref':myGS[ele]['ref']})
-                print("DEBUG: return",mrna_return)
                 rpt_string += "Created " + mrna_return['file_path'] + "\n"
  
         if params['showDNA']:
