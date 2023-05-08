@@ -56,7 +56,6 @@ with open(cat_names_path, "r") as file1:
         #print(cat,cat_name,cat_group)
         cat2name[namespace][cat] = cat_name
         cat2group[namespace][cat] = cat_group
-file1.close()
 
 ###############
 # Get the COG domain names 2014
@@ -78,7 +77,6 @@ with open(domain_to_cat_path, "r") as file1:
         if  cat not in cats:
             cats.append(cat)
         count += 1
-file1.close()
 print ("FINAL COG 2014 NUMBER",count)
 
 ###############
@@ -110,7 +108,6 @@ with open(domain_to_cat_path, "r") as file1:
         domfam2cat[domain]  = cat
         domfam2short[domain] = short_name
         count += 1
-file1.close()
 print ("FINAL COG v20 NUMBER",count)
 
 ###############
@@ -136,7 +133,6 @@ with open(cat_names_path, "r") as file1:
         cat2group[namespace][cat] = 'NA'
             
         #print(cat,cat_name,cat_group)
-file1.close()
 
 ###############
 # Get the PF domain names
@@ -165,7 +161,6 @@ with open(domain_to_cat_path, "r") as file1:
         domfam2short[domain] = short_name
         domfam2cat[domain]  = cat
         count += 1
-file1.close()
 print ("FINAL PfamA.orig NUMBER",count)
 
 ###############
@@ -202,7 +197,6 @@ with open(domain_to_cat_path, "r") as file1:
         domfam2short[domain] = short_name
         domfam2cat[domain]  = cat
         count += 1
-file1.close()
 print ("FINAL PfamA.v35 NUMBER",count)
 
 ###############
@@ -234,7 +228,6 @@ with open(cat_names_path, "r") as file1:
         cat2group[namespace][cat] = cat_group
             
         #print(cat,cat_name,cat_group)
-file1.close()
 
 ###############
 # Get the TIGRfam domain names
@@ -265,7 +258,6 @@ with open(domain_to_cat_path, "r") as file1:
         domfam2short[domain] = short_name
         domfam2cat[domain]  = cat
         count += 1
-file1.close()
 print ("FINAL TIGR NUMBER",count)
 
 ###############
@@ -309,7 +301,6 @@ with open(domain_to_cat_path, "r") as file1:
         domfam2name[domain] = dom_name
         domfam2short[domain] = short_name
         domfam2cat[domain]  = 'Other'
-file1.close()
 
 print ("FINAL hmm NUMBER",count)
 
@@ -375,7 +366,6 @@ with open(domain_to_cat_path, "r") as file1:
         domfam2name[domain] = dom_name
         domfam2short[domain] = short_name
         domfam2cat[domain]  = cat
-file1.close()
 print ("FINAL cdd NUMBER",count)
 
 ##############
@@ -388,7 +378,6 @@ with open(domain_to_cat_path, "w") as file1:
         for cat in cat2name[namespace]:
             outline = "\t".join([namespace,cat,cat2name[namespace][cat],cat2group[namespace][cat],"\n"])
             file1.write(outline)
-file1.close()
 
 
 ##############
@@ -400,7 +389,5 @@ with open(domain_to_cat_path, "w") as file1:
     for domain in domfam2ns:
         outline = "\t".join([domfam2ns[domain],domain,domfam2short[domain],domfam2name[domain],domfam2cat[domain],"\n"])
         file1.write(outline)
-file1.close()
-
 
 
