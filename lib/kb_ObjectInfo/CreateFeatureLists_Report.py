@@ -252,7 +252,7 @@ class CreateFeatureLists:
                 if cat not in cats:
                     cats.append(cat)
                 cat2name[namespace][cat] = cat_name
-                cat2group[namespace][cat] = cat_group=
+                cat2group[namespace][cat] = cat_group
         
         return(cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns, domfam2short)
         
