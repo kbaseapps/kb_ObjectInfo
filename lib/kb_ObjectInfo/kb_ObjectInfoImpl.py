@@ -583,7 +583,8 @@ class kb_ObjectInfo:
                 file_path = gbk_return['genbank_file']['file_path'].replace('/kb/module/work/tmp/','')
                 rpt_string += "Created " + file_path + "\n"
  
-                gbk_return = self.sd.export_to_staging({'input_ref':myGS[ele]['ref'], 'destination_dir':'ObjectInfo', 'workspace_name': workspace_name, 'export_genome':{'export_genome_genbank': 1} })
+                gbk_return = self.sd.export_to_staging({'input_ref':myGS[ele]['ref'], 'destination_dir':'/ObjectInfo', 'workspace_name': workspace_name, 'export_genome':{'export_genome_genbank': 1},
+                    'generate_report': 1    })
                 print("DEBUG: return 2",gbk_return)
             
         if params['FastaAA']:
