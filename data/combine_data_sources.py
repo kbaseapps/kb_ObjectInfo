@@ -33,6 +33,7 @@ domfam2cat   = dict()
 cats = []
 cat2name     = dict()
 cat2group    = dict()
+name2cat    = dict()
 
 
 path = '/Users/mland/my_KBASE/kb_ObjectInfo/data/'
@@ -56,6 +57,7 @@ with open(cat_names_path, "r") as file1:
         #print(cat,cat_name,cat_group)
         cat2name[namespace][cat] = cat_name
         cat2group[namespace][cat] = cat_group
+        name2cat[cat_name] = cat
 
 ###############
 # Get the COG domain names 2014
@@ -310,6 +312,7 @@ print ("FINAL hmm NUMBER",count)
 
 domain_to_cat_path = path + 'cddid_all.tsv'
 count = 0
+cat_list = []
 with open(domain_to_cat_path, "r") as file1:
     for line in file1:
         line = line.strip()
@@ -341,6 +344,26 @@ with open(domain_to_cat_path, "r") as file1:
             if x > 0 and y > 0:
                 cat = dom_name[x+1:y]
                 dom_name = dom_name[0:x].replace('"','')
+            if '/' in cat:
+                cat_list = cat.split(" /")
+                cat = cat_list[0]
+            if cat in name2cat:
+                cat = name2cat[cat]
+            elif 'Cell motility and secretion' in cat:
+                cat = 'N'
+            elif 'Cell division and chromosome partitioning' in cat:
+                cat = 'D'
+            elif 'Posttranslational modification, protein turnover, chaperones' in cat:
+                cat = 'O'
+            elif 'Intracellular trafficking and secretion' in cat:
+                cat = 'U'
+            elif 'Lipid metabolism' in cat:
+                cat = 'I'
+            elif 'DNA replication, recombination, and repair' in cat:
+                cat = 'L'
+            
+            if len(cat) > 5:
+                print ("Need a category for ",domain,dom_name)
         elif domain.startswith('PF') or domain.startswith('pfam'):
             namespace = 'PF'
         elif domain.startswith('TIGR'):
