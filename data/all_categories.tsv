@@ -1,0 +1,882 @@
+COG	D	Cell cycle control, cell division, chromosome partitioning	CELLULAR PROCESSES AND SIGNALING	
+COG	M	Cell wall/membrane/envelope biogenesis	CELLULAR PROCESSES AND SIGNALING	
+COG	N	Cell motility	CELLULAR PROCESSES AND SIGNALING	
+COG	O	Post-translational modification, protein turnover, and chaperones	CELLULAR PROCESSES AND SIGNALING	
+COG	T	Signal transduction mechanisms	CELLULAR PROCESSES AND SIGNALING	
+COG	U	Intracellular trafficking, secretion, and vesicular transport	CELLULAR PROCESSES AND SIGNALING	
+COG	V	Defense mechanisms	CELLULAR PROCESSES AND SIGNALING	
+COG	W	Extracellular structures	CELLULAR PROCESSES AND SIGNALING	
+COG	Y	Nuclear structure	CELLULAR PROCESSES AND SIGNALING	
+COG	Z	Cytoskeleton	CELLULAR PROCESSES AND SIGNALING	
+COG	A	RNA processing and modification	INFORMATION STORAGE AND PROCESSING	
+COG	B	Chromatin structure and dynamics	INFORMATION STORAGE AND PROCESSING	
+COG	J	Translation, ribosomal structure and biogenesis	INFORMATION STORAGE AND PROCESSING	
+COG	K	Transcription	INFORMATION STORAGE AND PROCESSING	
+COG	L	Replication, recombination and repair	INFORMATION STORAGE AND PROCESSING	
+COG	C	Energy production and conversion	METABOLISM	
+COG	E	Amino acid transport and metabolism	METABOLISM	
+COG	F	Nucleotide transport and metabolism	METABOLISM	
+COG	G	Carbohydrate transport and metabolism	METABOLISM	
+COG	H	Coenzyme transport and metabolism	METABOLISM	
+COG	I	Lipid transport and metabolism	METABOLISM	
+COG	P	Inorganic ion transport and metabolism	METABOLISM	
+COG	Q	Secondary metabolites biosynthesis, transport, and catabolism	METABOLISM	
+COG	X	Mobilome: prophages, transposons	MOBILOME	
+COG	R	General function prediction only	POOR CHAR	
+COG	S	Function unknown	POOR CHAR	
+PF	CL0247	2H phosphoesterase superfamily	NA	
+PF	CL0328	Transmembrane di-heme cytochrome superfamily	NA	
+PF	CL0571	30 kDa viral movement proteins superfamily	NA	
+PF	CL0344	4Fe-4S ferredoxins	NA	
+PF	CL0457	Aspartate chemoreceptor, signal-transduction ligand-binding	NA	
+PF	CL0053	4-helical cytokine superfamily	NA	
+PF	CL0670	4'-phosphopantetheinyl transferase superfamily	NA	
+PF	CL0464	5'-3'-exonuclease C-terminal sub-region	NA	
+PF	CL0106	6-phosphogluconate dehydrogenase C-terminal-like superfamily	NA	
+PF	CL0059	Six-hairpin glycosidase superfamily	NA	
+PF	CL0671	AAA+ ATPase lid domain superfamily	NA	
+PF	CL0603	Aminoacid dehydrogenase-like, N-terminal domain superfamily	NA	
+PF	CL0181	ABC-2-transporter-like clan	NA	
+PF	CL0241	ABC transporter membrane domain clan	NA	
+PF	CL0028	Alpha/Beta hydrolase fold	NA	
+PF	CL0070	ACT-like domain	NA	
+PF	CL0403	Acetoacetate decarboxylase-like	NA	
+PF	CL0092	Actin depolymerizing Factor	NA	
+PF	CL0084	ADP-ribosylation Superfamily	NA	
+PF	CL0243	Archaeo-eukaryotic primase	NA	
+PF	CL0278	AIG2/ChaC-like superfamily	NA	
+PF	CL0615	ALDC superfamily	NA	
+PF	CL0099	ALDH-like superfamily	NA	
+PF	CL0531	AMP-binding enzyme C-terminal domain superfamily	NA	
+PF	CL0356	Creatinase/prolidase N-terminal domain superfamily	NA	
+PF	CL0378	ANL superfamily	NA	
+PF	CL0650	AOC barrel-like superfamily	NA	
+PF	CL0062	APC superfamily	NA	
+PF	CL0545	subdomain	NA	
+PF	CL0133	AT14A-like	NA	
+PF	CL0179	ATP-grasp superfamily	NA	
+PF	CL0255	ATP synthase F0 subunit	NA	
+PF	CL0478	F-type and N-type ATPase, I/AtpR subunit	NA	
+PF	CL0330	Late secretory pathway transport machinery	NA	
+PF	CL0578	Antitoxin of Type IV toxin-antitoxin, Abi system	NA	
+PF	CL0132	AbrB/MraZ DNA-binding domain	NA	
+PF	CL0332	Acetyl-decarboxylase like superfamily	NA	
+PF	CL0257	N-acetyltransferase like	NA	
+PF	CL0108	Actin-like ATPase Superfamily	NA	
+PF	CL0713	Integral membrane Acyl-coA desaturase superfamily	NA	
+PF	CL0087	Acyl-CoA dehydrogenase, C-terminal domain-like	NA	
+PF	CL0544	Acyl-coenzyme A oxidase/dehydrogenase N-terminal	NA	
+PF	CL0316	Membrane acyl transferase superfamily	NA	
+PF	CL0622	Acylphosphatase/BLUF domain-like superfamily	NA	
+PF	CL0228	Acyltransferase clan	NA	
+PF	CL0204	Bacterial adhesin superfamily	NA	
+PF	CL0345	Aerolysin/ETX pore-forming domain superfamily	NA	
+PF	CL0648	Aha1/BPI domain-like superfamily	NA	
+PF	CL0423	AhpD-like superfamily	NA	
+PF	CL0441	RNA-DNA binding Alba-like superfamily	NA	
+PF	CL0088	Alkaline phosphatase-like	NA	
+PF	CL0284	Allatostatin superfamily	NA	
+PF	CL0034	Amidohydrolase superfamily	NA	
+PF	CL0685	AmpE/CobD like	NA	
+PF	CL0465	Ankyrin repeat superfamily	NA	
+PF	CL0416	Transmembrane protein families of the Anoctamin type	NA	
+PF	CL0645	N-terminal, cytoplasmic domain of anti-sigma factor superfamily	NA	
+PF	CL0627	DUF436/YokD-like superfamily	NA	
+PF	CL0620	Leech antihemostatic protein superfamily	NA	
+PF	CL0453	Inhibitors of suppressors of apoptosis Bax/Bak	NA	
+PF	CL0716	Aquaporin-like superfamily	NA	
+PF	CL0700	ArdcN superfamily	NA	
+PF	CL0302	Arginase/deacetylase superfamily	NA	
+PF	CL0135	Arrestin_N-like	NA	
+PF	CL0401	AsmA-like OmpF regulator protein superfamily	NA	
+PF	CL0399	Aspartate/glutamate racemase superfamily	NA	
+PF	CL0551	Bcl-2 inhibitors of programmed cell death	NA	
+PF	CL0688	Barnase-EndoU-ColicinE5/D-RelE like nuclease	NA	
+PF	CL0665	BET superfamily	NA	
+PF	CL0417	BIR-like domains	NA	
+PF	CL0404	BPD transporter like	NA	
+PF	CL0459	BRCT like	NA	
+PF	CL0143	Beta fructosidase superfamily	NA	
+PF	CL0598	Bacterial immunoglobulin/albumin-binding domain superfamily	NA	
+PF	CL0446	Translocation domain of colicin-like bacteriocins	NA	
+PF	CL0209	Bet v 1 like	NA	
+PF	CL0013	Serine beta-lactamase-like superfamily	NA	
+PF	CL0080	Beta-tent fold	NA	
+PF	CL0186	Beta propeller clan	NA	
+PF	CL0006	Protein kinase C, C1 domain	NA	
+PF	CL0100	C1q and TNF superfamily	NA	
+PF	CL0154	C2 superfamily	NA	
+PF	CL0361	Classical C2H2 and C2HC zinc fingers	NA	
+PF	CL0659	Cysteine-rich secretory proteins	NA	
+PF	CL0391	Adenylate cyclase associated (CAP) C terminal like	NA	
+PF	CL0203	Carbohydrate binding domain superfamily	NA	
+PF	CL0559	Small molecule-binding and fam 9 carbohydrate-binding module	NA	
+PF	CL0535	Carbohydrate-binding superfamily	NA	
+PF	CL0155	Carbohydrate binding domain 14/19 clan	NA	
+PF	CL0537	CCCH-zinc finger	NA	
+PF	CL0281	CCT like-motif	NA	
+PF	CL0109	Cytidine deaminase-like (CDA) superfamily	NA	
+PF	CL0293	Cholesterol-dependent cytolysin superfamily	NA	
+PF	CL0188	Calponin homology domain	NA	
+PF	CL0351	Coiled-coil helix coiled-coil helix superfamily	NA	
+PF	CL0367	CI-2 family of serine protease inhibitors	NA	
+PF	CL0678	CLIP domain superfamily	NA	
+PF	CL0663	CNF1/YfiH-like putative cysteine hydrolases	NA	
+PF	CL0714	Cytochrome c oxidase subunit I-like superfamily	NA	
+PF	CL0064	CPA/AT transporter superfamily	NA	
+PF	CL0512	CRAL-TRIO domain superfamily	NA	
+PF	CL0586	CST, telomere maintenance, complex subunit CTC1	NA	
+PF	CL0234	CTP transferase-like superfamily	NA	
+PF	CL0164	CUB clan	NA	
+PF	CL0026	Multicopper oxidase-like domain	NA	
+PF	CL0273	CYTH-like phosphatase superfamily	NA	
+PF	CL0056	C-type lectin-like superfamily	NA	
+PF	CL0165	Cache-like domain	NA	
+PF	CL0163	Calcineurin-like phosphoesterase superfamily	NA	
+PF	CL0116	Calycin superfamily	NA	
+PF	CL0448	Second domain of Mu2 adaptin subunit (ap50) of ap2 adaptor	NA	
+PF	CL0693	Cas9 helical lobe domain	NA	
+PF	CL0624	Cell growth inhibitor/plasmid maintenance toxic component superfamily	NA	
+PF	CL0402	Cdc48 domain 2-like	NA	
+PF	CL0560	Chalcone isomerase-like superfamily	NA	
+PF	CL0392	Chaperone J-domain superfamily	NA	
+PF	CL0355	CheC-like superfamily	NA	
+PF	CL0304	CheY-like superfamily	NA	
+PF	CL0634	CheY-binding domain of CheA superfamily	NA	
+PF	CL0043	Chelatase Superfamily	NA	
+PF	CL0176	Chemosensory 7tm receptor superfamily	NA	
+PF	CL0694	Choline binding repeat superfamily	NA	
+PF	CL0127	ClpP/Crotonase superfamily	NA	
+PF	CL0149	CoA-dependent acyltransferase superfamily	NA	
+PF	CL0601	Cobalamin adenosyltransferase-like superfamily	NA	
+PF	CL0640	Colicin D/E5 nuclease domain superfamily	NA	
+PF	CL0621	Colipase-like superfamily	NA	
+PF	CL0425	NADH dehydrogenase I, subunit N	NA	
+PF	CL0004	Concanavalin-like lectin/glucanase superfamily	NA	
+PF	CL0430	Copper resistance protein D	NA	
+PF	CL0047	Copper amine oxidase, domains 1 and 2	NA	
+PF	CL0029	Cupin fold	NA	
+PF	CL0065	Cyclin-like superfamily	NA	
+PF	CL0475	Cyclophilin-like superfamily	NA	
+PF	CL0121	Cystatin-like superfamily	NA	
+PF	CL0079	Cystine-knot cytokine superfamily	NA	
+PF	CL0318	Cytochrome c superfamily	NA	
+PF	CL0258	DALR superfamily	NA	
+PF	CL0288	DAP epimerase superfamily	NA	
+PF	CL0195	Duff-binding like superfamily	NA	
+PF	CL0387	Dihydrofolate reductase-like	NA	
+PF	CL0224	Dehydroquinate synthase-like superfamily	NA	
+PF	CL0308	Dimethyl sulfoxide reductase type II family	NA	
+PF	CL0184	Drug/Metabolite transporter superfamily	NA	
+PF	CL0382	DNA breaking-rejoining enzyme superfamily	NA	
+PF	CL0405	DNA-binding pseudo-barrel domain	NA	
+PF	CL0060	DNA clamp superfamily	NA	
+PF	CL0078	DNA/RNA ligase superfamily	NA	
+PF	CL0194	DNA polymerase B like	NA	
+PF	CL0242	DNA primase large subunit like	NA	
+PF	CL0530	DNase I-like	NA	
+PF	CL0199	Double Psi beta barrel glucanase	NA	
+PF	CL0196	DSRM-like clan	NA	
+PF	CL0528	DUF1214-like	NA	
+PF	CL0594	DUF1735-like superfamily	NA	
+PF	CL0471	DUF362-like superfamily	NA	
+PF	CL0041	Death Domain Superfamily	NA	
+PF	CL0075	Defensin/myotoxin-like superfamily	NA	
+PF	CL0205	Di-copper centre-containing domain	NA	
+PF	CL0032	Dimeric alpha/beta barrel superfamily	NA	
+PF	CL0310	DinB-like superfamily	NA	
+PF	CL0635	DmpA/ArgJ-like superfamily	NA	
+PF	CL0494	DNA-A N-terminal domain-like superfamily	NA	
+PF	CL0131	DoxD-like	NA	
+PF	CL0394	DsrEFH-like superfamily	NA	
+PF	CL0159	Ig-like fold superfamily (E-set)	NA	
+PF	CL0699	EAD1-like clan	NA	
+PF	CL0245	EDD superfamily	NA	
+PF	CL0437	Transcription elongation factor G C-terminal	NA	
+PF	CL0575	Translation proteins of Elongation Factors superfamily	NA	
+PF	CL0220	EF-hand like superfamily	NA	
+PF	CL0001	EGF superfamily	NA	
+PF	CL0706	EMC6	NA	
+PF	CL0009	ENTH/ANTH/VHS superfamily	NA	
+PF	CL0290	EPT/RTPC-like superfamily	NA	
+PF	CL0610	Electron transport accessory protein superfamily	NA	
+PF	CL0695	EndoU-like endoribonuclease superfamily	NA	
+PF	CL0227	Enolase N-terminal domain-like superfamily	NA	
+PF	CL0256	Enolase like TIM barrel	NA	
+PF	CL0331	General secretion pathway protein M	NA	
+PF	CL0628	EspA/CesA-like superfamily	NA	
+PF	CL0352	WXG100-A/WXG100-B dimer	NA	
+PF	CL0271	F-box-like domain	NA	
+PF	CL0277	FAD-linked oxidase C-terminal domain superfamily	NA	
+PF	CL0085	DHS-like NAD/FAD-binding domain	NA	
+PF	CL0076	Riboflavin synthase/Ferredoxin reductase FAD binding domain	NA	
+PF	CL0077	PCMH-like FAD binding	NA	
+PF	CL0086	FAD-linked oxidoreductase	NA	
+PF	CL0377	Fumarylacetoacetate hydrolase, C-terminal domain, superfamily	NA	
+PF	CL0162	F-box associated	NA	
+PF	CL0289	Folate binding domain	NA	
+PF	CL0632	FERM middle domain superfamily	NA	
+PF	CL0584	FF domain	NA	
+PF	CL0647	Nucleoporin FG repeat	NA	
+PF	CL0487	FKBP-like superfamily	NA	
+PF	CL0336	FMN-binding split barrel superfamily	NA	
+PF	CL0529	FMN-dependent nitroreductase-like	NA	
+PF	CL0307	Fusaric acid resistance protein-like superfamily	NA	
+PF	CL0388	Fatty acid responsive transcription factor FadR, C-terminal domain	NA	
+PF	CL0486	2Fe-2S iron-sulfur cluster binding domain	NA	
+PF	CL0667	Bacterioferritin-associated ferredoxin superfamily	NA	
+PF	CL0044	Ferritin-like Superfamily	NA	
+PF	CL0422	Fibrinogen C-terminal domain-like	NA	
+PF	CL0450	Fimbriae A and Mfa superfamily	NA	
+PF	CL0488	FixH-like	NA	
+PF	CL0042	Flavoprotein	NA	
+PF	CL0436	Flagellar motor switch family	NA	
+PF	CL0451	von Willebrand Factor like superfamily	NA	
+PF	CL0325	Formate/glycerate dehydrogenase catalytic domain-like superfamily	NA	
+PF	CL0412	Frag1 like	NA	
+PF	CL0225	FtsL-like superfamily	NA	
+PF	CL0393	FucI/AraA C-terminal domain-like [50443]	NA	
+PF	CL0335	Fumarate reductase respiratory complex transmembrane subunits	NA	
+PF	CL0507	Fungal specific transcription factor domain	NA	
+PF	CL0595	Fusion glycoprotein superfamily	NA	
+PF	CL0644	Frizzled cysteine-rich domain-related superfamily	NA	
+PF	CL0449	DExH-box splicing factor binding site	NA	
+PF	CL0593	B region of SasG biofilm-forming surface protein	NA	
+PF	CL0250	GAD domain superfamily	NA	
+PF	CL0139	Amino acid biosynthesis and glycosomal dehydrogenase	NA	
+PF	CL0161	GAF domain-like	NA	
+PF	CL0523	LTR-copia-type polyprotein segment	NA	
+PF	CL0409	GTPase activation domain superfamily	NA	
+PF	CL0202	Galactose-binding domain-like superfamily	NA	
+PF	CL0540	Gamma-tubulin complex superfamily	NA	
+PF	CL0286	gamma-glutamylcysteine synthetase/glutamine synthetase clan	NA	
+PF	CL0069	GFP-like superfamily	NA	
+PF	CL0547	Growth factor receptor Cys-rich	NA	
+PF	CL0400	Double-Glycine leader-peptide cleavage motif	NA	
+PF	CL0599	Families 57/38 glycoside transferase middle domain superfamily	NA	
+PF	CL0369	Glycosyl hydrolase domain superfamily	NA	
+PF	CL0677	GHMP C-terminal domain superfamily	NA	
+PF	CL0158	Glycoside hydrolase/deacetylase superfamily	NA	
+PF	CL0418	GIY-YIG endonuclease superfamily	NA	
+PF	CL0197	GME superfamily	NA	
+PF	CL0521	Sec14-like superfamily of golgi trafficking	NA	
+PF	CL0192	Family A G protein-coupled receptor-like superfamily	NA	
+PF	CL0497	Glutathione S-transferase, C-terminal domain	NA	
+PF	CL0110	Glycosyl transferase clan GT-A	NA	
+PF	CL0113	Glycosyl transferase clan GT-B	NA	
+PF	CL0111	Glycosyl transferase GT-C superfamily	NA	
+PF	CL0673	GYF domain	NA	
+PF	CL0661	GPCR autoproteolysis inducing	NA	
+PF	CL0103	Galactose Mutarotase-like superfamily	NA	
+PF	CL0279	YqeY-like superfamily	NA	
+PF	CL0089	GlnB-like superfamily	NA	
+PF	CL0090	Globin-like	NA	
+PF	CL0420	Bacterial membrane GlpM-like group	NA	
+PF	CL0014	Class-I Glutamine amidotransferase superfamily	NA	
+PF	CL0500	Glycine-zipper TM superfamily	NA	
+PF	CL0058	Tim barrel glycosyl hydrolase superfamily	NA	
+PF	CL0104	VOC superfamily	NA	
+PF	CL0145	Golgi-transport	NA	
+PF	CL0456	Shuttling between cyosol and Golgi, peripheral membrane family	NA	
+PF	CL0296	GroES-like superfamily	NA	
+PF	CL0315	Gx transporter superfamily	NA	
+PF	CL0363	Hedgehog/intein (Hint) superfamily	NA	
+PF	CL0303	Helix-two-turns-helix superfamily	NA	
+PF	CL0137	HAD superfamily	NA	
+PF	CL0681	HAMP domains	NA	
+PF	CL0275	HAS-barrel superfamily	NA	
+PF	CL0237	HD/PDEase superfamily	NA	
+PF	CL0536	Hexapeptide repeat superfamily	NA	
+PF	CL0198	Helix-hairpin-helix superfamily	NA	
+PF	CL0265	HIT superfamily	NA	
+PF	CL0704	HMA domain superfamily	NA	
+PF	CL0114	HMG-box like superfamily	NA	
+PF	CL0210	Heme NO and oxygen binding like	NA	
+PF	CL0230	Heme oxygenase-like superfamily	NA	
+PF	CL0426	HRDC-like superfamily	NA	
+PF	CL0190	HSP20-like chaperone superfamily	NA	
+PF	CL0123	Helix-turn-helix clan	NA	
+PF	CL0481	His-hydrophobic-His tranposase Y1,Y2 superfamily	NA	
+PF	CL0039	HUP - HIGH-signature proteins, UspA, and PP-ATPase.	NA	
+PF	CL0306	LEM/SAP HeH motif	NA	
+PF	CL0552	Hect, E3 ligase catalytic domain	NA	
+PF	CL0312	Heme iron utilization protein-like superfamily	NA	
+PF	CL0146	Herpes glycoprotein	NA	
+PF	CL0611	Hexon-like superfamily	NA	
+PF	CL0546	beta-N-acetylhexosaminidase-like domain	NA	
+PF	CL0263	His-Me finger endonuclease superfamily	NA	
+PF	CL0025	His Kinase A (phospho-acceptor) domain	NA	
+PF	CL0071	Histidine phosphatase superfamily	NA	
+PF	CL0012	Histone superfamily	NA	
+PF	CL0563	Bacteriophage holin superfamily II	NA	
+PF	CL0564	Holin superfamily III	NA	
+PF	CL0562	Holin superfamily V	NA	
+PF	CL0324	Homing endonuclease-like superfamily	NA	
+PF	CL0050	HotDog superfamily	NA	
+PF	CL0372	Hyaluronate lyase-like catalytic, N-terminal domain	NA	
+PF	CL0105	Barrel sandwich hybrid superfamily	NA	
+PF	CL0385	Hydrophilin-like superfamily	NA	
+PF	CL0447	DUF1304/DUF3784 clan	NA	
+PF	CL0380	Indolic compounds 2,3-dioxygenase-like superfamily	NA	
+PF	CL0548	IHF-like DNA-binding protein superfamily	NA	
+PF	CL0458	Class II aaRS Anticodon-binding domain-like	NA	
+PF	CL0246	Isomerase,CoA transferase & Translation initiation factor Superfamily	NA	
+PF	CL0516	Rieske-like iron-sulphur domain	NA	
+PF	CL0182	IT (Ion Transporter) superfamily	NA	
+PF	CL0011	Immunoglobulin superfamily	NA	
+PF	CL0371	Inovirus (filamentous phage) major coat protein	NA	
+PF	CL0239	Insulin-like superfamily	NA	
+PF	CL0359	Type II intron maturase-like superfamily	NA	
+PF	CL0030	Ion channel (VIC) superfamily	NA	
+PF	CL0270	Isocitrate/Isopropylmalate dehydrogenase-like superfamily	NA	
+PF	CL0366	JAB-like superfamily	NA	
+PF	CL0573	Kinase associated domain 1-like	NA	
+PF	CL0007	K-Homology (KH) domain Superfamily	NA	
+PF	CL0589	Kix domain of CBP (creb binding protein) and MED13/15	NA	
+PF	CL0291	Nucleotidyltransferase substrate binding domain	NA	
+PF	CL0107	KOW domain	NA	
+PF	CL0637	KaiA/RbsU domain superfamily	NA	
+PF	CL0005	Kazal like domain	NA	
+PF	CL0520	Keratin_associated superfamily	NA	
+PF	CL0157	Kleisin superfamily	NA	
+PF	CL0054	Scorpion toxin-like knottin superfamily	NA	
+PF	CL0602	Kringle/FnII superfamily	NA	
+PF	CL0614	L27 domain superfamily	NA	
+PF	CL0721	LAMP superfamily	NA	
+PF	CL0513	LCCL-domain like	NA	
+PF	CL0341	LDH C-terminal domain-like superfamily	NA	
+PF	CL0410	LEF-8 like region of RNA polymerase Rpb2	NA	
+PF	CL0532	Lipid-binding Ig-like superfamily	NA	
+PF	CL0022	Leucine Rich Repeat	NA	
+PF	CL0515	LTXXQ-like superfamily	NA	
+PF	CL0491	Complex1_LYR-like superfamily	NA	
+PF	CL0720	Lag3 N-terminal region superfamily	NA	
+PF	CL0364	LeuD/IlvD-like	NA	
+PF	CL0636	Leukocidin-like superfamily	NA	
+PF	CL0626	RNA bacteriophage capsid protein superfamily	NA	
+PF	CL0283	LigB-like superfamily	NA	
+PF	CL0561	LisH-like	NA	
+PF	CL0048	LolA/B superfamily	NA	
+PF	CL0421	Lipo-protein attachment motif superfamily	NA	
+PF	CL0292	LysE transporter superfamily	NA	
+PF	CL0187	LysM-like domain	NA	
+PF	CL0037	Lysozyme-like superfamily	NA	
+PF	CL0226	Mannose 6-phosphate receptor	NA	
+PF	CL0223	MACRO domain superfamily	NA	
+PF	CL0193	Outer membrane beta-barrel protein superfamily	NA	
+PF	CL0081	MBD-like DNA-binding domain	NA	
+PF	CL0682	Mirror Beta Grasp superfamily	NA	
+PF	CL0517	Membrane-bound O-acyltransferase,MBOAT,superfamily	NA	
+PF	CL0618	Methyl-coenzyme M reductase subunit superfamily	NA	
+PF	CL0015	Major Facilitator Superfamily	NA	
+PF	CL0343	MHC antigen-recognition domain	NA	
+PF	CL0683	Mitochondrial contact site complex	NA	
+PF	CL0082	Tautomerase/MIF superfamily	NA	
+PF	CL0251	MORN repeat	NA	
+PF	CL0524	Antigen MPT63/MPB63 (immunoprotective extracellular	NA	
+PF	CL0360	MTH1187/YkoF-like superfamily	NA	
+PF	CL0651	Mad2 superfamily	NA	
+PF	CL0269	Maf/Ham1 superfamily	NA	
+PF	CL0568	Mannoase-binding lectin superfamily	NA	
+PF	CL0396	MARVEL domain containing superfamily	NA	
+PF	CL0074	Retroviral matrix superfamily	NA	
+PF	CL0231	all-alpha NTP pyrophosphohydrolase superfamily	NA	
+PF	CL0142	Membrane and transport protein	NA	
+PF	CL0057	MetJ/Arc repressor, antitoxin of TA systems superfamily	NA	
+PF	CL0381	Metallo-hydrolase/oxidoreductase superfamily	NA	
+PF	CL0461	Metal-bound fold, usually iron, metallothionein superfamily	NA	
+PF	CL0160	Cobalamin-independent synthase	NA	
+PF	CL0719	Moesin tail domain superfamily	NA	
+PF	CL0619	Mog1p/PsbP-like superfamily	NA	
+PF	CL0141	MtN3-like, vesicle-trafficking cargo-receptors	NA	
+PF	CL0317	Multiheme cytochrome superfamily	NA	
+PF	CL0365	MurF and HprK N-domain-like superfamily	NA	
+PF	CL0222	MviN, MATE-like superfamily	NA	
+PF	CL0063	FAD/NAD(P)-binding Rossmann fold Superfamily	NA	
+PF	CL0091	Ferredoxin / Ferric reductase-like NAD binding	NA	
+PF	CL0701	NAD-kinase beta sandwich domain superfamily	NA	
+PF	CL0684	NEMF/FbpA/Caliban/Tae2 RNA binding	NA	
+PF	CL0669	NOG1 N-temrinal helical domain superfamily	NA	
+PF	CL0435	Nitrogen permease regulator family	NA	
+PF	CL0051	NTF2-like superfamily	NA	
+PF	CL0052	NTN hydrolase superfamily	NA	
+PF	CL0260	Nucleotidyltransferase superfamily	NA	
+PF	CL0261	NUDIX superfamily	NA	
+PF	CL0715	Nckap1/CYFIP 1/2 superfamily	NA	
+PF	CL0232	NifU C-terminal domain-like superfamily	NA	
+PF	CL0498	N-(deoxy)ribosyltransferase-like superfamily	NA	
+PF	CL0156	Mononegaviral nucleocapsid superfamily	NA	
+PF	CL0055	Nucleoplasmin-like/VP (viral coat and capsid proteins) superfamily	NA	
+PF	CL0585	Nucleoporin superfamily	NA	
+PF	CL0276	Nucleotide cyclase superfamily	NA	
+PF	CL0633	NusB-like superfamily	NA	
+PF	CL0439	NusG-like	NA	
+PF	CL0499	O-antigen assembly enzyme superfamily	NA	
+PF	CL0021	OB fold	NA	
+PF	CL0658	Bacterial enterotoxin OB-fold	NA	
+PF	CL0590	Major outer membrane lipoprotein zipper superfamily	NA	
+PF	CL0083	Omega toxin-like	NA	
+PF	CL0259	OstA superfamily	NA	
+PF	CL0376	Cytochrome oxidase biogenesis family	NA	
+PF	CL0023	P-loop containing nucleoside triphosphate hydrolase superfamily	NA	
+PF	CL0073	Beta-sandwich DNA-binding domain	NA	
+PF	CL0301	PA14 superfamily	NA	
+PF	CL0168	PAN-like	NA	
+PF	CL0183	PAS domain clan	NA	
+PF	CL0638	PAZ domain superfamily	NA	
+PF	CL0177	Periplasmic binding protein clan	NA	
+PF	CL0236	PD-(D/E)XK nuclease superfamily	NA	
+PF	CL0466	PDZ domain-like peptide-binding superfamily	NA	
+PF	CL0101	Pelota - RNA ribose binding superfamily	NA	
+PF	CL0374	PEP carboxykinase-like superfamily	NA	
+PF	CL0431	Profilin-like superfamily	NA	
+PF	CL0240	PFK-like superfamily	NA	
+PF	CL0339	PFL-like glycyl radical enzyme superfamily	NA	
+PF	CL0244	PGBD superfamily	NA	
+PF	CL0266	PH domain-like superfamily	NA	
+PF	CL0612	PHM/PNGase F superfamily	NA	
+PF	CL0280	PIN domain superfamily	NA	
+PF	CL0151	Pyruvate kinase-like TIM barrel superfamily	NA	
+PF	CL0016	Protein kinase superfamily	NA	
+PF	CL0629	Phospholipase A2 superfamily	NA	
+PF	CL0321	PLAT domain like superfamily	NA	
+PF	CL0384	PLC-like phosphodiesterases	NA	
+PF	CL0479	Phospholipase D superfamily	NA	
+PF	CL0061	PLP dependent aminotransferase superfamily	NA	
+PF	CL0191	POTRA domain superfamily	NA	
+PF	CL0033	POZ domain superfamily	NA	
+PF	CL0314	ACP-like superfamily	NA	
+PF	CL0238	PP2C-like superfamily	NA	
+PF	CL0570	Protease propeptides/inhibitors	NA	
+PF	CL0350	PRC-barrel like superfamily	NA	
+PF	CL0166	PRD domain superfamily	NA	
+PF	CL0533	PRPP synthetase-associated protein 1	NA	
+PF	CL0630	Plexin fold superfamily	NA	
+PF	CL0305	Peptidyl-tRNA hydrolase II superfamily	NA	
+PF	CL0493	Phosphotransferase system, EIIC superfamily	NA	
+PF	CL0340	Phosphotransferase/anion transport protein superfamily	NA	
+PF	CL0178	PUA/ASCH superfamily	NA	
+PF	CL0408	Purine and uridine phosphorylase superfamily	NA	
+PF	CL0556	PapD-like superfamily,immunoglobulin-like beta sandwich	NA	
+PF	CL0248	ParB-like superfamily	NA	
+PF	CL0577	C protein of Paramyovirinae families	NA	
+PF	CL0323	Patatin/FabD/lysophospholipase-like superfamily	NA	
+PF	CL0268	Pectate lyase-like beta helix	NA	
+PF	CL0505	Pentapeptide repeat	NA	
+PF	CL0320	PepSY domain-like superfamily	NA	
+PF	CL0490	PepSY_TM-like	NA	
+PF	CL0096	Peptidase Inhibitor Clan IE	NA	
+PF	CL0129	Peptidase clan AA	NA	
+PF	CL0130	Peptidase clan AD	NA	
+PF	CL0125	Peptidase clan CA	NA	
+PF	CL0093	Peptidase clan CD	NA	
+PF	CL0126	Peptidase clan MA	NA	
+PF	CL0170	Peptidase MD	NA	
+PF	CL0094	LuxS/MPP-like metallohydrolase	NA	
+PF	CL0035	Peptidase clan MH/MC/MF	NA	
+PF	CL0095	Peptidase Clan ML	NA	
+PF	CL0124	Peptidase clan PA	NA	
+PF	CL0299	Peptidase clan SF	NA	
+PF	CL0201	Peptidase clan SH	NA	
+PF	CL0472	Peptidase clan U	NA	
+PF	CL0718	Perilipin superfamily	NA	
+PF	CL0144	Periplasmic binding protein like	NA	
+PF	CL0617	Heme-dependent peroxidases superfamily	NA	
+PF	CL0484	Peroxisome-like domain	NA	
+PF	CL0379	Pyroglutamate aminopeptidase superfamily	NA	
+PF	CL0373	Phage coat superfamily	NA	
+PF	CL0567	Phage tail assembly chaperone	NA	
+PF	CL0569	Phage tail tube proteins superfamily	NA	
+PF	CL0504	Phage tail beta-barrel superfamily	NA	
+PF	CL0606	Phage fibre superfamily	NA	
+PF	CL0348	Phage virion morphogenesis superfamily	NA	
+PF	CL0691	Phage tail like superfamily	NA	
+PF	CL0249	Phage minor tail protein L clan	NA	
+PF	CL0383	Phenylalanine- and lysidine-tRNA synthetase domain superfamily	NA	
+PF	CL0297	PhoU-like superfamily	NA	
+PF	CL0368	Phospholipase C/P1 nuclease superfamily	NA	
+PF	CL0031	Phosphatase superfamily	NA	
+PF	CL0171	inositol polyphosphate 1 phosphatase like superfamily	NA	
+PF	CL0655	GspC HR domain/PilP-like superfamily	NA	
+PF	CL0327	Pilus subunit	NA	
+PF	CL0136	Plasmid toxin-antitoxin system	NA	
+PF	CL0708	Polo-box superfamily	NA	
+PF	CL0597	Post-HMGL domain-like superfamily	NA	
+PF	CL0668	Pre-PUA superfamily	NA	
+PF	CL0483	Probable substrate-binding preceding ATP-grasp domain	NA	
+PF	CL0200	Prefoldin	NA	
+PF	CL0482	Prolamin	NA	
+PF	CL0649	Pseudouridine synthase superfamily	NA	
+PF	CL0235	PspA/ESCRT-III	NA	
+PF	CL0362	CRISPR-associated (Cas) Repair Associated Mysterious Proteins	NA	
+PF	CL0542	Ras guanyl-nucleotide exchange factor activity N-term	NA	
+PF	CL0509	RBP11-like subunits of RNA polymerase	NA	
+PF	CL0337	Release factor superfamily	NA	
+PF	CL0272	RGS-like superfamily	NA	
+PF	CL0068	RIIa-like fold	NA	
+PF	CL0229	Ring-finger/U-box superfamily	NA	
+PF	CL0398	RNA/DNA-metabolising metallo-beta-lactamase motif	NA	
+PF	CL0322	RND permease superfamily	NA	
+PF	CL0219	Ribonuclease H-like superfamily	NA	
+PF	CL0539	RNase III domain-like superfamily	NA	
+PF	CL0221	RRM-like clan	NA	
+PF	CL0027	RNA dependent RNA polymerase	NA	
+PF	CL0608	FAD/NAD-linked reductase C-terminal domain superfamily	NA	
+PF	CL0326	Virus attachment protein superfamily	NA	
+PF	CL0169	Rep-like domain	NA	
+PF	CL0511	Retrovirus zinc finger-like domains	NA	
+PF	CL0207	Integral membrane protein / protease	NA	
+PF	CL0346	Ribosomal protein L29, L29p, superfamily	NA	
+PF	CL0118	Ribokinase-like superfamily	NA	
+PF	CL0588	Ribosomal proteins L15 bacteria, L18e archaea	NA	
+PF	CL0639	Rof/RNase P subunit-like superfamily	NA	
+PF	CL0217	Rotavirus VP7 protein	NA	
+PF	CL0045	Rubredoxin-like	NA	
+PF	CL0267	Ribosomal protein S11/L18p superfamily	NA	
+PF	CL0600	S15/NS1 RNA-binding domain superfamily	NA	
+PF	CL0652	Ribosomal S24e, L23 and L15e superfamily	NA	
+PF	CL0492	S4 domain superfamily	NA	
+PF	CL0329	Ribosomal protein S5 domain 2-like superfamily	NA	
+PF	CL0489	SAF-like beta clip superfamily	NA	
+PF	CL0003	Sterile Alpha Motif (SAM) domain	NA	
+PF	CL0311	SCP-2 sterol transfer superfamily	NA	
+PF	CL0697	Serine dehydratase beta chain superfamily	NA	
+PF	CL0264	SGNH hydrolase superfamily	NA	
+PF	CL0541	SH2, phosphotyrosine-recognition domain superfamily	NA	
+PF	CL0010	Src homology-3 domain	NA	
+PF	CL0660	SHOCT superfamily	NA	
+PF	CL0319	SHS2 domain	NA	
+PF	CL0474	SICA alpha/beta like extracellular domains	NA	
+PF	CL0067	SIS domain fold	NA	
+PF	CL0676	SMODS and LOG-Smf/DprA-Associating Two TM	NA	
+PF	CL0349	SMF/DprA-LOG (SLOG)	NA	
+PF	CL0357	SMAD/FHA domain superfamily	NA	
+PF	CL0212	SNARE-like superfamily	NA	
+PF	CL0445	SNARE-fusion membrane complex superfamily	NA	
+PF	CL0642	SOCS-box like superfamily	NA	
+PF	CL0503	Superoxide reductase-like superfamily	NA	
+PF	CL0433	SPFH superfamily	NA	
+PF	CL0616	SPOC domain-like superfamily	NA	
+PF	CL0098	SPOUT Methyltransferase Superfamily	NA	
+PF	CL0550	SRCR-like	NA	
+PF	CL0623	SRP alu RNA binding heterodimer, SRP9/14 superfamily	NA	
+PF	CL0587	N-terminal of fungal STAND proteins superfamily	NA	
+PF	CL0576	Starch-binding domain like superfamily	NA	
+PF	CL0502	STAS domain superfamily	NA	
+PF	CL0709	STING domain superfamily	NA	
+PF	CL0173	STIR superfamily	NA	
+PF	CL0526	SUKH superfamily	NA	
+PF	CL0707	Saposin-like superfamily	NA	
+PF	CL0294	Sec10-like superfamily	NA	
+PF	CL0282	Serum albumin superfamily	NA	
+PF	CL0213	Sea anemone toxin k like	NA	
+PF	CL0434	Sialidase superfamily	NA	
+PF	CL0527	Sm (Small RNA binding protein domain)	NA	
+PF	CL0115	Steroid oxidoreductase superfamily	NA	
+PF	CL0506	Succinyl-CoA synthetase flavodoxin domain superfamily	NA	
+PF	CL0233	SufE/NifU superfamily	NA	
+PF	CL0646	Type III secretion system domain superfamily	NA	
+PF	CL0419	Type III secretion system types a and b chaperone	NA	
+PF	CL0424	Type III secretion system-derived superfamily, hook-related	NA	
+PF	CL0679	Transforming acidic coiled-coil	NA	
+PF	CL0300	Twin-Arginine Translocation Motif	NA	
+PF	CL0407	TATA-binding protein like	NA	
+PF	CL0334	Tetrahydrobiopterin biosynthesis-like enzyme superfamily	NA	
+PF	CL0254	Thiamin diphosphate-binding superfamily	NA	
+PF	CL0572	Tiki-like, or EreA-ChaN-like 2His 2Glu metallopreotease SF	NA	
+PF	CL0353	TIMP-like superfamily	NA	
+PF	CL0036	Common phosphate binding-site TIM barrel superfamily	NA	
+PF	CL0591	Transketolase C-terminal domain-like superfamily	NA	
+PF	CL0607	TNF receptor-like superfamily	NA	
+PF	CL0462	Transcription elongation factor C-terminal nonapeptide repeat	NA	
+PF	CL0020	Tetratrico peptide repeat superfamily	NA	
+PF	CL0389	TRAF domain-like superfamily	NA	
+PF	CL0175	TRASH superfamily	NA	
+PF	CL0206	Transcriptional repressor beta-barrel domain	NA	
+PF	CL0477	DNA methylase specificity domain	NA	
+PF	CL0692	TSP1 superfamily	NA	
+PF	CL0689	Thrombospondin type 3 repeat superfamily	NA	
+PF	CL0496	Flp pilus-biogenesis Tad-like superfamily	NA	
+PF	CL0414	Tellurits and antibiotic resistance superfamily	NA	
+PF	CL0613	Terpenoid synthases superfamily	NA	
+PF	CL0174	TetR protein, C-terminal domain-like	NA	
+PF	CL0347	Tetraspannin-like	NA	
+PF	CL0046	Thiolase-like Superfamily	NA	
+PF	CL0172	Thioredoxin-like	NA	
+PF	CL0470	Threonine/Serine exporter ThrE superfamily	NA	
+PF	CL0428	TolA/TonB C-terminal	NA	
+PF	CL0342	TolB, N-terminal domain	NA	
+PF	CL0413	Toprim domain	NA	
+PF	CL0147	Trafficking protein	NA	
+PF	CL0375	Transporter-like superfamily, four TM region	NA	
+PF	CL0287	Transthyretin superfamily	NA	
+PF	CL0690	TrbC/VirB2 pilin superfamily	NA	
+PF	CL0698	TrbL/VirB6 plasmid conjugal transfer protein	NA	
+PF	CL0066	Beta-trefoil superfamily	NA	
+PF	CL0262	Trigger factor/SurA domain	NA	
+PF	CL0674	Triple beta spiral	NA	
+PF	CL0662	Triple barrel superfamily	NA	
+PF	CL0582	TrkA C-terminal domain-like	NA	
+PF	CL0452	Tropomyosin-like superfamily	NA	
+PF	CL0395	Tubby C-terminal domain-like	NA	
+PF	CL0566	Tubulin nucleotide-binding domain-like, GTPase	NA	
+PF	CL0442	Tubulin, FtsZ and Misato and their C-termini,	NA	
+PF	CL0049	Tudor domain 'Royal family'	NA	
+PF	CL0397	TusA-like superfamily	NA	
+PF	CL0097	Type III secretory system chaperone	NA	
+PF	CL0664	UB2H/UvrB interaction domain superfamily	NA	
+PF	CL0214	UBA superfamily	NA	
+PF	CL0208	Ubiquitin conjugating enzyme like superfamily	NA	
+PF	CL0702	Ubiquitin interacting motif	NA	
+PF	CL0122	Chorismate lyase/UTRA superfamily	NA	
+PF	CL0072	Ubiquitin superfamily	NA	
+PF	CL0429	UcrQ-like	NA	
+PF	CL0370	Uteroglobin-like superfamily	NA	
+PF	CL0705	VBS-like four-helical bundle superfamily	NA	
+PF	CL0653	VCCI superfamily superfamily	NA	
+PF	CL0596	Endosomal sorting complex assembly domain	NA	
+PF	CL0656	Variant surface antigens	NA	
+PF	CL0666	Major Vault Protein repeat superfamily	NA	
+PF	CL0411	Antigenic variants from Plasmodium cell-surface	NA	
+PF	CL0148	Viral Gag protein	NA	
+PF	CL0140	Viral nucleic acid binding	NA	
+PF	CL0543	Viral glycoprotein central and dimerisation domains	NA	
+PF	CL0696	Viral methyltranferase superfamily	NA	
+PF	CL0295	Vps51 domain superfamily	NA	
+PF	CL0274	WRKY-GCM1 superfamily	NA	
+PF	CL0680	WW domain	NA	
+PF	CL0654	WYL-like superfamily	NA	
+PF	CL0717	YbaB superfamily	NA	
+PF	CL0522	YbjQ-like superfamily	NA	
+PF	CL0710	YeeE-like transporter superfamily	NA	
+PF	CL0631	YgaC/TfoX-N like superfamily	NA	
+PF	CL0112	Yip1/YIF1-like	NA	
+PF	CL0406	YjbJ-CsbD-like superfamily	NA	
+PF	CL0534	YjgF-like superfamily	NA	
+PF	CL0508	L,D-transpeptidase catalytic domain	NA	
+PF	CL0643	YqbG-like superfamily	NA	
+PF	CL0580	YqgF-like family	NA	
+PF	CL0703	YtcA-like superfamily	NA	
+PF	CL0285	YycI/YycH superfamily	NA	
+PF	CL0167	Zinc beta-ribbon	NA	
+PF	CL0687	Zinc chelating superfamily	NA	
+PF	CL0686	Alpha-glutamyl/putrescinyl thymine phosphorylase	NA	
+PF	CL0354	beta-Barrel protease inhibitors	NA	
+PF	CL0018	bZIP-like leucine zipper	NA	
+PF	CL0592	beta-strand roll of R-module,  superfamily	NA	
+PF	CL0153	dUTPase like superfamily	NA	
+PF	CL0625	eIF4e-like superfamily	NA	
+PF	CL0333	Gamma-Crystallin-like superfamily	NA	
+PF	CL0469	lambda integrase N-terminal domain	NA	
+PF	CL0672	Baculovirus p35 protein superfamily	NA	
+PF	CL0525	Acid phosphatase/Vanadium-dependent haloperoxidase	NA	
+PF	CL0604	post-AAA+ oligomerization domain-like superfamily	NA	
+PF	CL0609	PC4-like superfamily	NA	
+PF	CL0605	ssDNA viruses Nucleoplasmin-like/VP coat superfamily	NA	
+PF	CL0476	tRNA-intron endonuclease catalytic domain-like N-term	NA	
+PF	CL0298	tRNA-binding arm superfamily	NA	
+PF	CL0040	Class II aminoacyl-tRNA and Biotin synthetases	NA	
+PF	CL0117	uPAR/Ly6/CD59/snake toxin-receptor superfamily	NA	
+PF	CL0128	von Willebrand factor type A	NA	
+PF	Other	Other	NA	
+PF	CL0454	Protease_inhib	NA	
+PF	CL0553	HBMR	NA	
+PF	CL0557	Calmodulin-bind	NA	
+PF	CL0390	zf-FYVE-PHD	NA	
+PF	CL0252	NfeD-like	NA	
+PF	CL0386	Ant-toxin_C	NA	
+PF	CL0218	ox_reductase_C	NA	
+PF	CL0189	Endonuclease	NA	
+PF	CL0583	Baseplate_VgrG	NA	
+PF	CL0579	Alg_lyase_Hep_N	NA	
+PF	CL0444	YNI	NA	
+PF	CL0455	MIM-OM_import	NA	
+PF	CL0438	TTHA10132-281	NA	
+PF	CL0565	GHKL	NA	
+PF	CL0538	DRMIP-like	NA	
+PF	CL0468	Malectin-like	NA	
+TIGR	TIGR_role:11010	Aromatic amino acid family	Amino acid biosynthesis	
+TIGR	TIGR_role:11020	Aspartate family	Amino acid biosynthesis	
+TIGR	TIGR_role:11030	Glutamate family	Amino acid biosynthesis	
+TIGR	TIGR_role:11040	Pyruvate family	Amino acid biosynthesis	
+TIGR	TIGR_role:11050	Serine family	Amino acid biosynthesis	
+TIGR	TIGR_role:11060	Histidine family	Amino acid biosynthesis	
+TIGR	TIGR_role:11070	Other	Amino acid biosynthesis	
+TIGR	TIGR_role:12010	2'-Deoxyribonucleotide metabolism	Purines, pyrimidines, nucleosides, and nucleotides	
+TIGR	TIGR_role:12020	Nucleotide and nucleoside interconversions	Purines, pyrimidines, nucleosides, and nucleotides	
+TIGR	TIGR_role:12030	Purine ribonucleotide biosynthesis	Purines, pyrimidines, nucleosides, and nucleotides	
+TIGR	TIGR_role:12040	Pyrimidine ribonucleotide biosynthesis	Purines, pyrimidines, nucleosides, and nucleotides	
+TIGR	TIGR_role:12050	Salvage of nucleosides and nucleotides	Purines, pyrimidines, nucleosides, and nucleotides	
+TIGR	TIGR_role:12060	Sugar-nucleotide biosynthesis and conversions	Purines, pyrimidines, nucleosides, and nucleotides	
+TIGR	TIGR_role:12070	Other	Purines, pyrimidines, nucleosides, and nucleotides	
+TIGR	TIGR_role:13010	Biosynthesis	Fatty acid and phospho- lipid metabolism	
+TIGR	TIGR_role:13020	Degradation	Fatty acid and phospho- lipid metabolism	
+TIGR	TIGR_role:13030	Other	Fatty acid and phospho- lipid metabolism	
+TIGR	TIGR_role:14010	Biotin	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14015	Folic acid	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14020	Heme, porphyrin, and cobalamin	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14025	Lipoate	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14030	Menaquinone and ubiquinone	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14035	Molybdopterin	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14040	Pantothenate and coenzyme A	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14045	Pyridoxin	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14050	Riboflavin, FMN, and FAD	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14055	Glutathione	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14060	Thiamine	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14065	Pyridine nucleotides	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14070	Chlorophyll	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:14075	Siderophores	Biosynthesis of cofactors, prosthetic groups, and carriers	
+TIGR	TIGR_role:15010	Amino sugars	Central intermediary metabolism	
+TIGR	TIGR_role:15015	One-carbon metabolism	Central intermediary metabolism	
+TIGR	TIGR_role:15020	Phosphorus compounds	Central intermediary metabolism	
+TIGR	TIGR_role:15030	Polyamine biosynthesis	Central intermediary metabolism	
+TIGR	TIGR_role:15040	Sulfur metabolism	Central intermediary metabolism	
+TIGR	TIGR_role:15050	Nitrogen fixation	Central intermediary metabolism	
+TIGR	TIGR_role:15060	Nitrogen metabolism	Central intermediary metabolism	
+TIGR	TIGR_role:15070	Other	Central intermediary metabolism	
+TIGR	TIGR_role:17010	Aerobic	Energy metabolism	
+TIGR	TIGR_role:17015	Amino acids and amines	Energy metabolism	
+TIGR	TIGR_role:17020	Anaerobic	Energy metabolism	
+TIGR	TIGR_role:17025	ATP-proton motive force interconversion	Energy metabolism	
+TIGR	TIGR_role:17035	Entner-Doudoroff	Energy metabolism	
+TIGR	TIGR_role:17040	Fermentation	Energy metabolism	
+TIGR	TIGR_role:17049	Glycolysis/gluconeogenesis	Energy metabolism	
+TIGR	TIGR_role:17050	Pentose phosphate pathway	Energy metabolism	
+TIGR	TIGR_role:17055	Pyruvate dehydrogenase	Energy metabolism	
+TIGR	TIGR_role:17060	Sugars	Energy metabolism	
+TIGR	TIGR_role:17065	TCA cycle	Energy metabolism	
+TIGR	TIGR_role:17070	Methanogenesis	Energy metabolism	
+TIGR	TIGR_role:17075	Biosynthesis and degradation of polysaccharides	Energy metabolism	
+TIGR	TIGR_role:17076	Photosynthesis	Energy metabolism	
+TIGR	TIGR_role:17077	Chemoautotrophy	Energy metabolism	
+TIGR	TIGR_role:17080	Other	Energy metabolism	
+TIGR	TIGR_role:17510	Phenylpropanoids/phenolics	Secondary metabolism	
+TIGR	TIGR_role:17520	Terpenoids	Secondary metabolism	
+TIGR	TIGR_role:17530	Alkaloids	Secondary metabolism	
+TIGR	TIGR_role:17540	Phytoalexins	Secondary metabolism	
+TIGR	TIGR_role:17550	Non-protein amino acids	Secondary metabolism	
+TIGR	TIGR_role:17560	Glucosinolates	Secondary metabolism	
+TIGR	TIGR_role:17570	Other	Secondary metabolism	
+TIGR	TIGR_role:18010	Amino acids, peptides and amines	Transport and binding proteins	
+TIGR	TIGR_role:18020	Anions	Transport and binding proteins	
+TIGR	TIGR_role:18030	Carbohydrates, organic alcohols, and acids	Transport and binding proteins	
+TIGR	TIGR_role:18040	Cations and iron carrying compounds	Transport and binding proteins	
+TIGR	TIGR_role:18050	Nucleosides, purines and pyrimidines	Transport and binding proteins	
+TIGR	TIGR_role:18060	Porins	Transport and binding proteins	
+TIGR	TIGR_role:18070	Other	Transport and binding proteins	
+TIGR	TIGR_role:18080	Unknown substrate	Transport and binding proteins	
+TIGR	TIGR_role:19010	DNA replication, recombination, and repair	DNA metabolism	
+TIGR	TIGR_role:19020	Restriction/modification	DNA metabolism	
+TIGR	TIGR_role:19030	Degradation of DNA	DNA metabolism	
+TIGR	TIGR_role:19040	Chromosome-associated proteins	DNA metabolism	
+TIGR	TIGR_role:19050	Other	DNA metabolism	
+TIGR	TIGR_role:20010	Degradation of RNA	Transcription	
+TIGR	TIGR_role:20020	DNA-dependent RNA polymerase	Transcription	
+TIGR	TIGR_role:20030	Transcription factors	Transcription	
+TIGR	TIGR_role:20040	RNA processing	Transcription	
+TIGR	TIGR_role:20050	Other	Transcription	
+TIGR	TIGR_role:21010	tRNA aminoacylation	Protein synthesis	
+TIGR	TIGR_role:21020	Nucleoproteins	Protein synthesis	
+TIGR	TIGR_role:21030	Ribosomal proteins: synthesis and modification	Protein synthesis	
+TIGR	TIGR_role:21040	tRNA and rRNA base modification	Protein synthesis	
+TIGR	TIGR_role:21050	Translation factors	Protein synthesis	
+TIGR	TIGR_role:21060	Other	Protein synthesis	
+TIGR	TIGR_role:21510	Protein and peptide secretion and trafficking	Protein fate	
+TIGR	TIGR_role:21520	Protein modification and repair	Protein fate	
+TIGR	TIGR_role:21530	Protein folding and stabilization	Protein fate	
+TIGR	TIGR_role:21540	Degradation of proteins, peptides, and glycopeptides	Protein fate	
+TIGR	TIGR_role:21550	Other	Protein fate	
+TIGR	TIGR_role:22010	DNA interactions	Regulatory functions	
+TIGR	TIGR_role:22020	RNA interactions	Regulatory functions	
+TIGR	TIGR_role:22030	Protein interactions	Regulatory functions	
+TIGR	TIGR_role:22040	Small molecule interactions	Regulatory functions	
+TIGR	TIGR_role:22090	Other	Regulatory functions	
+TIGR	TIGR_role:22505	Receptors	Signal trans- duction	
+TIGR	TIGR_role:22510	Kinases	Signal trans- duction	
+TIGR	TIGR_role:22520	Phosphatases	Signal trans- duction	
+TIGR	TIGR_role:22530	G-proteins	Signal trans- duction	
+TIGR	TIGR_role:22540	Hormones, cytokines	Signal trans- duction	
+TIGR	TIGR_role:22550	Channels	Signal trans- duction	
+TIGR	TIGR_role:22560	Immunology	Signal trans- duction	
+TIGR	TIGR_role:22570	Two-component systems	Signal trans- duction	
+TIGR	TIGR_role:22580	PTS	Signal trans- duction	
+TIGR	TIGR_role:22595	Other	Signal trans- duction	
+TIGR	TIGR_role:23020	Surface structures	Cell envelope	
+TIGR	TIGR_role:23030	Biosynthesis of murein sacculus and peptidoglycan	Cell envelope	
+TIGR	TIGR_role:23040	Biosynthesis and degradation of surface polysaccharides and lipopolysaccharides	Cell envelope	
+TIGR	TIGR_role:23060	Other	Cell envelope	
+TIGR	TIGR_role:23505	Cell wall	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23510	Plasma membrane	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23515	Cytoplasm	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23520	Cytoskeleton	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23525	Centrosome	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23530	Endoplasmic reticulum	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23535	Golgi	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23545	Nucleus	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23550	Chromosome structure	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23555	Mitochondria	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23560	Peroxisome	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23565	Endosome	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23570	Vacuole and lysosome	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23575	Chloroplast	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23580	Etioplast	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23585	Amyloplast	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23590	Plasmodesmata	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23595	Extracellular/secreted proteins	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23597	Extracellular matrix	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:23599	Other	Cellular structure, organization and biogenesis	
+TIGR	TIGR_role:24010	Cell division	Cellular processes	
+TIGR	TIGR_role:24015	Chemotaxis and motility	Cellular processes	
+TIGR	TIGR_role:24020	Cell adhesion	Cellular processes	
+TIGR	TIGR_role:24025	Conjugation	Cellular processes	
+TIGR	TIGR_role:24030	Detoxification	Cellular processes	
+TIGR	TIGR_role:24050	DNA transformation	Cellular processes	
+TIGR	TIGR_role:24060	Toxin production and resistance	Cellular processes	
+TIGR	TIGR_role:24065	Pathogenesis	Cellular processes	
+TIGR	TIGR_role:24070	Adaptations to atypical conditions	Cellular processes	
+TIGR	TIGR_role:24075	Biosynthesis of natural products	Cellular processes	
+TIGR	TIGR_role:24095	Other	Cellular processes	
+TIGR	TIGR_role:24215	Fruit ripening	Growth and development	
+TIGR	TIGR_role:24220	Senescence	Growth and development	
+TIGR	TIGR_role:24225	Flowering	Growth and development	
+TIGR	TIGR_role:24230	Floral development	Growth and development	
+TIGR	TIGR_role:24235	Juvenility	Growth and development	
+TIGR	TIGR_role:24240	Photoperiodism	Growth and development	
+TIGR	TIGR_role:24245	Vernalization	Growth and development	
+TIGR	TIGR_role:24250	Abscission	Growth and development	
+TIGR	TIGR_role:24255	Phototropism	Growth and development	
+TIGR	TIGR_role:24260	Gravitropism	Growth and development	
+TIGR	TIGR_role:24265	Thigmomorphogenesis	Growth and development	
+TIGR	TIGR_role:24270	Fertilization	Growth and development	
+TIGR	TIGR_role:24275	Phytohormones	Growth and development	
+TIGR	TIGR_role:24280	Other	Growth and development	
+TIGR	TIGR_role:24410	Bacteria	Pathogen responses	
+TIGR	TIGR_role:24420	Viruses	Pathogen responses	
+TIGR	TIGR_role:24430	Fungi	Pathogen responses	
+TIGR	TIGR_role:24440	Nematodes	Pathogen responses	
+TIGR	TIGR_role:24450	Pathogenesis-related proteins	Pathogen responses	
+TIGR	TIGR_role:24460	Hypersensitive response	Pathogen responses	
+TIGR	TIGR_role:24470	Systemic acquired resistance	Pathogen responses	
+TIGR	TIGR_role:24480	Cell death	Pathogen responses	
+TIGR	TIGR_role:24490	Other	Pathogen responses	
+TIGR	TIGR_role:24605	Light	Environmental Response	
+TIGR	TIGR_role:24610	Cold	Environmental Response	
+TIGR	TIGR_role:24615	Heat	Environmental Response	
+TIGR	TIGR_role:24620	Drought	Environmental Response	
+TIGR	TIGR_role:24625	Flooding	Environmental Response	
+TIGR	TIGR_role:24630	Xenobiotics	Environmental Response	
+TIGR	TIGR_role:24635	Insects	Environmental Response	
+TIGR	TIGR_role:24640	Wounding	Environmental Response	
+TIGR	TIGR_role:24645	UV	Environmental Response	
+TIGR	TIGR_role:24650	Osmotic	Environmental Response	
+TIGR	TIGR_role:24660	Other	Environmental Response	
+TIGR	TIGR_role:25015	Plasmid functions	Mobile and extra- chromo- somal element functions	
+TIGR	TIGR_role:25020	Prophage functions	Mobile and extra- chromo- somal element functions	
+TIGR	TIGR_role:25030	Transposon functions	Mobile and extra- chromo- somal element functions	
+TIGR	TIGR_role:25095	Other	Mobile and extra- chromo- somal element functions	
+TIGR	TIGR_role:25500	Enzymes of unknown specificity	Unknown function	
+TIGR	TIGR_role:25510	General	Unknown function	
+TIGR	TIGR_role:26010	Conserved	Hypothetical proteins	
+TIGR	TIGR_role:26015	Domain	Hypothetical proteins	
+TIGR	TIGR_role:26020	No database match	Hypothetical proteins	
+TIGR	TIGR_role:27000	Disrupted reading frame	Disrupted reading frame	

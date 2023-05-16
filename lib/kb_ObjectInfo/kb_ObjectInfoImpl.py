@@ -11,6 +11,7 @@ from installed_clients.DataFileUtilClient import DataFileUtil
 from .CreateFasta_Report import CreateFasta
 from .CreateFeatureLists_Report import CreateFeatureLists
 from .CreateMultiGenomeReport import CreateMultiGenomeReport
+from .CreateAssemblyReport import CreateAssemblyReport
 from .Report_creator import Report_creator
 
 #END_HEADER
@@ -31,9 +32,9 @@ class kb_ObjectInfo:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "1.1.0"
+    VERSION = "1.2.0"
     GIT_URL = "https://github.com/kbaseapps/kb_ObjectInfo"
-    GIT_COMMIT_HASH = "8bd0e2cb6021e152255036fa9842d782360a48d2"
+    GIT_COMMIT_HASH = "3de363edefcedf987fa3c34b133cab87fba4118a"
 
     #BEGIN_CLASS_HEADER
 
@@ -75,10 +76,9 @@ class kb_ObjectInfo:
             for rpt in rpt_list:
                 rpt_writer.writerow(rpt)
                 rpt_string += rpt_delimiter.join(rpt) + "\n"
-            report_txt.close()
             
         return rpt_string
-        
+       
     #END_CLASS_HEADER
 
     # config contains contents of config file in a hash or None if it couldn't
@@ -125,7 +125,7 @@ class kb_ObjectInfo:
         token = ctx['token']
 
         # Logging statements to stdout/stderr are captured and available as the App log
-        logging.info('Starting Assembly MetaData Object Info. ')
+        logging.info('Starting Assembly Object Info. ')
         mystr = pformat(params)
         logging.info(f"Params:\n{mystr}")
         
@@ -151,112 +151,59 @@ class kb_ObjectInfo:
             raise ValueError('showContigs parameter cannot be negative (' + str(showContigs) + ')')
         if showContigs > 1:
             raise ValueError('showContigs parameter cannot be greater than one (' + str(showContigs) + ')')
-
-        assembly = self.dfu.get_objects({'object_refs': [input_ref]})
-        name = "Assembly Data Object"
-        object_type = ''
-        if 'info' in assembly['data'][0]:
-            name = assembly['data'][0]['info'][1]
-            object_type = assembly['data'][0]['info'][2]
-        assembly_metadata = assembly['data'][0]['data']
-
-        this_list = []
-        rpt_list = []
         
-        rpt_list.extend([["OVERVIEW"]])
-        this_list = [["Name",name],["Type",object_type]]
+        car = CreateAssemblyReport(self.config)
+        assembly = self.dfu.get_objects({'object_refs': [input_ref]})
+        rpt_list = []
+        this_list = []
         
         html_report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
         html_report_txt = open(html_report_path, "w")
-        htmltable = self.make_HTML(this_list,'row_header')
-        html_report_txt.write("<h1>OVERVIEW</h1>")
+        
+        (header,this_list) = car.assembly_overview(assembly)
+        
+        htmltable = self.make_HTML(this_list,'col_header')
+        html_report_txt.write("<h1>"+header+"</h1>")
         html_report_txt.write(htmltable)
-        rpt_list.extend(this_list)
-         
-        rpt_list.extend([[],["METADATA"]])
-        this_list = []
-        dna_size = 1.0
-        list = ['assembly_id', 'dna_size', 'gc_content', 'num_contigs',
-                'fasta_handle_ref', 'md5', 'type', 'taxon_ref']
-        for item in list:
-            if item in assembly_metadata:
-                this_list.append([item,str(assembly_metadata[item])])
-                if item == 'dna_size':
-                    dna_size = assembly_metadata['dna_size']
-        if 'fasta_handle_info' in assembly_metadata and 'node_file_name' in assembly_metadata['fasta_handle_info']:
-            this_list.append(["Original filename",assembly_metadata['fasta_handle_info']['node_file_name']])
-        htmltable = self.make_HTML(this_list,'row_header')
-        html_report_txt.write("<h1>METADATA</h1>")
-        html_report_txt.write(htmltable)
+        rpt_list.extend([[header]])
         rpt_list.extend(this_list)
         
-        rpt_list.extend([[],["DNA Composition"]])
-        rpt_list.extend([["DNA BASES","COUNTS","PERCENT"]])
-        this_list = []
-        pct = 1.00
-        for base in assembly_metadata['base_counts']:
-            pct = 100 * assembly_metadata['base_counts'][base] / dna_size
-            this_list.append([base,str(assembly_metadata['base_counts'][base]),str(pct)])
-        rpt_list.extend(this_list)
-        htmltable = self.make_HTML(this_list,'row_header')
-        html_report_txt.write("<h1>DNA Composition</h1>")
+        (header,this_list) = car.assembly_metadata(assembly)
+        
+        htmltable = self.make_HTML(this_list,'col_header')
+        html_report_txt.write("<h1>"+header+"</h1>")
         html_report_txt.write(htmltable)
+        rpt_list.extend([[],[header]])
+        rpt_list.extend(this_list)
         
-        this_list = []
-        this_list.append(["Name","Length","GC content","Number of Ns","Contig ID","Description"])
-        rpt_list.extend([[],["Contigs in the Assembly"]])
-        
-        if 'contigs' in assembly_metadata:
-            myContig = assembly_metadata['contigs']
-            for ctg in myContig:
-                list = ['length', 'gc_content', 'Ncount', 'contig_id', 'description']
-                ctg_list = [ctg]
+        (header,this_list) = car.assembly_dnabases(assembly)
                 
-                for item in list:
-                    if item in myContig[ctg]:
-                        ctg_list.append(format(myContig[ctg][item]))
-                    else:
-                        ctg_list.append("")
-
-                this_list.append(ctg_list)
-                
-
-        htmltable = self.make_HTML(this_list,'row_header')
-        html_report_txt.write("<h1>CONTIGS IN THE ASSEMBLY</h1>")
+        htmltable = self.make_HTML(this_list,'col_header')
+        html_report_txt.write("<h1>"+header+"</h1>")
         html_report_txt.write(htmltable)
+        rpt_list.extend([[],[header]])
+        rpt_list.extend(this_list)
+        
+        (header,this_list) = car.assembly_contigs(assembly)
+                
+        htmltable = self.make_HTML(this_list,'col_header')
+        html_report_txt.write("<h1>"+header+"</h1>")
+        html_report_txt.write(htmltable)
+        rpt_list.extend([[],[header]])
+        rpt_list.extend(this_list)
         html_report_txt.close()
-        
-        rpt_list.extend(this_list)
 
         rpt_string = self.write_to_file(rpt_list,'assembly_meta_tab_file.tsv',"\t")
         self.write_to_file(rpt_list,'assembly_meta_csv_file.csv',",")
-        
-        fasta_list = []
-        dna_string = ""
+                                          
         if showContigs:
-            cf = CreateFasta(self.config)
-
-            fasta_list = cf.get_assembly_sequence(input_ref)
-            report_path = os.path.join(self.scratch, 'assembly_DNA_file.fna')
-            
-#           Write the DNA string out to a Fasta file
-            report_txt = open(report_path, "w")
-            for dna_seq in fasta_list:
-                dna = "\n".join(dna_seq)+"\n"
-                report_txt.write(dna)
-                dna_string += dna
-            report_txt.close()
+            (header) = car.assembly_dna(assembly,self.scratch)
+            rpt_list.extend([[],[header]])
         
-            html_report_path = os.path.join(self.scratch, 'assembly_DNA_sequences.html')
-            html_report_txt = open(html_report_path, "w")
-            html_report_txt.write("<h1>FASTA of the DNA Sequences</h1>")
-            html_report_txt.write("<pre>" + dna_string + "</pre>")
-            html_report_txt.close()
-
         cr = Report_creator(self.config)
         reported_output = cr.create_report(token, params['workspace_name'],
-                                    rpt_string, self.scratch)
-
+                                           rpt_string, self.scratch)
+                                           
         output = {'report_name': reported_output['name'],
                            'report_ref': reported_output['ref']}
         mystr = pformat(output)
@@ -270,17 +217,129 @@ class kb_ObjectInfo:
         # return the results
         return [output]
 
+    def assemblyset_report(self, ctx, params):
+        """
+        :param params: instance of type "AssemblySetReportParams" ->
+           structure: parameter "input_ref" of type "assemblyset_ref",
+           parameter "workspace_name" of String, parameter "showContigs" of
+           type "boolean" (A boolean. 0 = false, other = true.)
+        :returns: instance of type "ReportResults" (Here is the definition of
+           the output of the function.  The output can be used by other SDK
+           modules which call your code, or the output visualizations in the
+           Narrative.  'report_name' and 'report_ref' are special output
+           fields- if defined, the Narrative can automatically render your
+           Report.) -> structure: parameter "report_name" of String,
+           parameter "report_ref" of String
+        """
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN assemblyset_report
+        token = ctx['token']
+
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting AssemblySet Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params:\n{mystr}")
+
+        input_ref = params['input_ref']
+        if 'showContigs' not in params:
+            raise ValueError('Parameter showContigs is not set in input arguments')
+        showContigs_orig = params['showContigs']
+        showContigs = None
+        try:
+            showContigs = int(showContigs_orig)
+        except ValueError:
+            raise ValueError('Cannot parse integer from showContigs parameter (' + str(showContigs_orig) + ')')
+        if showContigs < 0:
+            raise ValueError('showContigs parameter cannot be negative (' + str(showContigs) + ')')
+        if showContigs > 1:
+            raise ValueError('showContigs parameter cannot be greater than one (' + str(showContigs) + ')')
+
+        assemblyset = self.dfu.get_objects({'object_refs': [input_ref]})
+        assemblylist = assemblyset['data'][0]['data']['items']
+        num_assem = len(assemblylist)
+        car = CreateAssemblyReport(self.config)
+        
+        assemref = []
+        
+        for i in range(num_assem):
+            assemref.append(assemblylist[i]['ref'])
+        
+        html_report_path = os.path.join(self.scratch, 'assembly_metadata_file.html')
+        html_report_txt = open(html_report_path, "w")
+        
+        this_list = []
+        rpt_list = []
+        obj_list = self.dfu.get_objects({'object_refs': assemref})
+        
+        (header,this_list) = car.assembly_overview(obj_list)
+        
+        htmltable = self.make_HTML(this_list,'col_header')
+        html_report_txt.write("<h1>"+header+"</h1>")
+        html_report_txt.write(htmltable)
+        rpt_list.extend([[header]])
+        rpt_list.extend(this_list)
+
+        (header,this_list) = car.assembly_metadata(obj_list)
+        
+        htmltable = self.make_HTML(this_list,'col_header')
+        html_report_txt.write("<h1>"+header+"</h1>")
+        html_report_txt.write(htmltable)
+        rpt_list.extend([[],[header]])
+        rpt_list.extend(this_list)
+        
+        (header,this_list) = car.assembly_dnabases(obj_list)
+                
+        htmltable = self.make_HTML(this_list,'col_header')
+        html_report_txt.write("<h1>"+header+"</h1>")
+        html_report_txt.write(htmltable)
+        rpt_list.extend([[],[header]])
+        rpt_list.extend(this_list)
+
+        (header,this_list) = car.assembly_contigs(obj_list)
+                
+        htmltable = self.make_HTML(this_list,'col_header')
+        html_report_txt.write("<h1>"+header+"</h1>")
+        html_report_txt.write(htmltable)
+        rpt_list.extend([[],[header]])
+        rpt_list.extend(this_list)
+        html_report_txt.close()
+                                  
+        if showContigs:
+            (header) = car.assembly_dna(obj_list,self.scratch)
+            rpt_list.extend([[],[header]])
+
+        rpt_string = self.write_to_file(rpt_list,'assembly_set_tab_file.tsv',"\t")
+        self.write_to_file(rpt_list,'assembly_set_csv_file.csv',",")
+                                          
+        cr = Report_creator(self.config)
+        reported_output = cr.create_report(token, params['workspace_name'],
+                                           rpt_string, self.scratch)
+                                           
+        output = {'report_name': reported_output['name'],
+                    'report_ref': reported_output['ref']}
+        mystr = pformat(output)
+        logging.info(f"Returning: {mystr}")
+        #END assemblyset_report
+
+        # At some point might do deeper type checking...
+        if not isinstance(output, dict):
+            raise ValueError('Method assemblyset_report return value ' +
+                             'output is not type dict as required.')
+        # return the results
+        return [output]
+
     def genome_report(self, ctx, params):
         """
         :param params: instance of type "GenomeReportParams" -> structure:
            parameter "input_ref" of type "genome_ref", parameter
-           "workspace_name" of String, parameter "showDNA" of type "boolean"
-           (A boolean. 0 = false, other = true.), parameter "listCoding" of
-           type "boolean" (A boolean. 0 = false, other = true.), parameter
+           "workspace_name" of String, parameter "listCoding" of type
+           "boolean" (A boolean. 0 = false, other = true.), parameter
            "listGFF" of type "boolean" (A boolean. 0 = false, other = true.),
            parameter "FastaAA" of type "boolean" (A boolean. 0 = false, other
            = true.), parameter "FastamRNA" of type "boolean" (A boolean. 0 =
-           false, other = true.)
+           false, other = true.), parameter "showDNA" of type "boolean" (A
+           boolean. 0 = false, other = true.)
         :returns: instance of type "ReportResults" (Here is the definition of
            the output of the function.  The output can be used by other SDK
            modules which call your code, or the output visualizations in the
@@ -395,7 +454,7 @@ class kb_ObjectInfo:
             dna_string = self.write_to_file(rpt_list,'genome_dna_file.fna',"\n")
             rpt_string += dna_string[0:200] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
             
-            html_report_path = os.path.join(self.scratch, 'genome_protein_mRNA.html')
+            html_report_path = os.path.join(self.scratch, 'genome_DNA.html')
             html_report_txt = open(html_report_path, "w")
             html_report_txt.write("<h1>DNA</h1>")
             html_report_txt.write("<pre>" + dna_string + "</pre>")
@@ -524,97 +583,6 @@ class kb_ObjectInfo:
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
             raise ValueError('Method genomeset_report return value ' +
-                             'output is not type dict as required.')
-        # return the results
-        return [output]
-
-    def domain_report(self, ctx, params):
-        """
-        :param params: instance of type "DomainReportParams" -> structure:
-           parameter "input_ref" of type "domain_ref", parameter
-           "evalue_cutoff" of Double, parameter "workspace_name" of String
-        :returns: instance of type "ReportResults" (Here is the definition of
-           the output of the function.  The output can be used by other SDK
-           modules which call your code, or the output visualizations in the
-           Narrative.  'report_name' and 'report_ref' are special output
-           fields- if defined, the Narrative can automatically render your
-           Report.) -> structure: parameter "report_name" of String,
-           parameter "report_ref" of String
-        """
-        # ctx is the context object
-        # return variables are: output
-        #BEGIN domain_report
-        token = ctx['token']
-
-        # Logging statements to stdout/stderr are captured and available as the App log
-        logging.info('Starting Domain Annotation Object Info. ')
-        mystr = pformat(params)
-        logging.info(f"Params:\n{mystr}")
-
-        # Step 1 - Parse/examine the parameters and catch any errors
-        # It is important to check that parameters exist and are defined, and that nice error
-        # messages are returned to users.
-
-        if 'workspace_name' not in params:
-            raise ValueError('Parameter workspace_name is not set in input arguments')
-        workspace_name = params['workspace_name']
-        if 'input_ref' not in params:
-            raise ValueError('Parameter input_ref is not set in input arguments')
-        input_ref = params['input_ref']
-
-        domain_anno = self.dfu.get_objects({'object_refs': [input_ref]})
-        domain_data = domain_anno['data'][0]['data']
-
-        evalue_cutoff = float(params['evalue_cutoff'])
-
-        rpt_list1 = []
-        rpt_list2 = []
-        
-        cf = CreateFeatureLists(self.config)
-        rpt_list1 = cf.readDomainAnnList(domain_data, evalue_cutoff)
-        rpt_list2 = cf.readDomainAnnCount(domain_data, evalue_cutoff)
-    
-        rpt_string = ''
-        
-        if rpt_list1 or rpt_list2:
-            if rpt_list2:
-                rpt_string += self.write_to_file(rpt_list2,'domain_annotation_byDomain.tsv',"\t")
-                self.write_to_file(rpt_list2,'domain_annotation_byDomain.csv',",")
-                        
-                html_report_path = os.path.join(self.scratch, 'domain_annotation_byDomain.html')
-                html_report_txt = open(html_report_path, "w")
-                html_report_txt.write("<h1>COUNTS PER DOMAIN</h1>")
-                htmltable = self.make_HTML(rpt_list2,'col_header')
-                html_report_txt.write(htmltable)
-                html_report_txt.close()
-
-            if rpt_list1:
-                rpt_string += self.write_to_file(rpt_list1,'domain_annotation_byGene.tsv',"\t")
-                self.write_to_file(rpt_list1,'domain_annotation_byGene.csv',",")
-                
-                html_report_path = os.path.join(self.scratch, 'domain_annotation_byGene.html')
-                html_report_txt = open(html_report_path, "w")
-                html_report_txt.write("<h1>LIST OF GENES AND THEIR DOMAINS</h1>")
-                
-                htmltable = self.make_HTML(rpt_list1,'col_header')
-                html_report_txt.write(htmltable)
-                html_report_txt.close()
-                
-        cr = Report_creator(self.config)
-
-        reported_output = cr.create_report(token, params['workspace_name'],
-                                           rpt_string, self.scratch)
-
-        output = {'report_name': reported_output['name'],
-                  'report_ref': reported_output['ref']}
-
-        mystr = pformat(output)
-        logging.info(f"Returning: {mystr}")
-        #END domain_report
-
-        # At some point might do deeper type checking...
-        if not isinstance(output, dict):
-            raise ValueError('Method domain_report return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
@@ -817,6 +785,115 @@ class kb_ObjectInfo:
         # return the results
         return [output]
 
+    def domain_report(self, ctx, params):
+        """
+        :param params: instance of type "DomainReportParams" -> structure:
+           parameter "input_ref" of type "domain_ref", parameter
+           "evalue_cutoff" of Double, parameter "workspace_name" of String
+        :returns: instance of type "ReportResults" (Here is the definition of
+           the output of the function.  The output can be used by other SDK
+           modules which call your code, or the output visualizations in the
+           Narrative.  'report_name' and 'report_ref' are special output
+           fields- if defined, the Narrative can automatically render your
+           Report.) -> structure: parameter "report_name" of String,
+           parameter "report_ref" of String
+        """
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN domain_report
+        token = ctx['token']
+
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting Domain Annotation Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params:\n{mystr}")
+
+        # Step 1 - Parse/examine the parameters and catch any errors
+        # It is important to check that parameters exist and are defined, and that nice error
+        # messages are returned to users.
+
+        if 'workspace_name' not in params:
+            raise ValueError('Parameter workspace_name is not set in input arguments')
+        workspace_name = params['workspace_name']
+        if 'input_ref' not in params:
+            raise ValueError('Parameter input_ref is not set in input arguments')
+        input_ref = params['input_ref']
+
+        domain_anno = self.dfu.get_objects({'object_refs': [input_ref]})
+        domain_data = domain_anno['data'][0]['data']
+
+        evalue_cutoff = float(params['evalue_cutoff'])
+
+        rpt_list1 = []
+        rpt_list2 = []
+        
+        cf = CreateFeatureLists(self.config)
+        (rpt_list1,rpt_list2,rpt_list3) = cf.readDomainAnnList(domain_data, evalue_cutoff)
+    
+        rpt_string = ''
+        resources = "<p>The following may be helpful</p><ul>"
+        resources += "<li>COGS - https://ftp.ncbi.nih.gov/pub/COG/COG2020/data/</li>"
+        resources += "<li>Pfam - http://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/</li>"
+        resources += "<li>TIGRFAM - ftp://ftp.jcvi.org/pub/data/TIGRFAMs/ or https://ftp.ncbi.nlm.nih.gov/hmm/TIGRFAMs/release_15.0/</li>"
+        resources += "<li>NCBIfams - https://ftp.ncbi.nlm.nih.gov/hmm/9.0/</li>"
+        resources += "<li>CDD (COGS, NCBI-curated, SMART, PRK) - ftp://ftp.ncbi.nih.gov/pub/mmdb/cdd</li>"
+        resources += "</ul>"
+        if rpt_list1 or rpt_list2:
+            if rpt_list1:
+                rpt_string += self.write_to_file(rpt_list1,'domain_annotation_byGene.tsv',"\t")
+                self.write_to_file(rpt_list1,'domain_annotation_byGene.csv',",")
+                
+                html_report_path = os.path.join(self.scratch, 'domain_annotation_byGene.html')
+                html_report_txt = open(html_report_path, "w")
+                html_report_txt.write("<h1>LIST OF GENES AND THEIR DOMAINS</h1>")
+                html_report_txt.write(resources)
+                htmltable = self.make_HTML(rpt_list1,'col_header')
+                html_report_txt.write(htmltable)
+                html_report_txt.close()
+                
+            if rpt_list2:
+                rpt_string += self.write_to_file(rpt_list2,'domain_annotation_byDomain.tsv',"\t")
+                self.write_to_file(rpt_list2,'domain_annotation_byDomain.csv',",")
+                        
+                html_report_path = os.path.join(self.scratch, 'domain_annotation_byDomain.html')
+                html_report_txt = open(html_report_path, "w")
+                html_report_txt.write("<h1>COUNTS PER DOMAIN</h1>")
+                html_report_txt.write(resources)
+                htmltable = self.make_HTML(rpt_list2,'col_header')
+                html_report_txt.write(htmltable)
+                html_report_txt.close()
+                    
+            if rpt_list3:
+                rpt_string += self.write_to_file(rpt_list3,'domain_annotation_byCategory.tsv',"\t")
+                self.write_to_file(rpt_list3,'domain_annotation_byCategory.csv',",")
+                        
+                html_report_path = os.path.join(self.scratch, 'domain_annotation_byCategory.html')
+                html_report_txt = open(html_report_path, "w")
+                html_report_txt.write("<h1>COUNTS PER CATEGORY</h1>")
+                html_report_txt.write(resources)
+                htmltable = self.make_HTML(rpt_list3,'col_header')
+                html_report_txt.write(htmltable)
+                html_report_txt.close()
+
+        cr = Report_creator(self.config)
+
+        reported_output = cr.create_report(token, params['workspace_name'],
+                                           rpt_string, self.scratch)
+
+        output = {'report_name': reported_output['name'],
+                  'report_ref': reported_output['ref']}
+
+        mystr = pformat(output)
+        logging.info(f"Returning: {mystr}")
+        #END domain_report
+
+        # At some point might do deeper type checking...
+        if not isinstance(output, dict):
+            raise ValueError('Method domain_report return value ' +
+                             'output is not type dict as required.')
+        # return the results
+        return [output]
+
     def featseq_report(self, ctx, params):
         """
         :param params: instance of type "FeatSeqReportParams" -> structure:
@@ -980,6 +1057,136 @@ class kb_ObjectInfo:
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
             raise ValueError('Method protcomp_report return value ' +
+                             'output is not type dict as required.')
+        # return the results
+        return [output]
+
+    def msa_report(self, ctx, params):
+        """
+        :param params: instance of type "MSAReportParams" -> structure:
+           parameter "input_ref" of type "msa_ref", parameter
+           "workspace_name" of String
+        :returns: instance of type "ReportResults" (Here is the definition of
+           the output of the function.  The output can be used by other SDK
+           modules which call your code, or the output visualizations in the
+           Narrative.  'report_name' and 'report_ref' are special output
+           fields- if defined, the Narrative can automatically render your
+           Report.) -> structure: parameter "report_name" of String,
+           parameter "report_ref" of String
+        """
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN msa_report
+        token = ctx['token']
+
+        # Logging statements to stdout/stderr are captured and available as the App log
+        logging.info('Starting Multiple Sequence Alignment Object Info. ')
+        mystr = pformat(params)
+        logging.info(f"Params:\n{mystr}")
+
+        input_ref = params['input_ref']
+        cf = CreateFasta(self.config)
+        
+        html_report_path = os.path.join(self.scratch, 'MSA_file.html')
+        html_report_txt = open(html_report_path, "w")
+
+        rpt_list = []
+        msa_list = self.dfu.get_objects({'object_refs': [input_ref]})['data'][0]['data']
+        
+        name = "Generic MSA"
+        if 'name' in msa_list:
+            name = msa_list['name']
+        desc = 'Unknown'
+        if 'description' in msa_list:
+            desc = msa_list['description']
+        align_length = 0
+        if 'alignment_length' in msa_list:
+            align_length = msa_list['alignment_length']
+        seq_type = 'Unknown'
+        if 'sequence_type' in msa_list:
+            seq_type = msa_list['sequence_type']
+        row_order = []
+        if 'row_order' in msa_list:
+            row_order = msa_list['row_order']
+        row_labels = {}
+        if 'default_row_labels' in msa_list:
+            row_labels = msa_list['default_row_labels']
+        alignment = {}
+        if 'alignment' in msa_list:
+            alignment = msa_list['alignment']
+        
+        rpt_list = [["MSA Name","Description","Alignment Length","Sequence Type"]]
+        rpt_list.extend([[name, desc, str(align_length),seq_type]])
+        html_report_txt.write("<h1>MSA Overview</h1>")
+        htmltable = self.make_HTML(rpt_list,'col_header')
+        html_report_txt.write(htmltable)
+        
+        rpt_list.extend([[],['Row Lables'],["Row","Label"]])
+        this_list = [["Row","Label"]]
+        longlabel = 0
+        for row in row_labels.keys():
+            rpt_list.extend([[row,row_labels[row]]])
+            this_list.extend([[row,row_labels[row]]])
+            if len(row) > longlabel:
+                longlabel = len(row)
+            
+        rpt_string = self.write_to_file(rpt_list,'MSA_tab_file.tsv',"\t")
+        self.write_to_file(rpt_list,'MSA_csv_file.csv',",")
+                        
+        html_report_txt.write("<h1>Row Labels</h1>")
+        htmltable = self.make_HTML(this_list,'col_header')
+        html_report_txt.write(htmltable)
+        
+##      ALIGNMENT
+        msa_list = [["CLUSTAL W multiple sequence alignment"],[]]
+        colsz = 50
+        start = 0
+        while True:
+            end = start + colsz
+            if end > align_length:
+                end = align_length
+            for row in row_order:
+                tmp_str = '{0:{3}} {1:50} {2:8}'.format(row,alignment[row][start:end],str(end),longlabel)
+                #msa_list.append([[row,alignment[row][start:end],str(end)]])
+                msa_list.append([tmp_str])
+            msa_list.append([])
+            start += colsz
+            if start > align_length:
+#                False
+                break
+                
+        msa_string = self.write_to_file(msa_list,'MSA_alignment_file.aln',"\n")
+                                
+        htmltable = self.make_HTML(msa_list,'col_header')
+        html_report_txt.write("<h1>MSA Alignment</h1>")
+        html_report_txt.write("<pre>" + msa_string + "</pre>")
+        html_report_txt.close()
+        
+##      FASTA
+        fasta_list = []
+        for row in row_order:
+            align = alignment[row].replace('-','')
+            fasta_list.extend([[">" + row ]])
+            fasta_list.extend(cf.splitSequence(align))
+        
+        fasta_file_name = 'MSA_fasta_file.fna'
+        if seq_type == 'protein':
+            fasta_file_name = 'MSA_protein_file.faa'
+        fasta_string = self.write_to_file(fasta_list,fasta_file_name,"\n")
+                                    
+        cr = Report_creator(self.config)
+        reported_output = cr.create_report(token, params['workspace_name'],
+                                           rpt_string, self.scratch)
+                                           
+        output = {'report_name': reported_output['name'],
+                    'report_ref': reported_output['ref']}
+        mystr = pformat(output)
+        logging.info(f"Returning: {mystr}")
+        #END msa_report
+
+        # At some point might do deeper type checking...
+        if not isinstance(output, dict):
+            raise ValueError('Method msa_report return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]

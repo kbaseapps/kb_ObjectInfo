@@ -342,6 +342,10 @@ class Application(object):
                              name='kb_ObjectInfo.assembly_metadata_report',
                              types=[dict])
         self.method_authentication['kb_ObjectInfo.assembly_metadata_report'] = 'required'  # noqa
+        self.rpc_service.add(impl_kb_ObjectInfo.assemblyset_report,
+                             name='kb_ObjectInfo.assemblyset_report',
+                             types=[dict])
+        self.method_authentication['kb_ObjectInfo.assemblyset_report'] = 'required'  # noqa
         self.rpc_service.add(impl_kb_ObjectInfo.genome_report,
                              name='kb_ObjectInfo.genome_report',
                              types=[dict])
@@ -350,14 +354,14 @@ class Application(object):
                              name='kb_ObjectInfo.genomeset_report',
                              types=[dict])
         self.method_authentication['kb_ObjectInfo.genomeset_report'] = 'required'  # noqa
-        self.rpc_service.add(impl_kb_ObjectInfo.domain_report,
-                             name='kb_ObjectInfo.domain_report',
-                             types=[dict])
-        self.method_authentication['kb_ObjectInfo.domain_report'] = 'required'  # noqa
         self.rpc_service.add(impl_kb_ObjectInfo.genomecomp_report,
                              name='kb_ObjectInfo.genomecomp_report',
                              types=[dict])
         self.method_authentication['kb_ObjectInfo.genomecomp_report'] = 'required'  # noqa
+        self.rpc_service.add(impl_kb_ObjectInfo.domain_report,
+                             name='kb_ObjectInfo.domain_report',
+                             types=[dict])
+        self.method_authentication['kb_ObjectInfo.domain_report'] = 'required'  # noqa
         self.rpc_service.add(impl_kb_ObjectInfo.featseq_report,
                              name='kb_ObjectInfo.featseq_report',
                              types=[dict])
@@ -366,6 +370,10 @@ class Application(object):
                              name='kb_ObjectInfo.protcomp_report',
                              types=[dict])
         self.method_authentication['kb_ObjectInfo.protcomp_report'] = 'required'  # noqa
+        self.rpc_service.add(impl_kb_ObjectInfo.msa_report,
+                             name='kb_ObjectInfo.msa_report',
+                             types=[dict])
+        self.method_authentication['kb_ObjectInfo.msa_report'] = 'required'  # noqa
         self.rpc_service.add(impl_kb_ObjectInfo.status,
                              name='kb_ObjectInfo.status',
                              types=[dict])

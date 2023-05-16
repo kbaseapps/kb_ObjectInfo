@@ -1,6 +1,25 @@
 # kb_ObjectInfo release notes
 =========================================
 
+1.2.1
+-----
+1.	Add assemblySets
+
+2.	Add the MSA 
+
+3.	Clean up Domain Annotation - 
+
+	- Fix  errors that create missing data
+
+	- Add a count by category (number of genes in the category across all the domains in the category)
+
+	- Update all of the data sources.
+
+	- Combine the three function calls (genes, count by domain, and count by category) to make it run smoother.
+
+	- Separate the function calls that initiate domains/categories and SEED. 
+	  They are never used in the same app, these should be separated so extra stuff doesn’t clutter things up.
+
 1.2.0
 -----
 1. Add selection boxes for multiple formats
