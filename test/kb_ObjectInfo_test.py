@@ -251,8 +251,21 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
-
-    def test_genome_protein_list(self):
+        
+    def mytest_assembly_set(self):
+        assemblyset_ref = '69870/28/2'
+        ret = self.getImpl().assemblyset_report(self.getContext(),
+                                                      {'workspace_name': self.ws_info[1],
+                                                       'input_ref': assemblyset_ref,
+                                                       'showContigs': 1
+                                                       })
+        # Validate the returned data
+        print(("ASSEMBLY SET RETURNED", ret))
+        self.assertIn('report_name', ret[0])
+        self.assertIn('report_ref', ret[0])
+        pass
+        
+    def mytest_genome_protein_list(self):
         genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
@@ -342,7 +355,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_ref', ret[0])
         pass
 
-    def mytest_domain_annotation(self):
+    def test_domain_annotation(self):
         domain_ref = self.getDomainInfo('test_domain')
         ret = self.getImpl().domain_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
@@ -406,6 +419,18 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                             'report_format': 'csv'
                                             })
         print(("GENOME COMPARISON RETURNED", ret))
+        self.assertIn('report_name', ret[0])
+        self.assertIn('report_ref', ret[0])
+        pass
+        
+    def mytest_MSA(self):
+        msa_ref = '70362/27/1'
+        ret = self.getImpl().msa_report(self.getContext(),
+                                                      {'workspace_name': self.ws_info[1],
+                                                       'input_ref': msa_ref
+                                                       })
+        # Validate the returned data
+        print(("MSA RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass

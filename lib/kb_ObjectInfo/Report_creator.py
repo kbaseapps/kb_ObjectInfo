@@ -34,8 +34,10 @@ class Report_creator:
         html_folder = os.path.join(read_file_path, 'html')
         if not os.path.exists(html_folder):
             os.mkdir(html_folder)
-
-        for file in os.listdir(read_file_path):
+        listdir = os.listdir(read_file_path)
+        listdir.sort()
+        
+        for file in listdir:
             label = ".".join(file.split(".")[1:])
             if (file.endswith(".zip")):
                 desc = 'Zip file generated for output '
@@ -79,6 +81,13 @@ class Report_creator:
                                          'name': file,
                                          'label': label,
                                          'description': desc})
+            elif (file.endswith(".aln")):
+                desc = 'MSA text file generated for output '
+                output_zip_files.append({'path': os.path.join(read_file_path, file),
+                                         'name': file,
+                                         'label': label,
+                                         'description': desc})
+                                    
             elif (file.endswith(".html")):
                 # Move html into html folder
                 shutil.move(os.path.join(read_file_path, file), os.path.join(html_folder, file))
@@ -86,7 +95,6 @@ class Report_creator:
                 # Create an index file -  header lines
                 with open('/kb/module/data/index_start.txt', 'r') as start_file:
                     html_string = start_file.read()
-                start_file.close()
                     
                 html_string += "        </div>    </div>    <div id=\"body\">\n"
                 html_string += "        <iframe id=\"content\" "
@@ -95,13 +103,11 @@ class Report_creator:
                 # Add the closing lines
                 with open('/kb/module/data/index_end.txt', 'r') as end_file:
                     html_string += end_file.read()
-                end_file.close()
                 
                 # Write the index html file to the directory
                 file_name = "index"+str(html_count)+".html"
                 with open(os.path.join(html_folder, file_name), 'w') as index_file:
                     index_file.write(html_string)
-                index_file.close()
             
                 html_file_list[file_name] = file
                 html_count += 1

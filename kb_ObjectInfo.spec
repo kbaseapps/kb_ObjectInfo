@@ -18,12 +18,14 @@ module kb_ObjectInfo {
     typedef int boolean;
 
     typedef string assembly_ref;
+    typedef string assemblyset_ref;
     typedef string genome_ref;
     typedef string genomeset_ref;
     typedef string domain_ref;
     typedef string genomecomp_ref;
     typedef string featseq_ref;
     typedef string protcomp_ref;
+    typedef string msa_ref;
      /*
         A 'typedef' can also be used to define compound or container
         objects, like lists, maps, and structures.  The standard KBase
@@ -38,6 +40,12 @@ module kb_ObjectInfo {
         string workspace_name;
         boolean showContigs;
     } AssemblyMetadataReportParams;
+
+    typedef structure {
+        assemblyset_ref input_ref;
+        string workspace_name;
+        boolean showContigs;
+    } AssemblySetReportParams;
 
     typedef structure {
         genome_ref input_ref;
@@ -62,16 +70,16 @@ module kb_ObjectInfo {
     } GenomeSetReportParams;
 
     typedef structure {
-        domain_ref input_ref;
-        float evalue_cutoff;
-        string workspace_name;
-    } DomainReportParams;
-
-    typedef structure {
         genomecomp_ref input_ref;
         string workspace_name;
     } GenomeCompReportParams;
 
+    typedef structure {
+        domain_ref input_ref;
+        float evalue_cutoff;
+        string workspace_name;
+    } DomainReportParams;
+    
     typedef structure {
         featseq_ref input_ref;
         string workspace_name;
@@ -81,6 +89,11 @@ module kb_ObjectInfo {
         protcomp_ref input_ref;
         string workspace_name;
     } ProtCompReportParams;
+
+    typedef structure {
+        msa_ref input_ref;
+        string workspace_name;
+    } MSAReportParams;
 
     /*
         Here is the definition of the output of the function.  The output
@@ -101,16 +114,20 @@ module kb_ObjectInfo {
     
     funcdef assembly_metadata_report(AssemblyMetadataReportParams params)
         returns (ReportResults output) authentication required;
+    funcdef assemblyset_report(AssemblySetReportParams params)
+        returns (ReportResults output) authentication required;
     funcdef genome_report(GenomeReportParams params)
         returns (ReportResults output) authentication required;
     funcdef genomeset_report(GenomeSetReportParams params)
         returns (ReportResults output) authentication required;
-    funcdef domain_report(DomainReportParams params)
-        returns (ReportResults output) authentication required;
     funcdef genomecomp_report(GenomeCompReportParams params)
+        returns (ReportResults output) authentication required;
+    funcdef domain_report(DomainReportParams params)
         returns (ReportResults output) authentication required;
     funcdef featseq_report(FeatSeqReportParams params)
         returns (ReportResults output) authentication required;
     funcdef protcomp_report(ProtCompReportParams params)
+        returns (ReportResults output) authentication required;
+    funcdef msa_report(MSAReportParams params)
         returns (ReportResults output) authentication required;
 };

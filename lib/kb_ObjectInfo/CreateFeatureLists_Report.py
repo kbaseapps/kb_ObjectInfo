@@ -12,136 +12,52 @@ class CreateFeatureLists:
         self.config = config
         self.callback_url = os.environ['SDK_CALLBACK_URL']
         self.dfu = DataFileUtil(self.callback_url)
-        (self.cats, self.cat2name, self.cat2group, self.domfam2cat, self.domfam2name, self.domfam2ns) = self._configure_categories()
+        #(self.cats, self.cat2name, self.cat2group, self.domfam2cat, self.domfam2name, self.domfam2ns) = self._configure_categories()
         logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',
                         level=logging.INFO,
                         datefmt='%Y-%m-%d %H:%M:%S')
 
-    def _configure_categories(self):
-
+    def configure_seed_categories(self):
         domain_desc_basepath = os.path.abspath('/kb/module/data')
-        domain_to_cat_map_path = dict()
-        domain_cat_names_path = dict()
-        domain_fam_names_path = dict()
-        domain_to_cat_map_path['COG'] = os.path.join(domain_desc_basepath, 'COG_2014.tsv')
-        domain_cat_names_path['COG'] = os.path.join(domain_desc_basepath, 'COG_2014_funcat.tsv')
-        domain_fam_names_path['COG'] = os.path.join(domain_desc_basepath, 'COG_2014.tsv')
-        domain_to_cat_map_path['PF'] = os.path.join(domain_desc_basepath, 'Pfam-A.clans.tsv')
-        domain_cat_names_path['PF'] = os.path.join(domain_desc_basepath, 'Pfam-A.clans_names.tsv')
-        domain_fam_names_path['PF'] = os.path.join(domain_desc_basepath, 'Pfam-A.clans.tsv')
-        domain_to_cat_map_path['TIGR'] = os.path.join(domain_desc_basepath, 'TIGRInfo.tsv')
-        domain_cat_names_path['TIGR'] = os.path.join(domain_desc_basepath, 'tigrrole2go.txt')
-        #domain_fam_names_path['TIGR']  = os.path.join(domain_desc_basepath, 'tigrfams2go.txt')
-        domain_fam_names_path['TIGR'] = os.path.join(domain_desc_basepath, 'TIGRInfo.tsv')
-        domain_to_cat_map_path['SEED'] = os.path.join(domain_desc_basepath, 'SEED_subsys.txt')
-        domain_cat_names_path['SEED'] = os.path.join(domain_desc_basepath, 'SEED_funcat.txt')
-        #domain_cat_names_path['SEED']  = os.path.join(domain_desc_basepath, 'SEED_subsys.txt')
-        domain_fam_names_path['SEED'] = os.path.join(domain_desc_basepath, 'SEED_subsys.txt')
-        
+        domfam2name  = dict()
+        domfam2ns = dict()
+        domfam2cat   = dict()
         cats = []
         cat2name     = dict()
         cat2group    = dict()
-        domfam2cat   = dict()
-#        cat2domfams  = dict()
-#        domfam2group = dict()
-        domfam2name  = dict()
-        domfam2ns = dict()
-
-        # read all mappings between groups and domfams
-        for namespace in ['COG', 'PF', 'TIGR', 'SEED']:
-
+            
+        # Initialize
+        for namespace in ['SEED']:
             cat2name[namespace] = dict()
             cat2group[namespace] = dict()
-#            domfam2cat[namespace] = dict()
-#            cat2domfams[namespace] = dict()
-#            domfam2group[namespace]  = dict()
-#            domfam2name[namespace]  = dict()
             
-            # get high-level cats
-            tigrrole_id2cat = dict()
-            with open(domain_cat_names_path[namespace], 'r') as dom_cat_handle:
-                for line in dom_cat_handle.readlines():
-                    line = line.strip()
+        # get high-level cats
+        with open(os.path.join(domain_desc_basepath, 'SEED_funcat.txt'), 'r') as dom_cat_handle:
+            for line in dom_cat_handle.readlines():
+                line = line.strip()
+                [cat_group, cat] = line.split("\t")[0:2]
+                if cat not in cats:
+                    cats.append(cat)
 
-                    if namespace == 'COG':
-                        [cat, cat_group, cat_name] = line.split("\t")[0:3]
-                        if  cat not in cats:
-                            cats.append(cat)
-                        cat2name[namespace][cat] = cat_name
-                        cat2group[namespace][cat] = cat_group
-
-                    elif namespace == 'PF':
-                        [cat, cat_name] = line.split("\t")[0:2]
-                        if cat not in cats:
-                            cats.append(cat)
-                        cat2name[namespace][cat] = cat_name
-                        cat2group[namespace][cat] = 'NA'
-
-                    elif namespace == 'TIGR':
-                        if line.startswith('!'):
-                            continue
-                        [cat, cat_id, cat_group, cat_name_plus_go_terms] = line.split("\t")[0:4]
-                        tigrrole_id2cat[cat_id] = cat
-                        if cat not in cats:
-                            cats.append(cat)
-                        cat_name = re.sub(' *\> GO:.*$', '', cat_name_plus_go_terms)
-                        cat2name[namespace][cat] = cat_name
-                        cat2group[namespace][cat] = cat_group
-
-                    elif namespace == 'SEED':
-                        #[cat_group, cat_subgroup, cat, domfam] = line.split("\t")[0:4]
-                        [cat_group, cat] = line.split("\t")[0:2]
-                        if cat not in cats:
-                            cats.append(cat)
-                        #cat_disp = re.sub('_', ' ', cat)
-                        #cat2name[namespace][cat] = cat_disp
-
-            # get domfam to cat map, and vice versa
-            with open(domain_to_cat_map_path[namespace], 'r') as dom2cat_map_handle:
-                for line in dom2cat_map_handle.readlines():
-                    line = line.strip()
-
-                    if namespace == 'COG':
-                        [domfam, cat_str, dom_name] = line.split("\t")[0:3]
-                        cat = cat_str[0]  # only use first cat
+        # get domfam to cat map, and vice versa
+        with open(os.path.join(domain_desc_basepath, 'SEED_subsys.txt'), 'r') as dom2cat_map_handle:
+            for line in dom2cat_map_handle.readlines():
+                line = line.strip()
+                [cat_group, cat_subgroup, cat, domfam] = line.split("\t")[0:4]
+                domfam = domfam.strip()
+                domfam = re.sub(' *\#.*$', '', domfam)
+                domfam = re.sub(' *\(EC [\d\.\-\w]*\) *$', '', domfam)
+                domfam = re.sub(' *\(TC [\d\.\-\w]*\) *$', '', domfam)
+                domfam = re.sub('_', ' ', domfam)
+                dom_name = domfam
+                dom_name = cat_subgroup
+                cat2group['SEED'][cat] = cat_group
                         
-                    elif namespace == 'PF':
-                        [domfam, cat, cat_name, dom_id, dom_name] = line.split("\t")[0:5]
-
-                    elif namespace == 'TIGR':
-                        if line.startswith('!'):
-                            continue
-                        [domfam_id, domfam, cat_group, cat_id, domfam_name, ec_id, dom_name] = line.split("\t")[0:7]
-                        if cat_id != '' and int(cat_id) != 0 and cat_id in tigrrole_id2cat:
-                            cat = tigrrole_id2cat[cat_id]
-                        else:
-                            continue
-
-                    elif namespace == 'SEED':
-                        [cat_group, cat_subgroup, cat, domfam] = line.split("\t")[0:4]
-                        domfam = domfam.strip()
-                        domfam = re.sub(' *\#.*$', '', domfam)
-                        domfam = re.sub(' *\(EC [\d\.\-\w]*\) *$', '', domfam)
-                        domfam = re.sub(' *\(TC [\d\.\-\w]*\) *$', '', domfam)
-                        domfam = re.sub('_', ' ', domfam)
-                        #domfam = 'SEED ' + domfam
-                        dom_name = domfam
-                        dom_name = cat_subgroup
-                        cat2group[namespace][cat] = cat_group
-
-                    domfam2ns[domfam] = namespace
-                    domfam2cat[domfam] = cat
-                    domfam2name[domfam]  = dom_name
-                    
- #                   if cat not in cat2domfams[namespace]:
- #                       cat2domfams[namespace][cat] = []
- #                   cat2domfams[namespace][cat].append(domfam)
-                    
- #                   if cat in cat2group[namespace]:
- #                       domfam2group[namespace][domfam]  = cat2group[namespace][cat]
- #                   else:
- #                       domfam2group[namespace][domfam]  = None
- 
+                domfam2ns[domfam] = 'SEED'
+                domfam2cat[domfam] = cat
+                domfam2name[domfam]  = dom_name
+        
+        
         return(cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns)
         
     # -----------------------------------------------------------------
@@ -150,21 +66,8 @@ class CreateFeatureLists:
 
     def delimitedTable(self, genome, features):
 
-#        seed_basepath = os.path.abspath('/kb/module/data')
-#        seed_subsys   = os.path.join(seed_basepath, 'subsys.txt')
-
-#        seed_cat = dict()
-
-#        with open(seed_subsys, 'r') as seed_handle:
-#            for line in seed_handle.readlines():
-#
-#                line = line.strip()
-#                [cat_group, cat_subgroup, cat, seedfam] = line.split("\t")[0:4]
-#                if seedfam in seed_cat:
-#                    seed_cat[seedfam] += "; " + cat
-#                else:
-#                    seed_cat[seedfam] = cat
-        seed_cat = self.domfam2cat
+        (cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns) = self.configure_seed_categories()
+        seed_cat = domfam2cat
         
         rpt_list = [["Feature ID", "Feature type", "Contig", "Start", "Stop", "Strand", "Feature Function", "Aliases",
                     "RAST Functional Assignment", "RAST Functional Group 1", "RAST Functional Group 2"]]
@@ -228,10 +131,10 @@ class CreateFeatureLists:
             catgroup = ''
             subgroup = ''
             if cat > ' ':
-                if cat in self.cat2group['SEED']:
-                    catgroup = self.cat2group['SEED'][cat] 
-                if domfam in self.domfam2name:
-                    subgroup = self.domfam2name[domfam]
+                if cat in cat2group['SEED']:
+                    catgroup = cat2group['SEED'][cat]
+                if domfam in domfam2name:
+                    subgroup = domfam2name[domfam]
  
             rpt_list.append([feat['id'], feat['type'], contig, str(start), str(stop), strand, feat['function'], aliases, cat, subgroup, catgroup])
 
@@ -304,49 +207,55 @@ class CreateFeatureLists:
     # -----------------------------------------------------------------
     #   Domain Annotation Reports
     #
+    def configure_domains(self):
 
-    #   OBJECT: DomainAnnotation
-    #   FUNCTION: User-defined function to format all the domains for a gene
-    #
-    def printGeneDomain(self, contig, geneName, geneDomain, cutoff):
-        rpt_list = []
+        # https://www.ncbi.nlm.nih.gov/Structure/cdd/cdd_help.shtml#CDSource_external
+        # cd00009   - Conserved Protein Domain Family - curated at NCBI
+        # cl21655   - Part of CDD at NCBI but not predicted
+        # COG5463   - Clusters of Orthologous Genes (COGs)
+        # KOG0989   - Eukaryotic COGs
+        # NF011716  - NCBIfams
+        # PF00015   - Protein Families - Pfam
+        # PRK000000 - Protein Clusters - NCBI - okay to exclue CHL, MTH, PHA, PLN, PTZ, convert pfam to PF
+        # sd000043   - Conserved Protein Domain Family - Domain models specifically built to annotate structural motifs;
+        # smart00156 - Simple Modular Architecture Research Tool
+        # TIGR03904  - The Institute for Genomic Research's database of protein families - TIGRfam
         
-        for domain in geneDomain:
-            list = geneDomain[domain]
-            if list[0][2] < cutoff:
-                if '.' in domain and len(domain) < 15:
-                    domain = domain.split('.')[0]
+        domain_desc_basepath = os.path.abspath('/kb/module/data')
+        domfam2name  = dict()
+        domfam2ns = dict()
+        domfam2cat   = dict()
+        domfam2short = dict()
+        cats = []
+        cat2name     = dict()
+        cat2group    = dict()
+            
+        # Initialize
+        for namespace in ['COG','PF','TIGR','PRK','NCBIfams','cdd','Other','smart']:
+            cat2name[namespace] = dict()
+            cat2group[namespace] = dict()
+#
+#       Define all the categories and all of the domains
+#       All the old and new data sources now combined in combine_data_sources.py
+#
+        with open(os.path.join(domain_desc_basepath,'all_domains.tsv'), 'r') as dom2cat_map_handle:
+            for line in dom2cat_map_handle.readlines():
+                [namespace,domfam,short_name,dom_name,cat] = line.split("\t")[0:5]
+                domfam2ns[domfam] = namespace
+                domfam2name[domfam]  = dom_name
+                domfam2cat[domfam] = cat
+                domfam2short[domfam] = short_name
 
-                if domain in self.domfam2ns:
-                    namespace = self.domfam2ns[domain]
-                else:
-                    namespace = ' '
-
-                if domain in self.domfam2name:
-                    dom_name = self.domfam2name[domain]
-                else:
-                    dom_name = ' '
-
-                if domain in self.domfam2cat:
-                    cat = self.domfam2cat[domain]
-                else:
-                    cat = ' '
-
-                if cat > ' ' and cat in self.cat2name[namespace]:
-                    cat_name = self.cat2name[namespace][cat]
-                else:
-                    cat_name = ' '
-
-                if cat > ' ' and cat in self.cat2group[namespace]:
-                    cat_group = self.cat2group[namespace][cat]
-                else:
-                    cat_group = ' '
-
-                rpt_list.append([contig, geneName, domain, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, cat, cat_name, str(cat_group)])
-                
-        # Returning a list of lists
-        return rpt_list
-
+        with open(os.path.join(domain_desc_basepath,'all_categories.tsv'), 'r') as dom2cat_map_handle:
+            for line in dom2cat_map_handle.readlines():
+                [namespace,cat,cat_name,cat_group] = line.split("\t")[0:4]
+                if cat not in cats:
+                    cats.append(cat)
+                cat2name[namespace][cat] = cat_name
+                cat2group[namespace][cat] = cat_group
+        
+        return(cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns, domfam2short)
+        
     #
     #   OBJECT: DomainAnnotation
     #   FORMAT: tab or comma delimited list of the genes, domains, e-values, and start/stop of domain hit
@@ -354,89 +263,157 @@ class CreateFeatureLists:
     #   Uses printGeneDomain to print out individual lines
     #
     def readDomainAnnList(self, pyStr, cutoff):
+    
+        (cats, cat2name, cat2group, domfam2cat, domfam2name, domfam2ns, domfam2short) = self.configure_domains()
         # Header
-        rpt_list = [["Contig", "Gene ID", "Domain", "Evalue", "Start", "Stop","Domain Name", "Category", "Category Name", "Category Group"]]
+        rpt_list1 = [["Contig", "Gene ID", "Domain", "Short Name", "Evalue", "Start", "Stop","Domain Name","Namespace", "Category", "Category Name", "Category Group"]]
 
         myData = pyStr['data']
-
-        for contig in myData:
-            contigData = myData[contig]
-            for gene in contigData:
-                if (gene[4]):
-                    domain = gene[4]
-
-                    # The return list is a list of lists and this is done many times
-                    # Need to append them to our list one at a time, otherwise list of lists of lists
-                    rtn_list = (self.printGeneDomain(contig, gene[0], domain, cutoff))
-                    for rtn in rtn_list:
-                        rpt_list.append(rtn)
-  
-        return rpt_list
-
-    #
-    #   OBJECT: DomainAnnotation
-    #   FUNCTION: User-defined function to count the domains for a gene
-    #
-    def countGeneDomain(self, contig, geneName, geneDomain, format, cutoff, myDict):
-        for domain in geneDomain:
-            list = geneDomain[domain]
-            if list[0][2] < cutoff:
-                if '.' in domain and len(domain) < 15:
-                    domain = domain.split('.')[0]
-                    
-                if domain in myDict:
-                    myDict[domain] += 1
-                else:
-                    myDict[domain] = 1
-
-        return myDict
-
-    #
-    #   OBJECT: DomainAnnotation
-    #   FORMAT: List of the domains and number of occurrences in the genome
-    #   Uses countGeneDomain to get the statistics for an individual gene
-    #
-    def readDomainAnnCount(self, pyStr, cutoff):
-
-        # Header
-        rpt_list = [["Count","Domain","Category","Category Name","Category Group","Domain Name"]]
-
-        myData = pyStr['data']
-        count = 0
-        myDict = {}
-        for contig in myData:
-            contigData = myData[contig]
-
-            for gene in contigData:
-                if (gene[4]):
-                    myDict = self.countGeneDomain(contig, gene[0], gene[4], format, cutoff, myDict)
-
-        namespace = '--'
-        dom_name = '--'
-        cat = '--'
-        cat_name = '--'
-        cat_group = '--'
         
-        domainList = list(myDict.keys())
-        domainList.sort()
-        for domain in domainList:
-            if domain in self.domfam2ns and self.domfam2ns[domain] > ' ':
-                namespace = self.domfam2ns[domain]
-                
-            if domain in self.domfam2name and self.domfam2name[domain] > ' ':
-                dom_name = self.domfam2name[domain]
-                
-            if domain in self.domfam2cat and self.domfam2cat[domain] > ' ':
-                    cat = self.domfam2cat[domain]
-                    
-            if cat != '--' and cat in self.cat2name[namespace] and self.cat2name[namespace][cat] > ' ':
-                cat_name = self.cat2name[namespace][cat]
+        for contig in myData:
+            contigData = myData[contig]
+            for gene in contigData:
+                if (gene[4]):
+                    geneDomain = gene[4]
+                    geneName   = gene[0]
+        
+                    for domain in geneDomain:
+                        list = geneDomain[domain]
+                        if list[0][2] < cutoff:
+                            if '.' in domain and len(domain) < 15:
+                                domain = domain.split('.')[0]
 
-            if cat != '--' and cat in self.cat2group[namespace] and self.cat2group[namespace][cat] > ' ':
-                cat_group = self.cat2group[namespace][cat]
+                            if domain in domfam2ns:
+                                namespace = domfam2ns[domain]
+                            else:
+                                namespace = 'Other'
+                                if domain.startswith('COG'):
+                                    namespace = 'COG'
+                                elif domain.startswith('PF') or domain.startswith('pfam'):
+                                    namespace = 'PF'
+                                elif domain.startswith('TIGR'):
+                                    namespace = 'TIGR'
+                                elif domain.startswith('PRK'):
+                                    namespace = 'PRK'
+                                elif domain.startswith('smart'):
+                                    namespace = 'smart'
+                                elif domain.startswith('NF'):
+                                    namespace = 'NCBIfams'
+                                elif domain.startswith('cd') or domain.startswith('cl') or domain.startswith('sd'):
+                                    namespace = 'cdd'
+                                domfam2ns[domain] = namespace
+
+                            if domain in domfam2name:
+                                dom_name = domfam2name[domain]
+                            else:
+                                dom_name = 'Other'
+                                domfam2name[domain] = dom_name
+
+                            if domain in domfam2cat:
+                                cat = domfam2cat[domain]
+                            else:
+                                cat = 'Other'
+                                domfam2cat[domain] = cat
+
+                            if domain in domfam2short:
+                                short_name = domfam2short[domain]
+                            else:
+                                short_name = 'Other'
+                                domfam2short[domain] = cat
+
+                            if namespace not in cat2name:
+                                cat2name[namespace]  = dict()
+                            if namespace not in cat2group:
+                                cat2group[namespace] = dict()
+                    
+                            if cat > ' ' and namespace in cat2name and cat in cat2name[namespace]:
+                                cat_name = cat2name[namespace][cat]
+                            else:
+                                cat = 'Other'
+                                cat_name = 'Other'
+                                cat2name[namespace][cat] = cat_name
+
+                            if cat > ' '  and namespace in cat2group and cat in cat2group[namespace] :
+                                cat_group = cat2group[namespace][cat]
+                            else:
+                                cat_group = 'Other'
+                                cat2group[namespace][cat] = cat_group
+                                        
+                            rpt_list1.append([contig, geneName, domain, short_name, str(list[0][2]), str(list[0][0]), str(list[0][1]), dom_name, namespace, cat, cat_name, str(cat_group)])
                 
-            rpt_list.append([str(myDict[domain]),domain,cat,cat_name,cat_group,dom_name])
-        return rpt_list
+        # Header
+        rpt_list2 = [["Count","Domain","Short Name","Namespace","Category","Category Name","Category Group","Domain Name"]]
+
+        myDict = {}
+        
+        for (contig, geneName, domain, short_name, evalue, start, stop, dom_name, namespace, cat, cat_name, cat_group) in rpt_list1:
+            # First line from previous list
+            if contig == 'Contig':
+                continue
+                
+            if domain in myDict:
+                myDict[domain] += 1
+            else:
+                myDict[domain] = 1
+                
+        for domain in sorted(myDict.keys()):
+            namespace  = domfam2ns[domain]
+            dom_name   = domfam2name[domain]
+            short_name = domfam2short[domain]
+            cat        = domfam2cat[domain]
+            cat_name   = cat2name[namespace][cat]
+            cat_group  = cat2group[namespace][cat]
+            
+            rpt_list2.append([str(myDict[domain]),domain,short_name,namespace,cat,cat_name,cat_group,dom_name])
+                                        
+        # Header
+        rpt_list3 = [["Namespace","Category Group","Category","Category Name","Count"]]
+        
+        ns2cat         = {}
+        ns2cat['COG']  = []
+        ns2cat['PF']   = []
+        ns2cat['TIGR'] = []
+        myDict         = {}
+        myDict['COG']  = {}
+        myDict['PF']   = {}
+        myDict['TIGR'] = {}
+        
+        for (geneCount,domain,short_name, namespace,cat,cat_name,cat_group,dom_name) in rpt_list2:
+                
+            # No category. No point in summarizing
+            if namespace != 'COG' and namespace != 'PF' and namespace != 'TIGR':
+                continue
+        
+            # First line
+            if domain == 'Domain':
+                continue
+                
+            if cat not in cat2group[namespace]:
+                cat2group[namespace][cat] = 'Other'
+            if cat not in cat2name[namespace]:
+                cat2name[namespace][cat] = 'Other'
+            
+            if cat in myDict[namespace]:
+                myDict[namespace][cat] += int(geneCount)
+            else:
+                myDict[namespace][cat] = int(geneCount)
+                    
+                if namespace in ns2cat:
+                    ns2cat[namespace].append(cat)
+                else:
+                    ns2cat[namespace] = [cat]
+        
+        for namespace in sorted(ns2cat.keys()):
+            if namespace == 'COG':
+                cat_list = ['D','M','N','O','T','U','V','W','Y','Z','A', 'B','J','K','L', 'C', 'E', 'F', 'G', 'H','I','P', 'Q', 'X', 'R', 'S']
+            else:
+                cat_list = sorted(ns2cat[namespace])
+                
+            for cat in cat_list:
+                if cat in myDict[namespace]:
+                    rpt_list3.append([namespace,cat2group[namespace][cat],cat,cat2name[namespace][cat],str(myDict[namespace][cat])])
+      
+        return (rpt_list1, rpt_list2, rpt_list3)
 
     #
     #   OBJECT: FeatureSet or SequenceSet
