@@ -530,22 +530,22 @@ class kb_ObjectInfo:
         multi_fasta = []
         rpt_string = ''
         
+#       Always do the list of genomes - short and ensures that there is an HTML link
+        gsr = CreateMultiGenomeReport(self.config)
+        rpt_list = gsr.readGenomeSet(genome_name, genomeset_data)
+        htmltable = self.make_HTML(rpt_list,'col_header')
+        html_report_path = os.path.join(self.scratch, 'genomeset_comparison.html')
+        html_report_txt = open(html_report_path, "w")
+        html_report_txt.write("<h1>GENOME COMPARISON</h1>")
+        html_report_txt.write(htmltable)
+        html_report_txt.close()
+        
         if params['showGenomes']:
-            gsr = CreateMultiGenomeReport(self.config)
-            rpt_list = gsr.readGenomeSet(genome_name, genomeset_data)
             rpt_string += self.write_to_file(rpt_list,'genomeset_tab_file.tsv',"\t")
             self.write_to_file(rpt_list,'genomeset_cvs_file.csv',",")
-            
-            htmltable = self.make_HTML(rpt_list,'col_header')
-            html_report_path = os.path.join(self.scratch, 'genomeset_comparison.html')
-            html_report_txt = open(html_report_path, "w")
-            html_report_txt.write("<h1>GENOME COMPARISON</h1>")
-            html_report_txt.write(htmltable)
-            html_report_txt.close()
-                    
+
         if params['listCoding']:
             cf = CreateFeatureLists(self.config)
-            gsr = CreateMultiGenomeReport(self.config)
             myGS = genomeset_data['elements']
             rpt_list = []
             for ele in myGS:
@@ -566,7 +566,6 @@ class kb_ObjectInfo:
             html_report_txt.close()
                 
         if params['listGFF']:
-            gsr = CreateMultiGenomeReport(self.config)
             myGS = genomeset_data['elements']
     
             for ele in myGS:
@@ -574,7 +573,6 @@ class kb_ObjectInfo:
                 rpt_string += "Created " + gff_return['file_path'] + "\n"
              
         if params['listGBK']:
-            gsr = CreateMultiGenomeReport(self.config)
             myGS = genomeset_data['elements']
     
             for ele in myGS:
@@ -583,12 +581,12 @@ class kb_ObjectInfo:
                 file_path = gbk_return['genbank_file']['file_path'].replace('/kb/module/work/tmp/','')
                 rpt_string += "Created " + file_path + "\n"
  
-                gbk_return = self.sd.export_to_staging({'input_ref':myGS[ele]['ref'], 'destination_dir':'/ObjectInfo', 'workspace_name': workspace_name, 'export_genome':{'export_genome_genbank': 1},
-                    'generate_report': 1    })
+                gbk_return = self.sd.export_to_staging({'input_ref':myGS[ele]['ref'], 'destination_dir':'ObjectInfo',
+                    'workspace_name': workspace_name, 'export_genome':{'export_genome_genbank': 1},
+                    'generate_report': 1, 'context': ctx    })
                 print("DEBUG: return 2",gbk_return)
             
         if params['FastaAA']:
-            gsr = CreateMultiGenomeReport(self.config)
             myGS = genomeset_data['elements']
     
             for ele in myGS:
@@ -596,7 +594,6 @@ class kb_ObjectInfo:
                 rpt_string += "Created " + cds_return['file_path'] + "\n"
                
         if params['FastamRNA']:
-            gsr = CreateMultiGenomeReport(self.config)
             myGS = genomeset_data['elements']
     
             for ele in myGS:
@@ -604,7 +601,6 @@ class kb_ObjectInfo:
                 rpt_string += "Created " + mrna_return['file_path'] + "\n"
  
         if params['showDNA']:
-            gsr = CreateMultiGenomeReport(self.config)
             rpt_list = [["Assembly Reference","Scientific Name","File Name"]]
             
 #           Get the list of assembly IDs for the genomeSet
