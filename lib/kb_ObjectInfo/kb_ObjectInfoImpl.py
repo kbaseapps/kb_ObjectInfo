@@ -9,7 +9,6 @@ from pprint import pprint, pformat
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.GenomeFileUtilClient import GenomeFileUtil
-from installed_clients.kb_staging_exporterClient import kb_staging_exporter
 from .CreateFasta_Report import CreateFasta
 from .CreateFeatureLists_Report import CreateFeatureLists
 from .CreateMultiGenomeReport import CreateMultiGenomeReport
@@ -81,6 +80,15 @@ class kb_ObjectInfo:
                 rpt_string += rpt_delimiter.join(rpt) + "\n"
             
         return rpt_string
+        
+    def read_from_file(self,rpt_path):
+        rpt_list = []
+
+        with open(rpt_path, mode='r') as report_txt:
+            for line in report_txt:
+                rpt_list.append([line+"\n"])
+            
+        return rpt_list
        
     #END_CLASS_HEADER
 
@@ -96,7 +104,6 @@ class kb_ObjectInfo:
         self.workspaceURL = config['workspace-url']
         self.dfu = DataFileUtil(self.callback_url)
         self.gfu = GenomeFileUtil(self.callback_url)
-        self.sd  = kb_staging_exporter(self.callback_url)
         self.scratch = os.path.abspath(config['scratch'])
         self.config = config
         #END_CONSTRUCTOR
@@ -396,10 +403,17 @@ class kb_ObjectInfo:
             html_report_txt.close()
                 
         if params['listGFF']:
-            cf = CreateFeatureLists(self.config)
-            rpt_list = cf.gff3(genome_data, 'features')
-            rpt_string += self.write_to_file(rpt_list,'genome_file.gff',"\t")
-                            
+            #cf = CreateFeatureLists(self.config)
+            #rpt_list = cf.gff3(genome_data, 'features')
+            #rpt_string += self.write_to_file(rpt_list,'genome_file.gff',"\t")
+            
+            gff_return = self.gfu.genome_to_gff({'genome_ref':input_ref,'is_gtf':0,'target_dir':self.scratch})
+            rpt_string += "Created " + gff_return['file_path'] + "\n"
+            print ("DEBUG GFF_RETURN",gff_return)
+                                        
+            rpt_list += self.read_from_file(gff_return['file_path'])
+            print (rpt_list)
+            
             html_report_path = os.path.join(self.scratch, 'genome_GFF.html')
             html_report_txt = open(html_report_path, "w")
             htmltable = self.make_HTML(rpt_list,'col_header')
@@ -577,14 +591,8 @@ class kb_ObjectInfo:
     
             for ele in myGS:
                 gbk_return = self.gfu.genome_to_genbank({'genome_ref':myGS[ele]['ref'],'target_dir':self.scratch})
-                print("DEBUG: return 1",gbk_return)
                 file_path = gbk_return['genbank_file']['file_path'].replace('/kb/module/work/tmp/','')
                 rpt_string += "Created " + file_path + "\n"
- 
-                gbk_return = self.sd.export_to_staging({'input_ref':myGS[ele]['ref'], 'destination_dir':'',
-                    'workspace_name': workspace_name, 'export_genome':{'export_genome_genbank': 1},
-                    'generate_report': 1, 'context': ctx    })
-                print("DEBUG: return 2",gbk_return)
             
         if params['FastaAA']:
             myGS = genomeset_data['elements']
