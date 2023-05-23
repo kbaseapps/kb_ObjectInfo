@@ -87,7 +87,8 @@ class kb_ObjectInfo:
         with open(rpt_path, mode='r') as report_txt:
             for line in report_txt:
                 #line.replace('\t', ',')
-                rpt_list.append([line.replace('\t', ',')])
+                cols = line.split("\t")
+                rpt_list.append(cols)
             
         return rpt_list
        
@@ -407,6 +408,7 @@ class kb_ObjectInfo:
             #cf = CreateFeatureLists(self.config)
             #rpt_list = cf.gff3(genome_data, 'features')
             #rpt_string += self.write_to_file(rpt_list,'genome_file.gff',"\t")
+            #print("DEBUG my GFF",rpt_list)
             
             gff_return = self.gfu.genome_to_gff({'genome_ref':input_ref,'is_gtf':0,'target_dir':self.scratch})
             rpt_string += "Created " + gff_return['file_path'] + "\n"
