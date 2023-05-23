@@ -86,7 +86,8 @@ class kb_ObjectInfo:
 
         with open(rpt_path, mode='r') as report_txt:
             for line in report_txt:
-                rpt_list.append([line+"\n"])
+                #line.replace('\t', ',')
+                rpt_list.append([line.replace('\t', ',')])
             
         return rpt_list
        
@@ -416,7 +417,7 @@ class kb_ObjectInfo:
             
             html_report_path = os.path.join(self.scratch, 'genome_GFF.html')
             html_report_txt = open(html_report_path, "w")
-            htmltable = self.make_HTML(rpt_list,'col_header')
+            htmltable = self.make_HTML(rpt_list,'no_header')
             html_report_txt.write("<h1>GFF OUTPUT</h1>")
             html_report_txt.write(htmltable)
             html_report_txt.close()
