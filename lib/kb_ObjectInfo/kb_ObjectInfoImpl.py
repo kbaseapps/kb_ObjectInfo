@@ -405,17 +405,15 @@ class kb_ObjectInfo:
             html_report_txt.close()
                 
         if params['listGFF']:
-            #cf = CreateFeatureLists(self.config)
-            #rpt_list = cf.gff3(genome_data, 'features')
-            #rpt_string += self.write_to_file(rpt_list,'genome_file.gff',"\t")
-            #print("DEBUG my GFF",rpt_list)
             
-            gff_return = self.gfu.genome_to_gff({'genome_ref':input_ref,'is_gtf':0,'target_dir':self.scratch})
-            rpt_string += "Created " + gff_return['file_path'] + "\n"
-            print ("DEBUG GFF_RETURN",gff_return)
-                                        
-            rpt_list += self.read_from_file(gff_return['file_path'])
-            print (rpt_list)
+            #gff_return = self.gfu.genome_to_gff({'genome_ref':input_ref,'is_gtf':0,'target_dir':self.scratch})
+            #rpt_string += "Created " + gff_return['file_path'] + "\n"
+            #rpt_list += self.read_from_file(gff_return['file_path'])
+            #print (rpt_list)
+            
+            gff_return = self.gfu.export_genome_as_gff({'input_ref':input_ref})
+
+            print (gff_return)
             
             html_report_path = os.path.join(self.scratch, 'genome_GFF.html')
             html_report_txt = open(html_report_path, "w")
