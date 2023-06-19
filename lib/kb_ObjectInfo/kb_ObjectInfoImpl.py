@@ -91,7 +91,7 @@ class kb_ObjectInfo:
                 rpt_list.append(cols)
             
         return rpt_list
-       
+
     #END_CLASS_HEADER
 
     # config contains contents of config file in a hash or None if it couldn't
@@ -108,6 +108,7 @@ class kb_ObjectInfo:
         self.gfu = GenomeFileUtil(self.callback_url)
         self.scratch = os.path.abspath(config['scratch'])
         self.config = config
+
         #END_CONSTRUCTOR
         pass
 
@@ -406,14 +407,9 @@ class kb_ObjectInfo:
                 
         if params['listGFF']:
             
-            #gff_return = self.gfu.genome_to_gff({'genome_ref':input_ref,'is_gtf':0,'target_dir':self.scratch})
-            #rpt_string += "Created " + gff_return['file_path'] + "\n"
-            #rpt_list += self.read_from_file(gff_return['file_path'])
-            #print (rpt_list)
-            
-            gff_return = self.gfu.export_genome_as_gff({'input_ref':input_ref})
-
-            print (gff_return)
+            gff_return = self.gfu.genome_to_gff({'genome_ref':input_ref,'is_gtf':0,'target_dir':self.scratch})
+            rpt_string += "Created " + gff_return['file_path'] + "\n"
+            rpt_list += self.read_from_file(gff_return['file_path'])
             
             html_report_path = os.path.join(self.scratch, 'genome_GFF.html')
             html_report_txt = open(html_report_path, "w")
