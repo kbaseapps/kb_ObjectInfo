@@ -96,7 +96,7 @@ class kb_ObjectInfo:
     def truncate_report_string(self,report_string):
         '''Take the report string and truncate each of the strings for readability'''
         '''Based on PR review suggestion from Erik Pearson'''
-        report_string_list = report_string.split("/n")
+        report_string_list = report_string.split("\n")
         new_report_string = ""
         max = 70
         for line in report_string_list:
