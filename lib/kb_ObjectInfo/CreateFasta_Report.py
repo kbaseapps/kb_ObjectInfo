@@ -56,7 +56,7 @@ class CreateFasta:
     #    Create a protein Fasta file for a genome
     #    Return a list called rpt_list (not the string used in the past)
     #
-    def create_Fasta_from_features(self, pyStr):
+    def create_fasta_from_features(self, pyStr):
         myFeat = pyStr
         rpt_list = []
         for feat in myFeat:
@@ -82,7 +82,7 @@ class CreateFasta:
     #    Before version 9 there was no cdss and the features needed a type. Values of interest are 'CDS' or 'gene'
     #    Return a list called rpt_list (not the string used in the past)
     #
-    def create_Fasta_from_mRNA(self, myFeat):
+    def create_fasta_from_mRNA(self, myFeat):
         rpt_list = []
         for feat in myFeat:
             if 'function' not in feat:
@@ -105,7 +105,7 @@ class CreateFasta:
     # -----------------------------------------------------------------
     #    Create a Fasta file for a genome
     # ######## NOT WRITTEN YET ######################
-    def create_Fasta_from_assembly(self, pyStr):
+    def create_fasta_from_assembly(self, pyStr):
         rpt_list = []
         for feat in myFeat:
             if 'function' not in feat:

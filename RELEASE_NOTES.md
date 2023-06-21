@@ -1,6 +1,15 @@
 # kb_ObjectInfo release notes
 =========================================
 
+1.2.2
+-----
+
+1. Expand the options available for GenomeSet to be more like the Genome object.
+
+2. Add a way to download a set of genomes in GenBank/GFF format.
+
+3. Take advantage of the functions available in the GFU module for GenBank/GFF instead of maintaining it here.
+
 1.2.1
 -----
 1.	Add assemblySets

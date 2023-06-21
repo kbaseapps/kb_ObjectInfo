@@ -22,7 +22,7 @@
             }
         },
        {
-           "id": "showGenomes",
+           "id": "show_genomes",
            "optional": false,
            "advanced": false,
            "allow_multiple": false,
@@ -36,12 +36,82 @@
            }
        },
        {
-           "id": "showDNA",
+           "id": "list_coding",
            "optional": false,
            "advanced": false,
            "allow_multiple": false,
            "default_values": [
                "1"
+           ],
+           "field_type": "checkbox",
+           "checkbox_options": {
+               "checked_value": 1,
+               "unchecked_value": 0
+           }
+       },
+       {
+           "id": "list_GFF",
+           "optional": false,
+           "advanced": false,
+           "allow_multiple": false,
+           "default_values": [
+               "0"
+           ],
+           "field_type": "checkbox",
+           "checkbox_options": {
+               "checked_value": 1,
+               "unchecked_value": 0
+           }
+       },
+       {
+           "id": "list_GBK",
+           "optional": false,
+           "advanced": false,
+           "allow_multiple": false,
+           "default_values": [
+               "0"
+           ],
+           "field_type": "checkbox",
+           "checkbox_options": {
+               "checked_value": 1,
+               "unchecked_value": 0
+           }
+       },
+       {
+           "id": "fasta_AA",
+           "optional": false,
+           "advanced": false,
+           "allow_multiple": false,
+           "default_values": [
+               "1"
+           ],
+           "field_type": "checkbox",
+           "checkbox_options": {
+               "checked_value": 1,
+               "unchecked_value": 0
+           }
+       },
+       {
+           "id": "fasta_mRNA",
+           "optional": false,
+           "advanced": false,
+           "allow_multiple": false,
+           "default_values": [
+               "0"
+           ],
+           "field_type": "checkbox",
+           "checkbox_options": {
+               "checked_value": 1,
+               "unchecked_value": 0
+           }
+       },
+       {
+           "id": "show_DNA",
+           "optional": false,
+           "advanced": false,
+           "allow_multiple": false,
+           "default_values": [
+               "0"
            ],
            "field_type": "checkbox",
            "checkbox_options": {
@@ -66,12 +136,32 @@
                     "target_type_transform": "resolved-ref"
                 },
                 {
-                    "input_parameter": "showGenomes",
-                    "target_property": "showGenomes"
+                    "input_parameter": "show_genomes",
+                    "target_property": "show_genomes"
                 },
                 {
-                    "input_parameter": "showDNA",
-                    "target_property": "showDNA"
+                    "input_parameter": "list_coding",
+                    "target_property": "list_coding"
+                },
+                {
+                    "input_parameter": "list_GFF",
+                    "target_property": "list_GFF"
+                },
+                {
+                    "input_parameter": "list_GBK",
+                    "target_property": "list_GBK"
+                },
+                {
+                    "input_parameter": "fasta_AA",
+                    "target_property": "fasta_AA"
+                },
+                {
+                    "input_parameter": "fasta_mRNA",
+                    "target_property": "fasta_mRNA"
+                },
+                {
+                    "input_parameter": "show_DNA",
+                    "target_property": "show_DNA"
                 }
             ],
             "output_mapping": [

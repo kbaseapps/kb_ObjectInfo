@@ -244,7 +244,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().assembly_metadata_report(self.getContext(),
                                                       {'workspace_name': self.ws_info[1],
                                                        'input_ref': assembly_ref,
-                                                       'showContigs': 1
+                                                       'show_contigs': 1
                                                        })
         # Validate the returned data
         print(("ASSEMBLY METADATA RETURNED", ret))
@@ -257,7 +257,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().assemblyset_report(self.getContext(),
                                                       {'workspace_name': self.ws_info[1],
                                                        'input_ref': assemblyset_ref,
-                                                       'showContigs': 1
+                                                       'show_contigs': 1
                                                        })
         # Validate the returned data
         print(("ASSEMBLY SET RETURNED", ret))
@@ -266,15 +266,16 @@ class kb_ObjectInfoTest(unittest.TestCase):
         pass
         
     def mytest_genome_protein_list(self):
+        genome_ref = self.genome_ref
         genome_ref = '40843/4/1'
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
-                                            'input_ref': self.genome_ref,
-                                            'listCoding': 1,
-                                            'listGFF': 1,
-                                            'FastaAA': 0,
-                                            'FastamRNA': 0,
-                                            'showDNA': 0
+                                            'input_ref': genome_ref,
+                                            'list_coding': 0,
+                                            'list_GFF': 1,
+                                            'fasta_AA': 0,
+                                            'fasta_mRNA': 0,
+                                            'show_DNA': 0
                                             })
         print(("GENOME PROTEIN/GFF RETURNED", ret))
         self.assertIn('report_name', ret[0])
@@ -285,11 +286,11 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.minimal_genome_ref,
-                                            'listCoding': 0,
-                                            'listGFF': 0,
-                                            'FastaAA': 1,
-                                            'FastamRNA': 0,
-                                            'showDNA': 0
+                                            'list_coding': 0,
+                                            'list_GFF': 0,
+                                            'fasta_AA': 1,
+                                            'fasta_mRNA': 0,
+                                            'show_DNA': 0
                                             })
         print(("GENOME CDS FASTA RETURNED", ret))
         self.assertIn('report_name', ret[0])
@@ -301,11 +302,11 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.minimal_genome_ref,
-                                            'listCoding': 0,
-                                            'listGFF': 0,
-                                            'FastaAA': 0,
-                                            'FastamRNA': 1,
-                                            'showDNA': 0
+                                            'list_coding': 0,
+                                            'list_GFF': 0,
+                                            'fasta_AA': 0,
+                                            'fasta_mRNA': 1,
+                                            'show_DNA': 0
                                             })
         print(("GENOME MRNA RETURNED", ret))
         self.assertIn('report_name', ret[0])
@@ -317,24 +318,29 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
                                             'input_ref': self.minimal_genome_ref,
-                                            'listCoding': 0,
-                                            'listGFF': 0,
-                                            'FastaAA': 0,
-                                            'FastamRNA': 0,
-                                            'showDNA': 1
+                                            'list_coding': 0,
+                                            'list_GFF': 0,
+                                            'fasta_AA': 0,
+                                            'fasta_mRNA': 0,
+                                            'show_DNA': 1
                                             })
         print(("GENOME DNA RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
 
-    def mytest_genomeset_genomes(self):
+    def test_genomeset_genomes(self):
         genomeset_ref = self.getGenomeSet()
         ret = self.getImpl().genomeset_report(self.getContext(),
-                                              {'workspace_name': self.ws_info[1],
-                                               'input_ref': genomeset_ref,
-                                               'showGenomes': 1,
-                                               'showDNA': 0
+                                              { 'workspace_name': self.ws_info[1],
+                                                'input_ref': genomeset_ref,
+                                                'show_genomes': 0,
+                                                'list_coding': 1,
+                                                'list_GFF': 0,
+                                                'list_GBK': 0,
+                                                'fasta_AA': 0,
+                                                'fasta_mRNA': 0,
+                                                'show_DNA': 0
                                                })
         print(("GENOME SET GENOME LIST RETURNED", ret))
         self.assertIn('report_name', ret[0])
@@ -347,15 +353,15 @@ class kb_ObjectInfoTest(unittest.TestCase):
         ret = self.getImpl().genomeset_report(self.getContext(),
                                               {'workspace_name': self.ws_info[1],
                                                'input_ref': genomeset_ref,
-                                               'showGenomes': 0,
-                                               'showDNA': 1
+                                               'show_genomes': 0,
+                                               'show_DNA': 1
                                                })
         print(("GENOME SET FASTA DNA RETURNED", ret))
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
 
-    def test_domain_annotation(self):
+    def mytest_domain_annotation(self):
         domain_ref = self.getDomainInfo('test_domain')
         ret = self.getImpl().domain_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],

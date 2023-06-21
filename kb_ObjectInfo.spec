@@ -38,30 +38,35 @@ module kb_ObjectInfo {
     typedef structure {
         assembly_ref input_ref;
         string workspace_name;
-        boolean showContigs;
+        boolean show_contigs;
     } AssemblyMetadataReportParams;
 
     typedef structure {
         assemblyset_ref input_ref;
         string workspace_name;
-        boolean showContigs;
+        boolean show_contigs;
     } AssemblySetReportParams;
 
     typedef structure {
         genome_ref input_ref;
         string workspace_name;
-        boolean listCoding;
-        boolean listGFF;
-        boolean FastaAA;
-        boolean FastamRNA;
-        boolean showDNA;
+        boolean list_coding;
+        boolean list_GFF;
+        boolean fasta_AA;
+        boolean fasta_mRNA;
+        boolean show_DNA;
     } GenomeReportParams;
 
     typedef structure {
         genomeset_ref input_ref;
         string workspace_name;
-        boolean showGenomes;
-        boolean showDNA;
+        boolean show_genomes;
+        boolean list_coding;
+        boolean list_GFF;
+        boolean list_GBK;
+        boolean fasta_AA;
+        boolean fasta_mRNA;
+        boolean show_DNA;
     } GenomeSetReportParams;
 
     typedef structure {

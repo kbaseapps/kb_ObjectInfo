@@ -91,22 +91,29 @@ class Report_creator:
             elif (file.endswith(".html")):
                 # Move html into html folder
                 shutil.move(os.path.join(read_file_path, file), os.path.join(html_folder, file))
-
+                file_name = file.replace('.html','')
+                
                 # Create an index file -  header lines
-                with open('/kb/module/data/index_start.txt', 'r') as start_file:
-                    html_string = start_file.read()
-                    
+                #use /data/index_start.txt as example and substitute a specific file name
+
+                html_string = '<html style="height: 100%;">'
+                html_string += '<head style="margin:0; padding: 0;">'
+                html_string += '<title>' + file_name + '</title>'
+                html_string += '</head>'
+                html_string += '<body style="margin: 0; padding: 0; height: 100%; box-sizing: border-box;">'
+                html_string += '<div id="menu" class="menu" style="border-bottom: 1px silver solid; box-sizing: border-box;">'
+                html_string += '<div class="menu-item" >'
                 html_string += "        </div>    </div>    <div id=\"body\">\n"
                 html_string += "        <iframe id=\"content\" "
                 html_string += "style=\"width: 100%; border: none; \" src=\"" + file + "\"></iframe>\n    </div>"
 
                 # Add the closing lines
-                with open('/kb/module/data/index_end.txt', 'r') as end_file:
+                with open('/kb/module/data/index_end.txt', 'r', encoding="utf-8") as end_file:
                     html_string += end_file.read()
                 
                 # Write the index html file to the directory
                 file_name = "index"+str(html_count)+".html"
-                with open(os.path.join(html_folder, file_name), 'w') as index_file:
+                with open(os.path.join(html_folder, file_name), 'w', encoding="utf-8") as index_file:
                     index_file.write(html_string)
             
                 html_file_list[file_name] = file
@@ -128,7 +135,7 @@ class Report_creator:
         short_report = report_string
         
         if len(report_string) > 1000:
-            short_report = report_string[0:1000] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
+            short_report = report_string[0:1000] + "\n.... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
             
         report_params = {
             'objects_created': [],

@@ -32,7 +32,7 @@ parameters :
             Assembly
         short-hint : |
             The Assembly object to analyze.
-    showContigs:
+    show_contigs:
         ui-name : |
             Include a FASTA of the Contigs
         short-hint : |
