@@ -22,7 +22,7 @@
             }
         },
         {
-            "id": "listCoding",
+            "id": "list_coding",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -36,7 +36,7 @@
             }
         },
         {
-            "id": "listGFF",
+            "id": "list_GFF",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -50,7 +50,7 @@
             }
         },
         {
-            "id": "FastaAA",
+            "id": "fasta_AA",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -64,7 +64,7 @@
             }
         },
         {
-            "id": "FastamRNA",
+            "id": "fasta_mRNA",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -78,7 +78,7 @@
             }
         },
         {
-            "id": "showDNA",
+            "id": "show_DNA",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -108,24 +108,24 @@
                     "target_type_transform": "resolved-ref"
                 },
                 {
-                    "input_parameter": "listCoding",
-                    "target_property": "listCoding"
+                    "input_parameter": "list_coding",
+                    "target_property": "list_coding"
                 },
                 {
-                    "input_parameter": "listGFF",
-                    "target_property": "listGFF"
+                    "input_parameter": "list_GFF",
+                    "target_property": "list_GFF"
                 },
                 {
-                    "input_parameter": "FastaAA",
-                    "target_property": "FastaAA"
+                    "input_parameter": "fasta_AA",
+                    "target_property": "fasta_AA"
                 },
                 {
-                    "input_parameter": "FastamRNA",
-                    "target_property": "FastamRNA"
+                    "input_parameter": "fasta_mRNA",
+                    "target_property": "fasta_mRNA"
                 },
                 {
-                    "input_parameter": "showDNA",
-                    "target_property": "showDNA"
+                    "input_parameter": "show_DNA",
+                    "target_property": "show_DNA"
                 }
             ],
             "output_mapping": [

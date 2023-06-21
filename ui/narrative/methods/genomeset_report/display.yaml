@@ -32,37 +32,37 @@ parameters :
             GenomeSet
         short-hint : |
             The GenomeSet to be used by the app.
-    showGenomes:
+    show_genomes:
         ui-name : |
             Include a list of the genomes
         short-hint : |
             Include a tab and comma delimited list of the genomes in the set.
-    listCoding:
+    list_coding:
         ui-name : |
             List protein coding features
         short-hint : |
             Include a tab or comma delimited list of the protein coding features.
-    listGFF:
+    list_GFF:
         ui-name : |
             GFF format of features
         short-hint : |
             Include a GFF-formatted list of the protein coding features.
-    listGBK:
+    list_GBK:
         ui-name : |
             GBK format of the genomes
         short-hint : |
             Include GBK formatted genomes.
-    FastaAA:
+    fasta_AA:
         ui-name : |
             FastA of protein coding features
         short-hint : |
             Include FastA files of the protein coding features
-    FastamRNA:
+    fasta_mRNA:
         ui-name : |
             FastA of mRNAs
         short-hint : |
             Include FastA files of mRNAs of the protein coding features
-    showDNA:
+    show_DNA:
         ui-name : |
             Include a DNA FastA
         short-hint : |
@@ -72,7 +72,7 @@ description : |
 
     <p>Most KBase data objects already have some type of viewable HTML table, either as output from an App or by dragging the object onto the Narrative. This App serves a different purpose. It creates data files that are downloadable and used with local tools such as Excel or informatic scripts.</p>
 
-    <p>This App creates files on the Genomes in a GenomeSet. A Summary section has a preview of the full output. It is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script. The HTML link opens a new tab with the full output. The link for downloading the files is in the Files section of the output. </p>
+    <p>This App creates a file for each Genome in a GenomeSet. A Summary section has a preview of the full output. It is intended to be a preview of the downloadable file. If the file is tab or comma delimited, it may appear misaligned on the screen but readable by a computer script. The HTML link opens a new tab with the full output. The link for downloading the files is in the Files section of the output. </p>
 
     <p><b>Inputs:</b>
     <ul>

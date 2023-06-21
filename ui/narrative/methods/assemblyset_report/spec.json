@@ -22,7 +22,7 @@
             }
         },
         {
-            "id": "showContigs",
+            "id": "show_contigs",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -52,8 +52,8 @@
                     "target_type_transform": "resolved-ref"
                 },
                 {
-                    "input_parameter": "showContigs",
-                    "target_property": "showContigs"
+                    "input_parameter": "show_contigs",
+                    "target_property": "show_contigs"
                 }
             ],
             "output_mapping": [
