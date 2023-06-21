@@ -445,7 +445,7 @@ class kb_ObjectInfo:
                 report_list = create_fasta.create_fasta_from_features(genome_data['features'])
             
             dna_string = self.write_list_to_text_file(report_list,'genome_file.faa',"\n")
-            report_string += dna_string[0:200] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
+            report_string += dna_string[0:200] + "\n.... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
             
             html_report_path = os.path.join(self.scratch, 'genome_protein_AA.html')
             html_report_txt = open(html_report_path, "w", encoding="utf-8")
@@ -462,7 +462,7 @@ class kb_ObjectInfo:
                 report_list = create_fasta.create_fasta_from_mRNA(genome_data['features'])
                 
             dna_string = self.write_list_to_text_file(report_list,'genome_mRNA_file.fna',"\n")
-            report_string += dna_string[0:200] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
+            report_string += dna_string[0:200] + "\n.... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
             
             html_report_path = os.path.join(self.scratch, 'genome_protein_mRNA.html')
             html_report_txt = open(html_report_path, "w", encoding="utf-8")
@@ -486,7 +486,7 @@ class kb_ObjectInfo:
                 report_string += 'Did not find the Assembly Reference\n'
                 
             dna_string = self.write_list_to_text_file(report_list,'genome_dna_file.fna',"\n")
-            report_string += dna_string[0:200] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
+            report_string += dna_string[0:200] + "\n.... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
             
             html_report_path = os.path.join(self.scratch, 'genome_DNA.html')
             html_report_txt = open(html_report_path, "w", encoding="utf-8")

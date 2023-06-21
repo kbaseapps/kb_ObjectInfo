@@ -135,7 +135,7 @@ class Report_creator:
         short_report = report_string
         
         if len(report_string) > 1000:
-            short_report = report_string[0:1000] + ".... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
+            short_report = report_string[0:1000] + "\n.... <b>Summary has been truncated. Use the links or files for full output.</b>\n"
             
         report_params = {
             'objects_created': [],
