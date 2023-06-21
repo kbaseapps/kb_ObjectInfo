@@ -103,7 +103,7 @@ class kb_ObjectInfo:
             if len(line) > max:
                 new_report_string += line[0:68] + "...\n"
             else:
-                new_report_string += line
+                new_report_string += line + "\n"
                 
         return new_report_string
             
