@@ -34,17 +34,18 @@ class CreateAssemblyReport:
         this_list = [['Assembly Name','Assembly ID', 'DNA size', 'GC content', 'Number contigs',
                 'FastA handle reference', 'MD5', 'Type', 'Taxon reference','Original filename']]
                 
-        list = ['assembly_id', 'dna_size', 'gc_content', 'num_contigs',
+        items = ['assembly_id', 'dna_size', 'gc_content', 'num_contigs',
                 'fasta_handle_ref', 'md5', 'type', 'taxon_ref']
                 
+        # DataFileUtil guarantees that 'info' contains object_info:
+        # https://github.com/kbaseapps/DataFileUtil/blob/master/DataFileUtil.spec#L499-L506
         for assembly in obj_list['data']:
-            name = "Assembly Data Object"
-            if 'info' in assembly:
-                name = assembly['info'][1]
+            name = assembly['info'][1]
+			ref = f"{assembly['info'][6]}/{assembly['info'][0]}/{assembly['info'][4]}"
 
             # Create the row for the one assembly
-            assem_list = [name]
-            for item in list:
+            assem_list = [name, ref]
+            for item in items:
                 if item in assembly['data']:
                     assem_list.append(str(assembly['data'][item]))
                 else:
