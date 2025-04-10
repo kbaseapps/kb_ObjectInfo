@@ -82,7 +82,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
                                                     "generate_ids_if_needed": 1,
                                                     "generate_missing_genes": 1
                                                     })['genome_ref']
-                                                    
+
 #       Prepare the Genome from gbff File
         cls.genbank_file_name = 'Carsonella_ruddii_HT_isolate_Thao2000.gbff'
 #       Set the path to file in scratch
@@ -251,9 +251,9 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
-        
-    def mytest_assembly_set(self):
-        assemblyset_ref = '69870/28/2'
+
+    def test_assembly_set(self):
+        assemblyset_ref = '72131/16/1'
         ret = self.getImpl().assemblyset_report(self.getContext(),
                                                       {'workspace_name': self.ws_info[1],
                                                        'input_ref': assemblyset_ref,
@@ -264,7 +264,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
-        
+
     def mytest_genome_protein_list(self):
         genome_ref = self.genome_ref
         genome_ref = '40843/4/1'
@@ -281,7 +281,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
-        
+
     def mytest_genome_protein_fasta(self):
         ret = self.getImpl().genome_report(self.getContext(),
                                            {'workspace_name': self.ws_info[1],
@@ -394,7 +394,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
-      
+
     def mytest_sequenceSet(self):
         featset_ref = '27092/23/1'
         ret = self.getImpl().featseq_report(self.getContext(),
@@ -405,7 +405,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
-    
+
     def mytest_ProtComp(self):
         protcomp_ref = '29939/15/1'
         ret = self.getImpl().protcomp_report(self.getContext(),
@@ -428,7 +428,7 @@ class kb_ObjectInfoTest(unittest.TestCase):
         self.assertIn('report_name', ret[0])
         self.assertIn('report_ref', ret[0])
         pass
-        
+
     def mytest_MSA(self):
         msa_ref = '70362/27/1'
         ret = self.getImpl().msa_report(self.getContext(),
