@@ -34,7 +34,7 @@ class CreateAssemblyReport:
         this_list = [['Assembly Name','Assembly ID', 'DNA size', 'GC content', 'Number contigs',
                 'FastA handle reference', 'MD5', 'Type', 'Taxon reference','Original filename']]
 
-        items = ['assembly_id', 'dna_size', 'gc_content', 'num_contigs',
+        items = ['dna_size', 'gc_content', 'num_contigs',
                 'fasta_handle_ref', 'md5', 'type', 'taxon_ref']
 
         # DataFileUtil guarantees that 'info' contains object_info:
@@ -137,4 +137,3 @@ class CreateAssemblyReport:
                 report_txt.close()
 
         return(header)
-
